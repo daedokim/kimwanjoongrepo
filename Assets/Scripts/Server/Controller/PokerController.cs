@@ -100,6 +100,11 @@ namespace com.dug.Server.Controller
             return GetRoom(roomIndex);
         }
 
+        public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        {
+            table.InsertGamePlayer(roomIndex, userIndex, chairIndex, buyInLeft);
+        }
+
         private void SetAnotherBetStatusReady(int roomIndex, long userIdx)
         {
             List<GamePlayer> list = table.SelectSitGamePlayer(roomIndex);

@@ -12,7 +12,7 @@ namespace com.dug.Server
 
         public static Dictionary<int, Room> RoomTable = new Dictionary<int, Room>();
         public static Dictionary<int, List<GamePlayer>> GamePlayertable = new Dictionary<int, List<GamePlayer>>();
-
+        public static Dictionary<long, Player> PlayerTable = new Dictionary<long, Player>();
 
 
         public void InitTable()
@@ -20,9 +20,32 @@ namespace com.dug.Server
             Room info = new Room();
             info.index = 1;
             info.state = RoomState.Wait;
-            InitGamePlayerList(info.index);
+
+            InitPlayers();
+            //InitGamePlayerList(info.index);
 
             RoomTable.Add(info.index, info);
+        }
+
+        private void InitPlayers()
+        {
+            Player user = new Player();
+            user.useridx = 1000;
+            user.nickName = "wanjoong";
+            user.coin = 1000000;
+            PlayerTable.Add(user.useridx, user);
+
+            user = new Player();
+            user.useridx = 1001;
+            user.nickName = "enyoung";
+            user.coin = 1000000;
+            PlayerTable.Add(user.useridx, user);
+
+            user = new Player();
+            user.useridx = 1002;
+            user.nickName = "jiyou";
+            user.coin = 1000000;
+            PlayerTable.Add(user.useridx, user);
         }
 
         private void InitGamePlayerList(int roomIndex)
@@ -38,9 +61,9 @@ namespace com.dug.Server
             gamePlayers.Add(info);
 
             info = new GamePlayer();
-            info.state = GamePlayerState.SitWait;
+            info.state = GamePlayerState.Stand;
             info.roomIndex = roomIndex;
-            info.chairIndex = 2;
+            info.chairIndex = -1;
             info.useridx = 1001;
             info.coin = 100000;
             info.nickName = "James.P1";
@@ -152,15 +175,23 @@ namespace com.dug.Server
 
         public List<GamePlayer> SelectGamePlayers(int roomIndex)
         {
-            List<GamePlayer> gamePlayers = GamePlayertable[roomIndex];
+            List<GamePlayer> gamePlayers = null;
             List<GamePlayer> list = new List<GamePlayer>();
 
-            for (int i = 0; i < gamePlayers.Count; i++)
+            if (GamePlayertable.ContainsKey(roomIndex))
             {
-                list.Add(gamePlayers[i]);
-            }
+                GamePlayertable.TryGetValue(roomIndex, out gamePlayers);
 
-            list.Sort(CompareOrderByChairIdx);
+                if(gamePlayers != null)
+                {
+                    for (int i = 0; i < gamePlayers.Count; i++)
+                    {
+                        list.Add(gamePlayers[i]);
+                    }
+
+                    list.Sort(CompareOrderByChairIdx);
+                }
+            }
             return list;
         }
 
@@ -191,14 +222,33 @@ namespace com.dug.Server
             return gamePlayer;
         }
 
-        public void InsertGamePlayer(int roomIndex, GamePlayer gamePlayer)
+        public void InsertGamePlayer(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
-             List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
+            Player player = SelectPlayer(userIndex);
+
+            GamePlayer gamePlayer = new GamePlayer();
             gamePlayer.roomIndex = roomIndex;
+            gamePlayer.useridx = userIndex;
+            gamePlayer.nickName = player.nickName;
+            gamePlayer.chairIndex = chairIndex;
+            gamePlayer.buyInLeft = buyInLeft;
+            gamePlayer.state = GamePlayerState.SitWait;
+
+            List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
             gamePlayers.Add(gamePlayer);
 
             GamePlayertable[roomIndex] = gamePlayers;
-            
+        }
+
+        public Player SelectPlayer(long userIndex)
+        {
+            Player player = null;
+
+            if(PlayerTable.ContainsKey(userIndex))
+            {
+                PlayerTable.TryGetValue(userIndex, out player);
+            }
+            return player;
         }
 
         public void UpdateGamePlayer(int roomIndex, GamePlayer gamePlayer)
@@ -248,6 +298,8 @@ namespace com.dug.Server
             }
             return count;
         }
+
+       
     }
 }
 

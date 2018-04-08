@@ -6,6 +6,7 @@ namespace com.dug.UI.dao
     using UnityEngine;
     using com.dug.Server;
     using com.dug.UI.dto;
+    using System;
 
     public class RoomDAO
     {
@@ -40,6 +41,10 @@ namespace com.dug.UI.dao
             return returnVal;
         }
 
+        public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        {
+            GameServer.Instance.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+        }
     }
 }
  

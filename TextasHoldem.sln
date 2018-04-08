@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextasHoldem.Plugins", "Tex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextasHoldem", "TextasHoldem.csproj", "{2F7A4468-0B04-27DA-E5E8-2CCA67A631C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextasHoldem.Editor", "TextasHoldem.Editor.csproj", "{002F386F-A478-2904-1BF0-FDB7F445FA36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{2F7A4468-0B04-27DA-E5E8-2CCA67A631C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F7A4468-0B04-27DA-E5E8-2CCA67A631C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F7A4468-0B04-27DA-E5E8-2CCA67A631C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002F386F-A478-2904-1BF0-FDB7F445FA36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002F386F-A478-2904-1BF0-FDB7F445FA36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002F386F-A478-2904-1BF0-FDB7F445FA36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002F386F-A478-2904-1BF0-FDB7F445FA36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

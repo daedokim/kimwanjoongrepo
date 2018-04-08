@@ -54,8 +54,6 @@ namespace com.dug.UI.view
                 sitButton.transform.localPosition = positions[i];
                 sitButtons[i] = sitButton.GetComponent<UISitButton>();
                 sitButtons[i].chairIndex = i;
-
-                sitButton.SetActive(false);
             }
         }
 

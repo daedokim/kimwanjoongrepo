@@ -55,7 +55,10 @@ namespace com.dug.Server
             return controller.SetPlayerBetting(roomIndex, userIdx, betType, callAmount, betAmount);
         }
 
-
+        public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        {
+            controller.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+        }
     }
 }
     

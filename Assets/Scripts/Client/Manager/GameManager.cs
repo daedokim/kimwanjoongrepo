@@ -33,7 +33,6 @@ namespace com.dug.UI.manager
         {
             dao = new RoomDAO();
             gameEvent = GameEvent.Instance;
-
         }
 
         private void Start()
@@ -74,7 +73,7 @@ namespace com.dug.UI.manager
 
             roomModel.SetRoomData(room);
             statusModel.SetRoomData(room);
-
+            gameEvent.InvokeRoomEvent(roomModel); 
             gameEvent.InvokeStatusEvent(statusModel);
         }
 
@@ -136,10 +135,10 @@ namespace com.dug.UI.manager
             gameEvent.InvokePlayerTurnEndEvent();
         }
 
-        public void SitChair(long userIndex, int chairIndex)
+        public void SitChair(int chairIndex)
         {
+            dao.DoSit(roomIndex, network.UserData.Instance.userIndex, chairIndex, network.UserData.Instance.buyInLeft);
         }
-
 
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {
