@@ -49,7 +49,7 @@ namespace com.dug.Server
             info = new GamePlayer();
             info.state = GamePlayerState.Stand;
             info.roomIndex = roomIndex;
-            info.chairIndex = 4;
+            info.chairIndex = -1;
             info.useridx = 1002;
             info.coin = 100000;
             info.nickName = "James.P2";
@@ -58,7 +58,7 @@ namespace com.dug.Server
             info = new GamePlayer();
             info.state = GamePlayerState.Stand;
             info.roomIndex = roomIndex;
-            info.chairIndex = 6;
+            info.chairIndex = -1;
             info.useridx  = 1003;
             info.coin = 500000;
             info.nickName = "Player";

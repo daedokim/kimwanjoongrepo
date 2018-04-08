@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using com.dug.UI.presenter;
 using com.dug.UI.model;
+using com.dug.UI.component;
+using com.dug.UI.dto ;
 using System;
 
 namespace com.dug.UI.view
@@ -10,6 +12,8 @@ namespace com.dug.UI.view
     public class SitButtonView : MonoBehaviour, IView
     {
         private static Vector2[] positions;
+
+        private UISitButton[] sitButtons = new UISitButton[RoomModel.MAX_GAME_PLAYER_COUNT];
 
         [SerializeField] GameObject sitButtonPrefab = null;
         private Transform sitButtonParent;
@@ -41,22 +45,44 @@ namespace com.dug.UI.view
         
         public void CreateSitButtons()
         {
-            GameObject gamePlayer = null;
+            GameObject sitButton = null;
             for (int i = 0; i < positions.Length; i++)
             {
-                gamePlayer = Instantiate(sitButtonPrefab, Vector3.zero, Quaternion.identity);
-                gamePlayer.transform.SetParent(sitButtonParent);
-                gamePlayer.transform.localScale = new Vector3(2, 2, 1);
-                gamePlayer.SetActive(false);
+                sitButton = Instantiate(sitButtonPrefab, Vector3.zero, Quaternion.identity);
+                sitButton.transform.SetParent(sitButtonParent);
+                sitButton.transform.localScale = new Vector3(2, 2, 1);
+                sitButton.transform.localPosition = positions[i];
+                sitButtons[i] = sitButton.GetComponent<UISitButton>();
+                sitButtons[i].chairIndex = i;
 
-                gamePlayer.transform.localPosition = positions[i];
+                sitButton.SetActive(false);
             }
         }
 
-        public void OnUpateUI(GamePlayerModel model)
+        public void OnUpateUI(List<int> chairIndice)
         {
-            UIGamePlayer component = GetGamePlayersByChairIndex(model.chairIndex);
-            component.UpdateGamePlayer(model);
+            for(int i = 0; i < sitButtons.Length; i++)
+            {
+                if (chairIndice.IndexOf(sitButtons[i].chairIndex) != -1)
+                {
+                    sitButtons[i].Enable = false;
+                }
+                else
+                {
+                    sitButtons[i].Enable = true;
+                }
+            }
+        }
+
+        public UISitButton GetSitButtonByChairIndex(int chairIndex)
+        {
+            UISitButton sitButton = null;
+
+            if (chairIndex > 0 && chairIndex <= this.sitButtons.Length - 1)
+            {
+                sitButton = this.sitButtons[chairIndex];
+            }
+            return sitButton;
         }
 
     }

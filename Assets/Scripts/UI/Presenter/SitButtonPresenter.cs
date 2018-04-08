@@ -5,6 +5,7 @@ using com.dug.UI.view;
 using com.dug.UI.manager;
 using com.dug.UI.events;
 using com.dug.UI.model;
+using com.dug.UI.component;
 using System;
 
 namespace com.dug.UI.presenter
@@ -26,10 +27,21 @@ namespace com.dug.UI.presenter
 
         private void OnUpdateGamePlayer(GamePlayerModel model)
         {
-            this.view.OnUpateUI(model);
+            List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
+
+            List<int> chairIndice = new List<int>();
+
+            if (gamePlayers != null)
+            {
+                for (int i = 0; i < gamePlayers.Count; i++)
+                {
+                    if(gamePlayers[i].chairIndex != -1)
+                    {
+                        chairIndice.Add(gamePlayers[i].chairIndex);
+                    }
+                }
+            }
+            this.view.OnUpateUI(chairIndice);
         }
-
-
-
     }
 }

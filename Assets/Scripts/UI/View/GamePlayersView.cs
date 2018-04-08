@@ -14,6 +14,7 @@ namespace com.dug.UI.view
         [SerializeField]
         public GameObject gamePlayerPrefab;
         private Transform gamePlayersParent = null;
+        private static Vector2[] positions;
 
         public UIGamePlayer[] gamePlayerList = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
 
@@ -21,39 +22,67 @@ namespace com.dug.UI.view
         
         private void Awake()
         {
-            gamePlayersParent = GameObject.Find("/UI/Canvas/GamePlayers").transform;
+            Setpositions();
+            gamePlayersParent = GameObject.Find("/UI/backgroundCanvas/GamePlayers").transform;
             presenter = new GamePlayersPresenter(this);
         }
+
+        private void Setpositions()
+        {
+            positions = new Vector2[RoomModel.MAX_GAME_PLAYER_COUNT];
+            positions[0] = new Vector2(499, 567);
+            positions[1] = new Vector2(799, 304);
+            positions[2] = new Vector2(799, -204);
+            positions[3] = new Vector2(501, -522);
+            positions[4] = new Vector2(64, -522);
+            positions[5] = new Vector2(-384.5f, -522);
+            positions[6] = new Vector2(-724, -198);
+            positions[7] = new Vector2(-724, 319);
+            positions[8] = new Vector2(-401, 567);
+        }
+
 
         public void CreateGamePlayers()
         {
             GameObject gamePlayer = null;
+            Transform tf = null;
             UIGamePlayer script = null;
             for (int i = 0; i < RoomModel.MAX_GAME_PLAYER_COUNT; i++)
             {
                 gamePlayer = Instantiate(gamePlayerPrefab, Vector3.zero, Quaternion.identity);
-                gamePlayer.transform.SetParent(gamePlayersParent.transform);
-                gamePlayer.transform.localPosition = new Vector3(-196 + ((i % 5) * 70), 4 + ((i/5) * -60), 0);
+                tf = gamePlayer.transform;
+                
+                tf.SetParent(gamePlayersParent.transform);
+                tf.localPosition = positions[i];
+                tf.localScale = new Vector2(2, 2);
 
                 script = gamePlayer.GetComponent<UIGamePlayer>();
                 script.ChairIndex = i;
+
+                gamePlayer.SetActive(false);
                 this.gamePlayerList[i] = script;
             }
         }
 
         public UIGamePlayer GetGamePlayersByChairIndex(int chairIndex)
         {
-            if(chairIndex <= 0 || chairIndex > this.gamePlayerList.Length - 1)
+            UIGamePlayer gamePlayer = null;
+
+            if(chairIndex > 0 && chairIndex <= this.gamePlayerList.Length - 1)
             {
-                throw new System.Exception("인덱스를 벗어 난다.");
+                gamePlayer = this.gamePlayerList[chairIndex];
             }
-            return this.gamePlayerList[chairIndex];
+            return gamePlayer;
         }
 
         public void OnUpateUI(GamePlayerModel model)
         {
             UIGamePlayer component = GetGamePlayersByChairIndex(model.chairIndex);
-            component.UpdateGamePlayer(model);
+
+            if(component != null)
+            {
+                component.UpdateGamePlayer(model);
+            }
         }
 
 

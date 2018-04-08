@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using com.dug.UI.model;
 using com.dug.UI.manager;
+using com.dug.UI.network;
 using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
@@ -13,29 +14,24 @@ namespace com.dug.UI.component
     public class UISitButton : MonoBehaviour
     {
         public int chairIndex = -1;
+        private bool enable = false;
 
-        GamePlayerModel model = new GamePlayerModel();
-
-        public GamePlayerModel Model { get { return model; } }
-
-        public void Sit(GamePlayerModel model)
-        {
-            if (model.status == GamePlayerModel.GamePlayerState.Stand)
-            { 
-                this.gameObject.SetActive(true);
-            }
-        }
+        public bool Enable { set { this.enable = value; }}
 
         void Awake()
         {
             this.gameObject.GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
-                GameManager.Instance.SitChair(model.userIndex, chairIndex);
+                GameManager.Instance.SitChair(UserData.Instance.userIndex, chairIndex);
+            });
+
+            this.ObserveEveryValueChanged(x => x.enable).Subscribe(x => {
+                this.gameObject.SetActive(enable);
             });
         }
 
         public void ResetButton()
         {
-            this.gameObject.SetActive(true);
+            //this.enable = true;
         }
     }
 
