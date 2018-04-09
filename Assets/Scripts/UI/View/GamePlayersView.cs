@@ -68,7 +68,7 @@ namespace com.dug.UI.view
         {
             UIGamePlayer gamePlayer = null;
 
-            if(chairIndex > 0 && chairIndex <= this.gamePlayerList.Length - 1)
+            if(chairIndex >= 0 && chairIndex <= this.gamePlayerList.Length - 1)
             {
                 gamePlayer = this.gamePlayerList[chairIndex];
             }
@@ -77,6 +77,10 @@ namespace com.dug.UI.view
 
         public void OnUpateUI(GamePlayerModel model)
         {
+            if(model.chairIndex == 0)
+            {
+                Debug.Log(model);
+            }
             UIGamePlayer component = GetGamePlayersByChairIndex(model.chairIndex);
 
             if(component != null)

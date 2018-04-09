@@ -22,10 +22,11 @@ namespace com.dug.UI.presenter
             this.manager = GameManager.Instance;
 
             this.view.CreateSitButtons();
-            GameEvent.Instance.AddGamePlayerEvent(OnUpdateGamePlayer);
+
+            GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
         }
 
-        private void OnUpdateGamePlayer(GamePlayerModel model)
+        private void OnRoomUpdate(RoomModel model)
         {
             List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
 
@@ -35,7 +36,7 @@ namespace com.dug.UI.presenter
             {
                 for (int i = 0; i < gamePlayers.Count; i++)
                 {
-                    if(gamePlayers[i].chairIndex != -1)
+                    if (gamePlayers[i].chairIndex != -1)
                     {
                         chairIndice.Add(gamePlayers[i].chairIndex);
                     }

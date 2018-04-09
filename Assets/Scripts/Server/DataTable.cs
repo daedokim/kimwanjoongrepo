@@ -48,47 +48,6 @@ namespace com.dug.Server
             PlayerTable.Add(user.useridx, user);
         }
 
-        private void InitGamePlayerList(int roomIndex)
-        {
-            List<GamePlayer> gamePlayers = new List<GamePlayer>();
-            GamePlayer info = new GamePlayer();
-            info.state = GamePlayerState.Stand;
-            info.roomIndex = roomIndex;
-            info.chairIndex = -1;
-            info.useridx = 1000;
-            info.coin = 100000;
-            info.nickName = "James.P";
-            gamePlayers.Add(info);
-
-            info = new GamePlayer();
-            info.state = GamePlayerState.Stand;
-            info.roomIndex = roomIndex;
-            info.chairIndex = -1;
-            info.useridx = 1001;
-            info.coin = 100000;
-            info.nickName = "James.P1";
-            gamePlayers.Add(info);
-
-            info = new GamePlayer();
-            info.state = GamePlayerState.Stand;
-            info.roomIndex = roomIndex;
-            info.chairIndex = -1;
-            info.useridx = 1002;
-            info.coin = 100000;
-            info.nickName = "James.P2";
-            gamePlayers.Add(info);
-
-            info = new GamePlayer();
-            info.state = GamePlayerState.Stand;
-            info.roomIndex = roomIndex;
-            info.chairIndex = -1;
-            info.useridx  = 1003;
-            info.coin = 500000;
-            info.nickName = "Player";
-            gamePlayers.Add(info);
-
-            GamePlayertable.Add(roomIndex, gamePlayers);
-        }
 
         public Room SelectRoom(int roomIndex)
         {
@@ -222,22 +181,41 @@ namespace com.dug.Server
             return gamePlayer;
         }
 
+        public GamePlayer SelectGamePlayerByChairIndex(int roomIndex, int chairIndex)
+        {
+            List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
+            GamePlayer gamePlayer = null;
+
+            for (int i = 0; i < gamePlayers.Count; i++)
+            {
+                if (gamePlayers[i] != null && gamePlayers[i].chairIndex == chairIndex)
+                {
+                    gamePlayer = gamePlayers[i];
+                }
+            }
+
+            return gamePlayer;
+        }
+
         public void InsertGamePlayer(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
             Player player = SelectPlayer(userIndex);
 
-            GamePlayer gamePlayer = new GamePlayer();
-            gamePlayer.roomIndex = roomIndex;
-            gamePlayer.useridx = userIndex;
-            gamePlayer.nickName = player.nickName;
-            gamePlayer.chairIndex = chairIndex;
-            gamePlayer.buyInLeft = buyInLeft;
-            gamePlayer.state = GamePlayerState.SitWait;
+            if(SelectGamePlayerByUserIdx(roomIndex, userIndex) == null && SelectGamePlayerByChairIndex(roomIndex, chairIndex) == null)
+            {
+                GamePlayer gamePlayer = new GamePlayer();
+                gamePlayer.roomIndex = roomIndex;
+                gamePlayer.useridx = userIndex;
+                gamePlayer.nickName = player.nickName;
+                gamePlayer.chairIndex = chairIndex;
+                gamePlayer.buyInLeft = buyInLeft;
+                gamePlayer.state = GamePlayerState.SitWait;
 
-            List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
-            gamePlayers.Add(gamePlayer);
+                List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
+                gamePlayers.Add(gamePlayer);
 
-            GamePlayertable[roomIndex] = gamePlayers;
+                GamePlayertable[roomIndex] = gamePlayers;
+            }
         }
 
         public Player SelectPlayer(long userIndex)

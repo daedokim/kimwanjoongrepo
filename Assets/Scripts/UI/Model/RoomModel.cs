@@ -25,7 +25,6 @@ namespace com.dug.UI.model
         public int card5 = 0;
         public RoomState state;
 
-
         public void SetRoomData(Room room)
         {
             roomIndex = room.index;

@@ -14,7 +14,7 @@ namespace com.dug.UI.component
     public class UISitButton : MonoBehaviour
     {
         public int chairIndex = -1;
-        private bool enable;
+        private bool enable = false;
 
         public bool Enable { set { this.enable = value; }}
 
@@ -28,14 +28,10 @@ namespace com.dug.UI.component
 
         private void Start()
         {
-            this.ObserveEveryValueChanged(x => x.enable).Where(x=>x).Subscribe(x => {
+            this.ObserveEveryValueChanged(x => x.enable).Subscribe(x => {
+                
                 this.gameObject.SetActive(enable);
             });
-        }
-
-
-        public void ResetButton()
-        {
         }
     }
 

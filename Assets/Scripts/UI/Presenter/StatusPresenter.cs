@@ -15,7 +15,7 @@ namespace com.dug.UI.presenter
     {
         private StatusView view;
         private GameManager manager;
-        public StatusModel model = new StatusModel();
+        private RoomModel model = new RoomModel();
         IDisposable waitTimeoutDispose = null;
 
         public StatusPresenter(StatusView view)
@@ -23,7 +23,7 @@ namespace com.dug.UI.presenter
             this.view = view;
             this.manager = GameManager.Instance;
 
-            GameEvent.Instance.AddStatusEvent(new UnityAction<StatusModel>(OnStatusUpdate));
+            GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
             GameEvent.Instance.AddPlayerTurnEvent(new UnityAction<GamePlayerModel>(OnPlayerTurnUpdate));
             model.ObserveEveryValueChanged(x => x.state).Subscribe(_ => {
                 SetStateHandler();
@@ -45,15 +45,15 @@ namespace com.dug.UI.presenter
 
         private void SetStateHandler()
         {
-            StatusModel.RoomState state = model.state;
-            if (state == StatusModel.RoomState.Wait)
+            RoomModel.RoomState state = model.state;
+            if (state == RoomModel.RoomState.Wait)
             {
-                view.SetStatusText("게임 준비" + state);
+                view.SetStatusText("WAIT GAME");
             }
-            else if (state == StatusModel.RoomState.Ready)
+            else if (state == RoomModel.RoomState.Ready)
             {
-                view.SetStatusText("딜러가 카드를 나눠줌 게임 시작 남은 시간 : " + model.waitTimeout / 1000);
-                SetWaitTimeout(model.waitTimeout);
+                view.SetStatusText("READY");
+                SetWaitTimeout(5);
             }
         }
 
@@ -72,10 +72,11 @@ namespace com.dug.UI.presenter
 
                 if (waitTimeout >= 0)
                 {
-                    view.SetStatusText("남은 시간 : " + waitTimeout / 1000);
+                    view.SetStatusText("" + waitTimeout / 1000);
                 }
                 else
                 {
+                    
                     DisposeWaitTimeout();
                 }
             }).AddTo(this.view);
@@ -93,7 +94,7 @@ namespace com.dug.UI.presenter
         }
 
 
-        public void OnStatusUpdate(StatusModel model)
+        public void OnRoomUpdate(RoomModel model)
         {
             this.model.Update(model);
         }
