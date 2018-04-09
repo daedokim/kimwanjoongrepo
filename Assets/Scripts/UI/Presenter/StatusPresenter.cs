@@ -29,7 +29,7 @@ namespace com.dug.UI.presenter
                 SetStateHandler();
             });
 
-            GameEvent.Instance.AddPlayerTurnEndEvent(new UnityAction(OnPlayerTurnEnd));
+            GameEvent.Instance.AddPlayerTurnEndEvent(OnPlayerTurnEnd);
         }
 
         private void OnPlayerTurnEnd()
@@ -48,11 +48,11 @@ namespace com.dug.UI.presenter
             RoomModel.RoomState state = model.state;
             if (state == RoomModel.RoomState.Wait)
             {
-                view.SetStatusText("WAIT GAME");
+                view.SetStatusText("Ready");
             }
             else if (state == RoomModel.RoomState.Ready)
             {
-                view.SetStatusText("READY");
+                view.SetStatusText("Start");
                 SetWaitTimeout(5);
             }
         }
