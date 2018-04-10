@@ -19,7 +19,6 @@ namespace com.dug.UI.manager
         private long minbetAmount = 1000;
 
         private RoomModel roomModel = new RoomModel();
-        private StatusModel statusModel = new StatusModel();
         private GamePlayerModel gamePlayerModel = new GamePlayerModel();
         private GamePlayerModel gamePlayerUpdateModel = new GamePlayerModel();
 
@@ -37,7 +36,17 @@ namespace com.dug.UI.manager
 
         private void Start()
         {
-            statusModel.ObserveEveryValueChanged(x => x.currentUserIndex).Subscribe(x =>
+            roomModel.ObserveEveryValueChanged(x => x.state).Subscribe(_ => {
+
+                
+                if(roomModel.state == RoomModel.RoomState.Ready)
+                {
+
+                }
+
+            });
+
+            roomModel.ObserveEveryValueChanged(x => x.currentUserIndex).Subscribe(x =>
             {
                 if (x == 0 || currentGamePlayer == null)
                     return;
@@ -72,9 +81,8 @@ namespace com.dug.UI.manager
             }
 
             roomModel.SetRoomData(room);
-            statusModel.SetRoomData(room);
+            
             gameEvent.InvokeRoomEvent(roomModel); 
-            gameEvent.InvokeStatusEvent(statusModel);
         }
 
         private bool CheckPreFlopBlind(GamePlayer gamePlayer)

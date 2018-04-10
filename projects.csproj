@@ -306,8 +306,10 @@
     <Compile Include="Assets\Scripts\Server\vo\Room.cs" />
     <Compile Include="Assets\Scripts\Test\SingletonTest.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayer.cs" />
+    <Compile Include="Assets\Scripts\UI\Component\UIGamePlayerTableCard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UISitButton.cs" />
     <Compile Include="Assets\Scripts\UI\Event\GameEvent.cs" />
+    <Compile Include="Assets\Scripts\UI\Event\GamePlayerActionEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Model\ButtonModel.cs" />
     <Compile Include="Assets\Scripts\UI\Model\GamePlayerModel.cs" />
     <Compile Include="Assets\Scripts\UI\Model\IModel.cs" />
@@ -316,12 +318,14 @@
     <Compile Include="Assets\Scripts\UI\Network\UserData.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ChipsPresenter.cs" />
+    <Compile Include="Assets\Scripts\UI\Presenter\GamePlayerCardPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\GamePlayersPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\IPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\SitButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\StatusPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\View\ButtonView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ChipsView.cs" />
+    <Compile Include="Assets\Scripts\UI\View\GamePlayerCardView.cs" />
     <Compile Include="Assets\Scripts\UI\View\GamePlayersView.cs" />
     <Compile Include="Assets\Scripts\UI\View\IView.cs" />
     <Compile Include="Assets\Scripts\UI\View\SitButtonView.cs" />

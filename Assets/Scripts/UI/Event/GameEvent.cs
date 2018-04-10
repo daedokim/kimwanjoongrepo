@@ -5,8 +5,6 @@ using UnityEngine.Events;
 namespace com.dug.UI.events
 {
     [System.Serializable]
-    public class StatusEvent : UnityEvent<StatusModel>{}
-    [System.Serializable]
     public class GamePlayerEvent : UnityEvent<GamePlayerModel> {}
     [System.Serializable]
     public class RoomEvent : UnityEvent<RoomModel> { }
@@ -20,32 +18,12 @@ namespace com.dug.UI.events
 
     public class GameEvent : Singleton<GameEvent>
     {
-        private StatusEvent statusEvent = new StatusEvent();
         private GamePlayerEvent gamePlayerEvent = new GamePlayerEvent();
         private PlayerTurnEvent playerTurnEvent = new PlayerTurnEvent();
         private PlayerTurnEndEvent playerTurnEndEvent = new PlayerTurnEndEvent();
         private GamePlayerAcionEvent gamePlayerActionEvent = new GamePlayerAcionEvent();
         private RoomEvent roomEvent = new RoomEvent();
 
-        public void AddStatusEvent(UnityAction<StatusModel> call)
-        {
-            statusEvent.AddListener(call);
-        }
-
-        public void RemoveStatusEvent(UnityAction<StatusModel> call)
-        {
-            statusEvent.RemoveListener(call);
-        }
-
-        public void RemoveAllStatusEvent()
-        {
-            statusEvent.RemoveAllListeners();
-        }
-
-        public void InvokeStatusEvent(StatusModel model)
-        {
-            statusEvent.Invoke(model);
-        }
 
         public void AddGamePlayerEvent(UnityAction<GamePlayerModel> call)
         {

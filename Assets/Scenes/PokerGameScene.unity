@@ -309,7 +309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: READY
+  m_Text: 
 --- !u!222 &279386003
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1420,6 +1420,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1503080454}
+--- !u!1 &1578192123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1578192124}
+  m_Layer: 0
+  m_Name: GamePlayerTableCards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1578192124
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1578192123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1967008571}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1610468388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,6 +1672,7 @@ GameObject:
   - component: {fileID: 1688981462}
   - component: {fileID: 1688981463}
   - component: {fileID: 1688981464}
+  - component: {fileID: 1688981465}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -1736,7 +1770,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sitButtonPrefab: {fileID: 1790759559859392, guid: fe460266ef04fee4e99589e66cb84b0a,
     type: 2}
-  sitButtons:
+--- !u!114 &1688981465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1688981458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554b042994682c041afeddb3b7e27dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 1195447021356574, guid: 83829b2f4c322664bbc9a15cded3e16a, type: 2}
+  cardResources:
+  - {fileID: 21300000, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300002, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300004, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300006, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300008, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300010, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300012, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300014, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  - {fileID: 21300016, guid: 04957786756162249b7beb6d3bc477b3, type: 3}
+  tableCards:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -2109,6 +2165,7 @@ RectTransform:
   m_Children:
   - {fileID: 494556173}
   - {fileID: 1621785205}
+  - {fileID: 1578192124}
   m_Father: {fileID: 967498839}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -40,7 +40,7 @@ namespace com.dug.UI.presenter
         private void OnPlayerTurnUpdate(GamePlayerModel model)
         {
             view.SetStatusText(manager.Room.stage + "에서 "  + model.nickName + "의 턴");
-            SetWaitTimeout(RoomModel.WAITTIMEOUT_BY_GAME_PLAYER);
+           // SetWaitTimeout(RoomModel.WAITTIMEOUT_BY_GAME_PLAYER);
         }
 
         private void SetStateHandler()
@@ -48,16 +48,15 @@ namespace com.dug.UI.presenter
             RoomModel.RoomState state = model.state;
             if (state == RoomModel.RoomState.Wait)
             {
-                view.SetStatusText("Ready");
+                view.SetStatusText("Wait GamePlayer");
             }
             else if (state == RoomModel.RoomState.Ready)
             {
-                view.SetStatusText("Start");
-                SetWaitTimeout(5);
+                SetGameStartWaitTime(model.waitTimeout);
             }
         }
 
-        private void SetWaitTimeout(int time)
+        private void SetGameStartWaitTime(int time)
         {
             if(waitTimeoutDispose != null)
             {

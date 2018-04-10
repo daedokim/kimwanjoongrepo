@@ -16,7 +16,7 @@ namespace com.dug.UI.view
         private Transform gamePlayersParent = null;
         private static Vector2[] positions;
 
-        public UIGamePlayer[] gamePlayerList = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
+        public UIGamePlayer[] gamePlayers = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
 
         private GamePlayersPresenter presenter = null;
         
@@ -60,7 +60,7 @@ namespace com.dug.UI.view
                 script.ChairIndex = i;
 
                 gamePlayer.SetActive(false);
-                this.gamePlayerList[i] = script;
+                this.gamePlayers[i] = script;
             }
         }
 
@@ -68,19 +68,15 @@ namespace com.dug.UI.view
         {
             UIGamePlayer gamePlayer = null;
 
-            if(chairIndex >= 0 && chairIndex <= this.gamePlayerList.Length - 1)
+            if(chairIndex >= 0 && chairIndex <= this.gamePlayers.Length - 1)
             {
-                gamePlayer = this.gamePlayerList[chairIndex];
+                gamePlayer = this.gamePlayers[chairIndex];
             }
             return gamePlayer;
         }
 
         public void OnUpateUI(GamePlayerModel model)
         {
-            if(model.chairIndex == 0)
-            {
-                Debug.Log(model);
-            }
             UIGamePlayer component = GetGamePlayersByChairIndex(model.chairIndex);
 
             if(component != null)
