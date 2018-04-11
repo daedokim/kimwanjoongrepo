@@ -13,14 +13,6 @@ namespace com.dug.UI.component
         [SerializeField]
         public Image image;
 
-
-        public int ChairIndex
-        {
-            set
-            {
-                this.chairIndex = value;
-            }
-        }
         
         public Sprite ImageSource
         {
@@ -35,6 +27,11 @@ namespace com.dug.UI.component
         private void Render()
         {
             image.sprite = imageSource;
+        }
+
+        public void Handout()
+        {
+            this.gameObject.SetActive(true);
         }
     }
 

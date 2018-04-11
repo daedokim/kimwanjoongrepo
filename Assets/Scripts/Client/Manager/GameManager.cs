@@ -36,16 +36,6 @@ namespace com.dug.UI.manager
 
         private void Start()
         {
-            roomModel.ObserveEveryValueChanged(x => x.state).Subscribe(_ => {
-
-                
-                if(roomModel.state == RoomModel.RoomState.Ready)
-                {
-
-                }
-
-            });
-
             roomModel.ObserveEveryValueChanged(x => x.currentUserIndex).Subscribe(x =>
             {
                 if (x == 0 || currentGamePlayer == null)
@@ -59,7 +49,7 @@ namespace com.dug.UI.manager
             }).AddTo(this);
             InvokeRepeating("Thread", 0.10f, 0.10f);
         }
-
+    
         private void Thread()
         {
             room = dao.GetRoom(roomIndex);
@@ -147,6 +137,8 @@ namespace com.dug.UI.manager
         {
             dao.DoSit(roomIndex, network.UserData.Instance.userIndex, chairIndex, network.UserData.Instance.buyInLeft);
         }
+
+
 
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {

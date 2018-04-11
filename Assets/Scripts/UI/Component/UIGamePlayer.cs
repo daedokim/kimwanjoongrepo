@@ -22,10 +22,6 @@ namespace com.dug.UI.component
          
         public void UpdateGamePlayer(GamePlayerModel model)
         {
-            if(model.chairIndex == 0)
-            {
-                Debug.Log(model);
-            }
             this.model.Update(model);
         }
 

@@ -10,6 +10,7 @@ namespace com.dug.UI.model
     {
         public static int MAX_GAME_PLAYER_COUNT = 9;
         public static int WAITTIMEOUT_BY_GAME_PLAYER = 10000;
+        public static int WAITTIMEOUT_BY_GAME_START= 10000;
 
         public int roomIndex = 0;
         public int stage = 0;
@@ -44,7 +45,7 @@ namespace com.dug.UI.model
         }
 
 
-        internal void Update(RoomModel model)
+        public void Update(RoomModel model)
         {
             roomIndex = model.roomIndex;
             stage = model.stage;
@@ -61,8 +62,6 @@ namespace com.dug.UI.model
             card4 = model.card4;
             card5 = model.card5;
         }
-
-
 
         public enum GamePlayerState
         {

@@ -82,6 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ea87f0409c317498b73b34eaf60342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chairIndex: -1
+  image: {fileID: 114560971192851820}
 --- !u!222 &222759284538371908
 CanvasRenderer:
   m_ObjectHideFlags: 1

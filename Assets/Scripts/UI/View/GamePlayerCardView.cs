@@ -60,11 +60,22 @@ namespace com.dug.UI.view
                 tf.localScale = new Vector2(1, 1);
 
                 script = tableCard.GetComponent<UIGamePlayerTableCard>();
-                script.ChairIndex = i;
+                script.chairIndex = i;
                 script.ImageSource = cardResources[i];
 
                 tableCard.SetActive(false);
                 this.tableCards[i] = script;
+            }
+        }
+
+        public void GetTableCard(int chairIndex)
+        {
+            for (int i = 0; i < tableCards.Length; i++)
+            {
+                if(chairIndex == tableCards[i].chairIndex)
+                {
+                    tableCards[i].Handout();
+                }
             }
         }
     }
