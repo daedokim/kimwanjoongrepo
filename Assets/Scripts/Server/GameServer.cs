@@ -16,7 +16,6 @@ namespace com.dug.Server
         private DataTable table;
         private PokerController controller;
         private PokerScheduleController scheduler;
-      
 
         private void Awake()
         {

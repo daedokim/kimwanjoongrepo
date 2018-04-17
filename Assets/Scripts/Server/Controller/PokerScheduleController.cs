@@ -33,23 +33,15 @@
                         GotoReady(room);
                         break;
                     case RoomState.Ready:
+                        GotoSetting(room);
+                        break;
+                    case RoomState.Setting:
                         GotoPlay(room);
                         break;
                     case RoomState.Playing:
                         SetPlaying(room);
                         break;
                 }
-            }
-        }
-
-        private void GotoPlay(Room room)
-        {
-            if (room.waitTimeout <= 0)
-            {
-                room.state = RoomState.Playing;
-                room.stage = 3;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
-                table.UpdateRoom(room);
             }
         }
 
@@ -64,12 +56,12 @@
             if (playerList != null && playerList.Count >= 2)
             {
                 room.state = RoomState.Ready;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_DEALER;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
                 room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
                 room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
                 room.lastbet = 0;
                 room.stageBet = 0;
-                room.stage = 2;
+                room.stage = 1;
                 room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
                 room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
 
@@ -96,6 +88,28 @@
             }
         }
 
+        private void GotoSetting(Room room)
+        {
+            if (room.waitTimeout <= 0)
+            {
+                room.state = RoomState.Setting;
+                room.stage = 2;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
+                table.UpdateRoom(room);
+            }
+        }
+
+        private void GotoPlay(Room room)
+        {
+            if (room.waitTimeout <= 0)
+            {
+                room.state = RoomState.Playing;
+                room.stage = 3;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
+                table.UpdateRoom(room);
+            }
+        }
+
         private void CheckWaitTime(Room room, int diffTime)
         {
             if (room.waitTimeout > 0)
@@ -118,13 +132,13 @@
                 switch (stageSet)
                 {
                     case 0:
-                        CheckNextGamePlayer(room);
+                        CheckBetStatus(room);
                         break;
                     case 1:
                         CheckWinner(room);
                         break;
                     case 2:
-                        CheckDealer(room);
+                        CheckSetting(room);
                         break;
                 }
 
@@ -138,15 +152,15 @@
         }
 
         /**
-         * 딜러가 카드를 오픈하는 타이밍
+         * 시스템이 세팅하는 스테이지
          */
-        private void CheckDealer(Room room)
+        private void CheckSetting(Room room)
         {
             if (room.waitTimeout <= 0)
             {
                 room.stage += 1;
                 room.currentOrderNo = 0;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
 
                 table.UpdateRoom(room);
@@ -203,7 +217,7 @@
             {
                 ClearGamePlayerByStage(room.index, room.stage);
                 room.stage += 1;
-                room.waitTimeout = 5000;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.stageBet = 0;
 
                 table.UpdateRoom(room);
@@ -211,9 +225,9 @@
         }
 
         /**
-        * 아무 액션이 없는 사용자 처리
+        *  게임플레이어 베팅 상태 체크 
         */
-        private void CheckNextGamePlayer(Room room)
+        private void CheckBetStatus(Room room)
         {
             GamePlayer gamePlayer = table.SelectGamePlayerByUserIdx(room.index, room.currentUserIndex);
             long currentUserIndex = 0;
@@ -249,10 +263,9 @@
                     {
                         room.stage += 1;
                         room.betCount = 0;
-                        room.waitTimeout = 5000;
+                        room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                         currentOrderNo = 0;
                         table.UpdateRoom(room);
-
                     }
                     else
                     {
@@ -335,7 +348,7 @@
             {
                 chairIndex = playerList[i].chairIndex;
 
-                // 딜러 체어 인덱스에 가장 가까운 체어 인덱스를 찾는다.
+                // 이전 딜러 체어 인덱스에 가장 가까운 체어 인덱스를 찾는다.
                 if (chairIndex < dealerChiarIdx) tempChairIndex = chairIndex + Room.MAX_GAME_PLAYER_COUNT;
                 else tempChairIndex = chairIndex;
 

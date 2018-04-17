@@ -292,6 +292,7 @@
     <Compile Include="Assets\Scripts\Client\DTO\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Player.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Room.cs" />
+    <Compile Include="Assets\Scripts\Client\Manager\CardManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
@@ -305,6 +306,8 @@
     <Compile Include="Assets\Scripts\Server\vo\Player.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Room.cs" />
     <Compile Include="Assets\Scripts\Test\SingletonTest.cs" />
+    <Compile Include="Assets\Scripts\UI\Component\FlipCard.cs" />
+    <Compile Include="Assets\Scripts\UI\Component\UICard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayer.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayerTableCard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UISitButton.cs" />
@@ -323,6 +326,7 @@
     <Compile Include="Assets\Scripts\UI\Presenter\IPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\SitButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\StatusPresenter.cs" />
+    <Compile Include="Assets\Scripts\UI\Util\GameObjectPool.cs" />
     <Compile Include="Assets\Scripts\UI\View\ButtonView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ChipsView.cs" />
     <Compile Include="Assets\Scripts\UI\View\GamePlayerCardView.cs" />

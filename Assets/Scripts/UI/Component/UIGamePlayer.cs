@@ -14,6 +14,9 @@ namespace com.dug.UI.component
         public Text betTypeText = null;
         public Image picture = null;
 
+        public UICard firstCard = null;
+        public UICard secondCard = null;
+
         public int chairIndex = -1;
 
         GamePlayerModel model = new GamePlayerModel();
@@ -51,7 +54,7 @@ namespace com.dug.UI.component
             model.ObserveEveryValueChanged(x => x.lastBetType).Subscribe(_ =>
                 {
                     betTypeText.text = GetBetTypeName(model.lastBetType);
-                });
+                }); 
 
             model.ObserveEveryValueChanged(x => x.isMyTurn).Subscribe(x =>
               {
@@ -75,6 +78,21 @@ namespace com.dug.UI.component
             {
                 GameManager.Instance.GameEvent.InvokeGamePlayerActionEvent(model);   
             });
+        }
+
+        private void CreatePlayerCard()
+        {
+            firstCard = CardManager.Instance.GetCards(model.card1);
+            firstCard.transform.SetParent(transform);
+            firstCard.transform.localPosition = new Vector2(94, 0);
+            firstCard.transform.localScale = new Vector3(1, 1, 1);
+            firstCard.gameObject.SetActive(true);
+
+            secondCard = CardManager.Instance.GetCards(model.card2);
+            secondCard.transform.SetParent(transform);
+            secondCard.transform.localPosition = new Vector2(94, 0);
+            secondCard.transform.localScale = new Vector3(1, 1, 1);
+            secondCard.gameObject.SetActive(true);
         }
 
         private string GetBetTypeName(GamePlayerModel.BetType lastBetType)

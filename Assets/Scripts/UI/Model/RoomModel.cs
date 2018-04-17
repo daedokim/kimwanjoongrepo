@@ -81,7 +81,7 @@ namespace com.dug.UI.model
 
         public enum RoomState
         {
-            Wait = 0, Ready = 1, Playing = 2
+            Wait = -1, Ready = 0, Setting = 1, Playing = 2
         }
 
     }

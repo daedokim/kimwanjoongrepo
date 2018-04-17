@@ -137,9 +137,6 @@ namespace com.dug.UI.manager
         {
             dao.DoSit(roomIndex, network.UserData.Instance.userIndex, chairIndex, network.UserData.Instance.buyInLeft);
         }
-
-
-
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {
             GamePlayerModel gamePlayer = null;
