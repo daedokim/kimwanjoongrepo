@@ -26,23 +26,12 @@ namespace com.dug.UI.presenter
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
 
             roomModel.ObserveEveryValueChanged(x => x.state).Subscribe(x => {
-                if(x == RoomModel.RoomState.Ready)
+                if(x == RoomModel.RoomState.Setting)
                 {
-                    int waitTime = RoomModel.WAITTIMEOUT_BY_GAME_START/1000;
-
-                    Observable.FromCoroutine<int>(observer => HandoutCardsCoroutine(observer, waitTime)).Subscribe(_ => { });
+                    HandoutCards();
                 }
             });
 
-        }
-
-        public IEnumerator HandoutCardsCoroutine(IObserver<int> observer, int waitTime)
-        {
-            yield return new WaitForSeconds(waitTime);
-            observer.OnCompleted();
-
-
-            HandoutCards();
         }
 
         private void HandoutCards()
@@ -55,7 +44,7 @@ namespace com.dug.UI.presenter
                 {
                     if(gamePlayers[i].state != dto.GamePlayerState.Stand)
                     {
-                        this.view.GetTableCard(gamePlayers[i].chairIndex);
+                        this.view.HandAllOut(gamePlayers[i].chairIndex);
                     }
                 }
             }

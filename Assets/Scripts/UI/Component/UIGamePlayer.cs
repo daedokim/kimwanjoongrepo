@@ -90,7 +90,7 @@ namespace com.dug.UI.component
 
             secondCard = CardManager.Instance.GetCards(model.card2);
             secondCard.transform.SetParent(transform);
-            secondCard.transform.localPosition = new Vector2(94, 0);
+            secondCard.transform.localPosition = new Vector2(170, 0);
             secondCard.transform.localScale = new Vector3(1, 1, 1);
             secondCard.gameObject.SetActive(true);
         }
@@ -121,6 +121,7 @@ namespace com.dug.UI.component
             return betName;
         }
 
+
         public void ResetGamePlayer()
         {
             this.gameObject.SetActive(false);
@@ -146,6 +147,15 @@ namespace com.dug.UI.component
 
             picture.color = Color.white;
         }
+
+        public void ShowOwnCard()
+        {
+            CreatePlayerCard();
+
+            firstCard.SetFace(true);
+            secondCard.SetFace(true);
+        }
+
     }
 }
 

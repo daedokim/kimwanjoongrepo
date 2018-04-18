@@ -42,6 +42,9 @@
                         SetPlaying(room);
                         break;
                 }
+                GameUtil.DebugLog("스테이지 :" + room.stage, ", 현재 벳 사용자 인덱스 :" + room.currentUserIndex, ", 현재 정렬 : " + room.currentOrderNo
+              , ", 스테이지 벳금액 : " + room.stageBet, ", 마지막 벳 금액 :" + room.lastbet, ", 마지막 벳 타입 : " + room.lastBetType
+              );
             }
         }
 
@@ -57,13 +60,6 @@
             {
                 room.state = RoomState.Ready;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
-                room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
-                room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
-                room.lastbet = 0;
-                room.stageBet = 0;
-                room.stage = 1;
-                room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
-                room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
 
                 helper = new CardSortingHelper();
                 room.card1 = helper.Pop();
@@ -71,6 +67,29 @@
                 room.card3 = helper.Pop();
                 room.card4 = helper.Pop();
                 room.card5 = helper.Pop();
+
+
+                table.UpdateRoom(room);
+            }
+        }
+
+        private void GotoSetting(Room room)
+        {
+            List<GamePlayer> playerList = table.SelectSitGamePlayer(room.index);
+
+            if (room.waitTimeout <= 0)
+            {
+                room.state = RoomState.Setting;
+                room.stage = 2;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
+
+                room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
+                room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
+                room.lastbet = 0;
+                room.stageBet = 0;
+                room.stage = 1;
+                room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
+                room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
 
                 playerList = SetCards(helper, playerList);
                 playerList = SetOrderNo(room.ownerIndex, playerList);
@@ -84,17 +103,6 @@
 
                 InitGamePlayerMember(room.index);
 
-                table.UpdateRoom(room);
-            }
-        }
-
-        private void GotoSetting(Room room)
-        {
-            if (room.waitTimeout <= 0)
-            {
-                room.state = RoomState.Setting;
-                room.stage = 2;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 table.UpdateRoom(room);
             }
         }
@@ -144,11 +152,6 @@
 
                 CheckGameStatus(room);
             }
-
-            GameUtil.DebugLog("스테이지 :" + room.stage, ", 현재 벳 사용자 인덱스 :" + room.currentUserIndex, ", 현재 정렬 : " + room.currentOrderNo
-                , ", 스테이지 벳금액 : " + room.stageBet, ", 마지막 벳 금액 :" + room.lastbet, ", 마지막 벳 타입 : " + room.lastBetType 
-                );
-
         }
 
         /**
@@ -238,7 +241,6 @@
                 bool isCompleteBetUser = false;
 
                 if ((gamePlayer.betStatus == BetStatus.BlindBetComplete || gamePlayer.betStatus == BetStatus.BetComplete)
-                    //&& gamePlayer.lastBetType != BetType.Fold && gamePlayer.lastBetType != BetType.Allin 
                     && (gamePlayer.state == GamePlayerState.Play || gamePlayer.state == GamePlayerState.StandWait)
                    )
                 {
@@ -256,7 +258,6 @@
                         gamePlayer.stage = room.stage;
                         table.UpdateGamePlayer(room.index, gamePlayer);
                     }
-
 
                     // 대기하고있는 사용자가 하나도 없다면 다음 스테이지로 이동 한다.
                     if (table.SelectReadyCount(room.index) == 0)

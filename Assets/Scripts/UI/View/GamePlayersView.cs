@@ -16,6 +16,7 @@ namespace com.dug.UI.view
         private Transform gamePlayersParent = null;
         private static Vector2[] positions;
 
+        [HideInInspector]
         public UIGamePlayer[] gamePlayers = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
 
         private GamePlayersPresenter presenter = null;
@@ -41,6 +42,7 @@ namespace com.dug.UI.view
             positions[8] = new Vector2(-401, 567);
         }
 
+        
 
         public void CreateGamePlayers()
         {
@@ -85,6 +87,15 @@ namespace com.dug.UI.view
             }
         }
 
+        public void ShowOwnCards(int chairIndex)
+        {
+            UIGamePlayer component = GetGamePlayersByChairIndex(chairIndex);
+
+            if(component != null)
+            {
+                component.ShowOwnCard();
+            }
+        }
 
     }
 }

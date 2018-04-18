@@ -15,6 +15,7 @@ namespace com.dug.UI.presenter
         private ButtonView view;
         private GameManager manager;
         private GamePlayerModel currentGamePlayer;
+        private bool isClickable = false;
 
 
         public ButtonPresenter(ButtonView view)
@@ -22,40 +23,37 @@ namespace com.dug.UI.presenter
             this.view = view;
             this.manager = GameManager.Instance;
 
-            if(view != null)
+            this.view.OnCallButtonClicked.Where(_=> isClickable).Subscribe(x =>
             {
-                this.view.OnCallButtonClicked.Subscribe(_ =>
-                {
-                    view.EnableAllButtons(false);
-                    manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
-                });
+                manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
+                isClickable = false;
+            });
 
-                this.view.OnRaiseButtonClicked.Subscribe(_ =>
-                {
-                    view.EnableAllButtons(false);
-                    manager.OnRaise(currentGamePlayer.userIndex, currentGamePlayer.stageBet, 1000);
-                }); 
+            this.view.OnRaiseButtonClicked.Where(_ => isClickable).Subscribe(_ =>
+            {
+                manager.OnRaise(currentGamePlayer.userIndex, currentGamePlayer.stageBet, 1000);
+                isClickable = false;
+            }); 
 
-                this.view.OnCheckButtonClicked.Subscribe(_ =>
-                {
-                    view.EnableAllButtons(false);
-                    manager.OnCheck(currentGamePlayer.userIndex);
-                });
+            this.view.OnCheckButtonClicked.Where(_ => isClickable).Subscribe(_ =>
+            {
+                manager.OnCheck(currentGamePlayer.userIndex);
+                isClickable = false;
+            });
 
-                this.view.OnFoldButtonClicked.Subscribe(_ =>
-                {
-                    view.EnableAllButtons(false);
-                    manager.OnFold(currentGamePlayer.userIndex);
-                });
+            this.view.OnFoldButtonClicked.Where(_ => isClickable).Subscribe(_ =>
+            {
+                manager.OnFold(currentGamePlayer.userIndex);
+                isClickable = false;
+            });
 
-                this.view.OnAllinButtonClicked.Subscribe(_ =>
-                {
-                    view.EnableAllButtons(false);
-                    manager.OnAllIn(currentGamePlayer.userIndex, currentGamePlayer.stageBet, currentGamePlayer.buyInLeft);
-                });
+            this.view.OnAllinButtonClicked.Where(_ => isClickable).Subscribe(_ =>
+            {
+                manager.OnAllIn(currentGamePlayer.userIndex, currentGamePlayer.stageBet, currentGamePlayer.buyInLeft);
+                isClickable = false;
+            });
 
-                GameEvent.Instance.AddPlayerTurnEvent(OnPlayerTurnEvent);
-;            }
+            GameEvent.Instance.AddPlayerTurnEvent(OnPlayerTurnEvent);
         }
 
         private void OnPlayerTurnEvent(GamePlayerModel model)
@@ -65,11 +63,10 @@ namespace com.dug.UI.presenter
             if (isBlind == false && model.lastBetType != GamePlayerModel.BetType.Allin && model.lastBetType != GamePlayerModel.BetType.Fold)
             {
                 view.EnableAllButtons(true);
-
-                if(model.betCount > 0)
-                {
-                    view.EnableCheckButton(false);
-                }
+                
+                view.EnableCheckButton(model.betCount == 0);
+                
+                isClickable = true;
             }
             else
             {

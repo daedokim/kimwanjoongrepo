@@ -9,8 +9,9 @@ namespace com.dug.UI.model
     public class RoomModel : IModel
     {
         public static int MAX_GAME_PLAYER_COUNT = 9;
-        public static int WAITTIMEOUT_BY_GAME_PLAYER = 10000;
-        public static int WAITTIMEOUT_BY_GAME_START= 10000;
+        public static int WAITTIMEOUT_BY_SETTING = 5000;
+        public static int WAITTIMEOUT_BY_GAME_PLAYER = 15000;
+        public static int WAITTIMEOUT_BY_READY = 10000;
 
         public int roomIndex = 0;
         public int stage = 0;
@@ -24,7 +25,7 @@ namespace com.dug.UI.model
         public int card3 = 0;
         public int card4 = 0;
         public int card5 = 0;
-        public RoomState state;
+        public RoomState state = RoomState.Wait;
 
         public void SetRoomData(Room room)
         {

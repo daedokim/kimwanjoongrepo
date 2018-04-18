@@ -28,7 +28,7 @@ namespace com.dug.Server
 
         private void Start()
         {
-            InvokeRepeating("Thread", 1.0f, 2.0f);
+            InvokeRepeating("Thread", 1.0f, 0.5f);
         }      
         
         /**

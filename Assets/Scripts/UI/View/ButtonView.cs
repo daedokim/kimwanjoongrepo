@@ -50,13 +50,50 @@ namespace com.dug.UI.view
 
         public void EnableAllButtons(bool enable)
         {
-            raiseButton.enabled = checkButton.enabled = callButton.enabled = foldButton.enabled = allinButton.enabled = enable;
+            raiseButton.interactable = checkButton.interactable = callButton.interactable = foldButton.interactable = allinButton.interactable = enable;
         }
 
         public void EnableCheckButton(bool enable)
         {
-            checkButton.enabled = enable;
+            if(checkButton != null)
+            {
+                checkButton.interactable = enable;
+            }
         }
+
+        public void EnableCallButton(bool enable)
+        {
+            if (callButton != null)
+            {
+                callButton.interactable = enable;
+            }
+        }
+
+        public void EnableRaiseButton(bool enable)
+        {
+            if (raiseButton != null)
+            {
+                raiseButton.interactable = enable;
+            }
+        }
+
+        public void EnableFoldButton(bool enable)
+        {
+            if (foldButton != null)
+            {
+                foldButton.interactable = enable;
+            }
+        }
+
+        public void EnableAllinButton(bool enable)
+        {
+            if (allinButton != null)
+            {
+                allinButton.interactable = enable;
+            }
+        }
+
+
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using com.dug.UI.dto;
+﻿using System;
+using com.dug.UI.dto;
 using com.dug.UI.events;
 using com.dug.UI.manager;
 using com.dug.UI.model;
@@ -14,6 +15,7 @@ namespace com.dug.UI.presenter
         private GameManager manager;
 
         private GamePlayerModel model = new GamePlayerModel();
+        private GameEvent gameEvent = GameEvent.Instance;
 
         public GamePlayersPresenter(GamePlayersView view)
         {
@@ -22,7 +24,13 @@ namespace com.dug.UI.presenter
 
             this.view.CreateGamePlayers();
 
-            GameEvent.Instance.AddGamePlayerEvent(OnUpdateGamePlayer);
+            gameEvent.AddGamePlayerEvent(OnUpdateGamePlayer);
+            gameEvent.AddHandoutCompleteEvent(OnHandOutComplete);
+        }
+
+        private void OnHandOutComplete(int charIndex)
+        {
+            this.view.ShowOwnCards(charIndex);
         }
 
         private void OnUpdateGamePlayer(GamePlayerModel model)

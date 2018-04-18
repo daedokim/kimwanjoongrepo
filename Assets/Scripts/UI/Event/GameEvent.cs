@@ -16,6 +16,11 @@ namespace com.dug.UI.events
     public class GamePlayerAcionEvent : UnityEvent<GamePlayerModel> { }
 
 
+
+    [System.Serializable]
+    public class HandoutCompleteEvent : UnityEvent<int> { }
+
+
     public class GameEvent : Singleton<GameEvent>
     {
         private GamePlayerEvent gamePlayerEvent = new GamePlayerEvent();
@@ -23,6 +28,7 @@ namespace com.dug.UI.events
         private PlayerTurnEndEvent playerTurnEndEvent = new PlayerTurnEndEvent();
         private GamePlayerAcionEvent gamePlayerActionEvent = new GamePlayerAcionEvent();
         private RoomEvent roomEvent = new RoomEvent();
+        private HandoutCompleteEvent handoutCompleteEvent = new HandoutCompleteEvent();
 
 
         public void AddGamePlayerEvent(UnityAction<GamePlayerModel> call)
@@ -125,6 +131,25 @@ namespace com.dug.UI.events
             roomEvent.Invoke(model);
         }
 
+        public void AddHandoutCompleteEvent(UnityAction<int> call)
+        {
+            handoutCompleteEvent.AddListener(call);
+        }
+
+        public void RemovHandoutCompleteEvent(UnityAction<int> call)
+        {
+            handoutCompleteEvent.RemoveListener(call);
+        }
+
+        public void RemoveAllHandoutCompleteEvent()
+        {
+            handoutCompleteEvent.RemoveAllListeners();
+        }
+
+        public void InvokeHandoutCompleteEvent(int chairIndex)
+        {
+            handoutCompleteEvent.Invoke(chairIndex);
+        }
 
     }
 }

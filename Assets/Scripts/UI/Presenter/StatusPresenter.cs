@@ -92,7 +92,6 @@ namespace com.dug.UI.presenter
             view.SetStatusText("");
         }
 
-
         public void OnRoomUpdate(RoomModel model)
         {
             this.model.Update(model);

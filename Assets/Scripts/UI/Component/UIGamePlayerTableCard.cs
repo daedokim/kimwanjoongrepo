@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using com.dug.UI.events;
 
 namespace com.dug.UI.component
 {
@@ -32,6 +33,8 @@ namespace com.dug.UI.component
         public void Handout()
         {
             this.gameObject.SetActive(true);
+
+            GameEvent.Instance.InvokeHandoutCompleteEvent(chairIndex);
         }
     }
 

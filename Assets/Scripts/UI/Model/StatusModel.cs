@@ -19,7 +19,7 @@ namespace com.dug.UI.model
         public int card3 = 0;
         public int card4 = 0;
         public int card5 = 0;
-        public RoomState state = RoomState.Init;
+        public RoomState state = RoomState.Wait;
 
 
         public void SetRoomData(Room room)
@@ -79,7 +79,7 @@ namespace com.dug.UI.model
 
         public enum RoomState
         {
-            Init = -1, Wait = 0, Ready = 1, Playing = 2
+            Wait = -1, Ready = 0, Setting = 1, Playing = 2
         }
     }
 }

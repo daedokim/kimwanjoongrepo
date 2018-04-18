@@ -21,4 +21,10 @@ public class UICard : MonoBehaviour
 
         this.index = index;
     }
+
+    internal void SetFace(bool isFace)
+    {
+        face.gameObject.SetActive(isFace);
+        back.gameObject.SetActive(!isFace);
+    }
 }

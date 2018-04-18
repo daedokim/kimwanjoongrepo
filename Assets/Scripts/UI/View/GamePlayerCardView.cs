@@ -68,7 +68,7 @@ namespace com.dug.UI.view
             }
         }
 
-        public void GetTableCard(int chairIndex)
+        public void HandAllOut(int chairIndex)
         {
             for (int i = 0; i < tableCards.Length; i++)
             {
