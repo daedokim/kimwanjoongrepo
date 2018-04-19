@@ -71,7 +71,7 @@ namespace com.dug.UI.presenter
 
                 if (waitTimeout >= 0)
                 {
-                    view.SetStatusText("" + waitTimeout / 1000);
+                    view.SetStatusText("" + (waitTimeout / 1000 + 1));
                 }
                 else
                 {

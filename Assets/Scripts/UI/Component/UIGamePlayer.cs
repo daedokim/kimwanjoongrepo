@@ -10,13 +10,24 @@ namespace com.dug.UI.component
 {
     public class UIGamePlayer : MonoBehaviour
     {
+        [SerializeField]
         public Text nameText = null;
+        [SerializeField]
         public Text betTypeText = null;
+        [SerializeField]
         public Image picture = null;
+        [SerializeField]
+        public GameObject timeLineGameObject = null;
 
-        public UICard firstCard = null;
-        public UICard secondCard = null;
+        [HideInInspector]
+        private UICard firstCard = null;
+        [HideInInspector]
+        private UICard secondCard = null;
 
+
+        private UITimeline timeline = null;
+
+        
         public int chairIndex = -1;
 
         GamePlayerModel model = new GamePlayerModel();
@@ -38,6 +49,9 @@ namespace com.dug.UI.component
 
         void Awake()
         {
+
+            timeline = timeLineGameObject.GetComponent<UITimeline>();
+
             model.ObserveEveryValueChanged(x => x.status).Subscribe(_ =>
             {
                 if (model.status != GamePlayerModel.GamePlayerState.Stand)
@@ -61,10 +75,13 @@ namespace com.dug.UI.component
                   if (x == true)
                   {
                       picture.color = Color.black;
+
+                      timeline.StartCountDown();
                   }
                   else
                   {
                       picture.color = Color.white;
+                      timeline.StopCountDown();
                   }
               });
 
@@ -78,6 +95,11 @@ namespace com.dug.UI.component
             {
                 GameManager.Instance.GameEvent.InvokeGamePlayerActionEvent(model);   
             });
+        }
+
+        public void SetTimeLine(RuntimeAnimatorController controller)
+        {
+            timeline.Draw(controller, chairIndex);
         }
 
         private void CreatePlayerCard()

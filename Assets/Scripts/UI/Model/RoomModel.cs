@@ -10,8 +10,8 @@ namespace com.dug.UI.model
     {
         public static int MAX_GAME_PLAYER_COUNT = 9;
         public static int WAITTIMEOUT_BY_SETTING = 5000;
-        public static int WAITTIMEOUT_BY_GAME_PLAYER = 15000;
-        public static int WAITTIMEOUT_BY_READY = 10000;
+        public static int WAITTIMEOUT_BY_GAME_PLAYER = 17000;
+        public static int WAITTIMEOUT_BY_READY = 5000;
 
         public int roomIndex = 0;
         public int stage = 0;

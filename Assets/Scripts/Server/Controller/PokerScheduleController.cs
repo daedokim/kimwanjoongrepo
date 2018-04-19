@@ -59,6 +59,7 @@
             if (playerList != null && playerList.Count >= 2)
             {
                 room.state = RoomState.Ready;
+                room.stage = 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
 
                 helper = new CardSortingHelper();
@@ -87,7 +88,6 @@
                 room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
                 room.lastbet = 0;
                 room.stageBet = 0;
-                room.stage = 1;
                 room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
                 room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
 
@@ -163,7 +163,7 @@
             {
                 room.stage += 1;
                 room.currentOrderNo = 0;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
                 room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
 
                 table.UpdateRoom(room);
@@ -266,6 +266,7 @@
                         room.betCount = 0;
                         room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                         currentOrderNo = 0;
+                        currentUserIndex = 0;
                         table.UpdateRoom(room);
                     }
                     else

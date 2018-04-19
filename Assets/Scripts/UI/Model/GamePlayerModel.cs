@@ -69,7 +69,7 @@ namespace com.dug.UI.model
             coin = gamePlayer.coin;
             nickName = gamePlayer.nickName;
 
-            isMyTurn = gamePlayer.useridx == room.currentUserIndex;
+            isMyTurn = gamePlayer.useridx == room.currentUserIndex && roomStage % 3 == 0;
             betCount = room.betCount;
             roomStage = room.stage;
         }

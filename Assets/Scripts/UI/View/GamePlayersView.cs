@@ -19,6 +19,10 @@ namespace com.dug.UI.view
         [HideInInspector]
         public UIGamePlayer[] gamePlayers = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
 
+        [SerializeField]
+        public RuntimeAnimatorController[] timelineAnimationControllers = new RuntimeAnimatorController[4];
+
+
         private GamePlayersPresenter presenter = null;
         
         private void Awake()
@@ -61,9 +65,16 @@ namespace com.dug.UI.view
                 script = gamePlayer.GetComponent<UIGamePlayer>();
                 script.ChairIndex = i;
 
+                SetTImelineUI(script);
+
                 gamePlayer.SetActive(false);
                 this.gamePlayers[i] = script;
             }
+        }
+
+        private void SetTImelineUI(UIGamePlayer script)
+        {
+            script.SetTimeLine(timelineAnimationControllers[0]);
         }
 
         public UIGamePlayer GetGamePlayersByChairIndex(int chairIndex)

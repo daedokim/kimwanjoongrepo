@@ -311,6 +311,7 @@
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayer.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayerTableCard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UISitButton.cs" />
+    <Compile Include="Assets\Scripts\UI\Component\UITimeline.cs" />
     <Compile Include="Assets\Scripts\UI\Event\GameEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Event\GamePlayerActionEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Model\ButtonModel.cs" />
