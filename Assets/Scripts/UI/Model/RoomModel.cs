@@ -85,6 +85,10 @@ namespace com.dug.UI.model
             Wait = -1, Ready = 0, Setting = 1, Playing = 2
         }
 
+        public enum Stage
+        {
+            PreFlop = 3, Flop = 6, Turn = 9, River = 12
+        }
     }
 }
 

@@ -44,6 +44,13 @@ namespace com.dug.UI.manager
             if (index < 0 || index > 52 || cards[index] == null)
                 throw new System.Exception("인덱스를 넘어감");
 
+            UICard card = cards[index];
+
+            card.transform.localPosition = new Vector3(0, 0, 0);
+            card.transform.localScale = new Vector3(1, 1, 1);
+            card.transform.SetParent(null);
+            card.gameObject.SetActive(false);
+
             return cards[index];
         }
 

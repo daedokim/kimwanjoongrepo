@@ -320,6 +320,7 @@
     <Compile Include="Assets\Scripts\UI\Model\RoomModel.cs" />
     <Compile Include="Assets\Scripts\UI\Model\StatusModel.cs" />
     <Compile Include="Assets\Scripts\UI\Network\UserData.cs" />
+    <Compile Include="Assets\Scripts\UI\Presenter\BetRangePresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ChipsPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\GamePlayerCardPresenter.cs" />
@@ -327,7 +328,9 @@
     <Compile Include="Assets\Scripts\UI\Presenter\IPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\SitButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\StatusPresenter.cs" />
+    <Compile Include="Assets\Scripts\UI\Presenter\TableCardPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Util\GameObjectPool.cs" />
+    <Compile Include="Assets\Scripts\UI\View\BetRangeView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ButtonView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ChipsView.cs" />
     <Compile Include="Assets\Scripts\UI\View\GamePlayerCardView.cs" />
@@ -335,6 +338,7 @@
     <Compile Include="Assets\Scripts\UI\View\IView.cs" />
     <Compile Include="Assets\Scripts\UI\View\SitButtonView.cs" />
     <Compile Include="Assets\Scripts\UI\View\StatusView.cs" />
+    <Compile Include="Assets\Scripts\UI\View\TableCardView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />

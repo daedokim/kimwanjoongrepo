@@ -106,14 +106,14 @@ namespace com.dug.UI.component
         {
             firstCard = CardManager.Instance.GetCards(model.card1);
             firstCard.transform.SetParent(transform);
-            firstCard.transform.localPosition = new Vector2(94, 0);
-            firstCard.transform.localScale = new Vector3(1, 1, 1);
+            firstCard.transform.localPosition = new Vector2(80.4f, 0);
+            firstCard.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             firstCard.gameObject.SetActive(true);
 
             secondCard = CardManager.Instance.GetCards(model.card2);
             secondCard.transform.SetParent(transform);
-            secondCard.transform.localPosition = new Vector2(170, 0);
-            secondCard.transform.localScale = new Vector3(1, 1, 1);
+            secondCard.transform.localPosition = new Vector2(141.7f, 0);
+            secondCard.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             secondCard.gameObject.SetActive(true);
         }
 
