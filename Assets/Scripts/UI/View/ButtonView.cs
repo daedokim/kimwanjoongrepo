@@ -12,7 +12,6 @@ namespace com.dug.UI.view
         [SerializeField] Button checkButton = null;
         [SerializeField] Button callButton = null;
         [SerializeField] Button foldButton = null;
-        [SerializeField] Button allinButton = null;
 
         private ButtonPresenter presenter;
 
@@ -43,14 +42,9 @@ namespace com.dug.UI.view
             get { return foldButton.OnClickAsObservable(); }
         }
 
-        public IObservable<Unit> OnAllinButtonClicked
-        {
-            get { return allinButton.OnClickAsObservable(); }
-        }
-
         public void EnableAllButtons(bool enable)
         {
-            raiseButton.interactable = checkButton.interactable = callButton.interactable = foldButton.interactable = allinButton.interactable = enable;
+            raiseButton.interactable = checkButton.interactable = callButton.interactable = foldButton.interactable = enable;
         }
 
         public void EnableCheckButton(bool enable)
@@ -85,14 +79,14 @@ namespace com.dug.UI.view
             }
         }
 
-        public void EnableAllinButton(bool enable)
-        {
-            if (allinButton != null)
+        public void SetRaiseBetAmount(long amount)
+        { 
+            if(presenter != null)
             {
-                allinButton.interactable = enable;
+                presenter.SetRaiseBetAmount(amount);
             }
-        }
 
+        }
 
     }
 

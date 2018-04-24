@@ -12,6 +12,11 @@ namespace com.dug.UI.component
 
         public bool IsFlipable { get; set; }
 
+        private void Awake()
+        {
+            isFace = false;
+        }
+
     }
 }
 

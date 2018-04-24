@@ -16,7 +16,7 @@ namespace com.dug.UI.presenter
         private GameManager manager;
         private GamePlayerModel currentGamePlayer;
         private bool isClickable = false;
-
+        private long raiseBetAmount = 0;
 
         public ButtonPresenter(ButtonView view)
         {
@@ -29,9 +29,20 @@ namespace com.dug.UI.presenter
                 isClickable = false;
             });
 
+
+            this.view.OnCallButtonClicked.Where(_ => isClickable).Subscribe(x =>
+            {
+                manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
+                isClickable = false;
+            });
+
             this.view.OnRaiseButtonClicked.Where(_ => isClickable).Subscribe(_ =>
             {
-                manager.OnRaise(currentGamePlayer.userIndex, currentGamePlayer.stageBet, 1000);
+                if(currentGamePlayer.buyInLeft <= raiseBetAmount)
+                    manager.OnAllIn(currentGamePlayer.userIndex, currentGamePlayer.stageBet, currentGamePlayer.buyInLeft);
+                else
+                    manager.OnRaise(currentGamePlayer.userIndex, currentGamePlayer.stageBet, raiseBetAmount);
+
                 isClickable = false;
             }); 
 
@@ -44,12 +55,6 @@ namespace com.dug.UI.presenter
             this.view.OnFoldButtonClicked.Where(_ => isClickable).Subscribe(_ =>
             {
                 manager.OnFold(currentGamePlayer.userIndex);
-                isClickable = false;
-            });
-
-            this.view.OnAllinButtonClicked.Where(_ => isClickable).Subscribe(_ =>
-            {
-                manager.OnAllIn(currentGamePlayer.userIndex, currentGamePlayer.stageBet, currentGamePlayer.buyInLeft);
                 isClickable = false;
             });
 
@@ -72,6 +77,11 @@ namespace com.dug.UI.presenter
             {
                 view.EnableAllButtons(false);
             }
+        }
+
+        public void SetRaiseBetAmount(long amount)
+        {
+            raiseBetAmount = amount;
         }
     }
 
