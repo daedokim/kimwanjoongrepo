@@ -181,6 +181,24 @@ namespace com.dug.Server
             return gamePlayer;
         }
 
+        public int SelectFirstOrderNo(int index)
+        {
+            List<GamePlayer> gamePlayers = SelectSitGamePlayer(index);
+            gamePlayers.Sort(CompareOrderByOrderNo);
+
+            int orderNo = 0;
+
+            for (int i = 0; i < gamePlayers.Count; i++)
+            {
+                if (gamePlayers[i] != null && gamePlayers[i].lastBetType != BetType.Allin && gamePlayers[i].lastBetType != BetType.Fold)
+                {
+                    orderNo = gamePlayers[i].orderNo;
+                    break;
+                }
+            }
+            return orderNo;
+        }
+
         public GamePlayer SelectGamePlayerByChairIndex(int roomIndex, int chairIndex)
         {
             List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);

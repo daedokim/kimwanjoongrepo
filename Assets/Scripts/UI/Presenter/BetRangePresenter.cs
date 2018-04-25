@@ -17,8 +17,8 @@ namespace com.dug.UI.presenter
         private GameManager manager;
         private GameEvent gameEvent;
         private GamePlayerModel model = new GamePlayerModel();
-        private float selectedRate = 0;
         private long lastRaiseBet = 0;
+        private bool editable = false;
 
         public BetRangePresenter(BetRangeView view)
         {
@@ -27,47 +27,48 @@ namespace com.dug.UI.presenter
             manager = GameManager.Instance;
             gameEvent = GameEvent.Instance;
 
-            this.view.OnMaxButtonClicked.Subscribe(x => {
-
+            this.view.OnMaxButtonClicked.Where(_=> editable).Subscribe(x => {
+                
                 this.view.scrollBar.value = 1;
             });
 
-            this.view.OnMinButtonClicked.Subscribe(x => {
+            this.view.OnMinButtonClicked.Where(_ => editable).Subscribe(x => {
 
                 this.view.scrollBar.value = 0;
             });
 
-            this.view.OnPlusButtonClicked.Subscribe(x => {
+            this.view.OnPlusButtonClicked.Where(_ => editable).Subscribe(x => {
 
                 this.view.scrollBar.value += 0.1f;
             });
 
-            this.view.OnMinusButtonClicked.Subscribe(x => {
+            this.view.OnMinusButtonClicked.Where(_ => editable).Subscribe(x => {
                 this.view.scrollBar.value -= 0.1f;
             });
 
-            this.view.OnScrollBarChanged.Subscribe(x => {
+            this.view.OnScrollBarChanged.Where(_ => editable).Subscribe(x => {
 
                 double v = Math.Floor(x * 10) / 10;
                 OnChangeBetRange((float)v);
             });
 
             gameEvent.AddPlayerTurnEvent(OnUpdatePlayerEvent);
+            gameEvent.AddPlayerTurnEndEvent(OnTurnEndEvent);
         }
 
+      
         private void OnChangeBetRange(float rate)
         {
-            selectedRate = rate;
-
             double minRaiseBet = lastRaiseBet * 2;
             double maxRaiseBet = model.buyInLeft;
             if (model.buyInLeft < minRaiseBet)
                 minRaiseBet = model.buyInLeft;
 
-            double rangeAmount = minRaiseBet + (model.buyInLeft - minRaiseBet) * selectedRate;
+            double rangeAmount = minRaiseBet + (model.buyInLeft - minRaiseBet) * rate;
 
             long raiseBet = (long)rangeAmount;
 
+            
             buttonView.SendMessage("SetRaiseBetAmount", raiseBet);
             this.view.SetRangeText("Raise $" + raiseBet);
         }
@@ -76,12 +77,20 @@ namespace com.dug.UI.presenter
         {
             this.model.Update(model);
             lastRaiseBet = manager.Room.lastRaise;
+            OnChangeBetRange(this.view.GetScrollRate());
 
+            editable = true;
 
-            Debug.Log("lastRaiseBet :  " + lastRaiseBet);
-
-            OnChangeBetRange(selectedRate);
+            this.view.EnableScrollBar(editable);
         }
+
+        private void OnTurnEndEvent()
+        {
+            editable = false;
+            this.view.EnableScrollBar(editable);
+        }
+
+
     }
 }
 

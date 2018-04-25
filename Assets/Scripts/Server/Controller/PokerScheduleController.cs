@@ -94,7 +94,6 @@
                 playerList = SetCards(helper, playerList);
                 playerList = SetOrderNo(room.ownerIndex, playerList);
 
-
                 // 정렬을 세팅한다.
                 for (int i = 0; i < playerList.Count; i++)
                 {
@@ -162,11 +161,15 @@
             if (room.waitTimeout <= 0)
             {
                 room.stage += 1;
-                room.currentOrderNo = 0;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
+
+                room.currentOrderNo = table.SelectFirstOrderNo(room.index);
                 room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
 
+
                 table.UpdateRoom(room);
+
+                ClearGamePlayerByStage(room.index, room.stage);
             }
         }
 
@@ -218,7 +221,6 @@
             }
             else
             {
-                ClearGamePlayerByStage(room.index, room.stage);
                 room.stage += 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.stageBet = 0;

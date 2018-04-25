@@ -24,7 +24,7 @@ namespace com.dug.UI.presenter
             this.manager = GameManager.Instance;
 
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
-            GameEvent.Instance.AddPlayerTurnEvent(new UnityAction<GamePlayerModel>(OnPlayerTurnUpdate));
+            
             model.ObserveEveryValueChanged(x => x.state).Subscribe(_ => {
                 SetStateHandler();
             });
@@ -35,12 +35,6 @@ namespace com.dug.UI.presenter
         private void OnPlayerTurnEnd()
         {
             DisposeWaitTimeout();
-        }
-
-        private void OnPlayerTurnUpdate(GamePlayerModel model)
-        {
-            view.SetStatusText(manager.Room.stage + "에서 "  + model.nickName + "의 턴");
-           // SetWaitTimeout(RoomModel.WAITTIMEOUT_BY_GAME_PLAYER);
         }
 
         private void SetStateHandler()

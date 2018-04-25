@@ -59,6 +59,16 @@ namespace com.dug.UI.view
         {
             rangeText.text = str;
         }
+
+        public float GetScrollRate()
+        {
+            return scrollBar.value;
+        }
+
+        public void EnableScrollBar(bool enable)
+        {
+            scrollBar.interactable = enable;
+        }
     }
 }
 

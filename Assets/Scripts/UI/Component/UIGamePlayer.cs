@@ -67,6 +67,9 @@ namespace com.dug.UI.component
 
             model.ObserveEveryValueChanged(x => x.lastBetType).Subscribe(_ =>
                 {
+                    if (model.lastBetType == 0)
+                        return;
+
                     betTypeText.text = GetBetTypeName(model.lastBetType);
                 }); 
 
