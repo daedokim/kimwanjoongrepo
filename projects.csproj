@@ -293,6 +293,7 @@
     <Compile Include="Assets\Scripts\Client\DTO\Player.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Room.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\CardManager.cs" />
+    <Compile Include="Assets\Scripts\Client\Manager\ChipsManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="Assets\Scripts\UI\Presenter\StatusPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\TableCardPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Util\GameObjectPool.cs" />
+    <Compile Include="Assets\Scripts\UI\Util\GameUtil.cs" />
     <Compile Include="Assets\Scripts\UI\View\BetRangeView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ButtonView.cs" />
     <Compile Include="Assets\Scripts\UI\View\ChipsView.cs" />

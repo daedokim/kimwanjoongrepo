@@ -32,7 +32,10 @@ namespace com.dug.UI.presenter
 
             this.view.OnCallButtonClicked.Where(_ => isClickable).Subscribe(x =>
             {
-                manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
+                if (currentGamePlayer.buyInLeft <= raiseBetAmount)
+                    manager.OnAllIn(currentGamePlayer.userIndex, currentGamePlayer.stageBet, 0);
+                else
+                    manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
                 isClickable = false;
             });
 
@@ -68,7 +71,8 @@ namespace com.dug.UI.presenter
             if (isBlind == false && model.lastBetType != GamePlayerModel.BetType.Allin && model.lastBetType != GamePlayerModel.BetType.Fold)
             {
                 view.EnableAllButtons(true);
-                
+
+                view.EnableCallButton(model.betCount != 0);
                 view.EnableCheckButton(model.betCount == 0);
                 
                 isClickable = true;

@@ -33,6 +33,7 @@ namespace com.dug.UI.manager
                 cardInstance = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
                 script = cardInstance.GetComponent<UICard>();
                 script.Draw(faces[i], back, i);
+                script.transform.SetParent(this.transform);
                 cardInstance.SetActive(false);
 
                 cards[i] = script;
@@ -48,7 +49,7 @@ namespace com.dug.UI.manager
 
             card.transform.localPosition = new Vector3(0, 0, 0);
             card.transform.localScale = new Vector3(1, 1, 1);
-            card.transform.SetParent(null);
+            card.transform.SetParent(this.transform);
             card.gameObject.SetActive(false);
 
             return cards[index];

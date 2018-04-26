@@ -92,7 +92,7 @@ namespace com.dug.Server.Controller
                 table.UpdateRoom(room);
 
                 if (isBlindBet == false &&
-                    ((BetType)betType == BetType.Raise || (BetType)betType == BetType.Allin))
+                    ((BetType)betType == BetType.Raise || (BetType)betType == BetType.Allin && betAmount > 0))
                 {
                     SetAnotherBetStatusReady(roomIndex, userIdx);
                 }

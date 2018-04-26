@@ -46,8 +46,6 @@ namespace com.dug.UI.view
             positions[8] = new Vector2(-401, 567);
         }
 
-        
-
         public void CreateGamePlayers()
         {
             GameObject gamePlayer = null;
