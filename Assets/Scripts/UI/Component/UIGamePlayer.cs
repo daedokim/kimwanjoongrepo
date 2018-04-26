@@ -102,7 +102,7 @@ namespace com.dug.UI.component
 
         public void SetTimeLine(RuntimeAnimatorController controller)
         {
-            timeline.Draw(controller, chairIndex);
+            //timeline.Draw(controller, chairIndex);
         }
 
         private void CreatePlayerCard()
