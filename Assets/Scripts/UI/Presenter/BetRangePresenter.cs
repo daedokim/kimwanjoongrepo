@@ -60,13 +60,15 @@ namespace com.dug.UI.presenter
         private void OnChangeBetRange(float rate)
         {
             double minRaiseBet = lastRaiseBet * 2;
-            double maxRaiseBet = model.buyInLeft;
             if (model.buyInLeft < minRaiseBet)
                 minRaiseBet = model.buyInLeft;
 
             double rangeAmount = minRaiseBet + (model.buyInLeft - minRaiseBet) * rate;
 
             long raiseBet = (long)rangeAmount;
+
+            if (raiseBet > model.buyInLeft)
+                raiseBet = model.buyInLeft;
 
             
             buttonView.SendMessage("SetRaiseBetAmount", raiseBet);

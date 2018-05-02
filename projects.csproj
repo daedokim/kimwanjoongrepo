@@ -332,6 +332,7 @@
     <Compile Include="Assets\Scripts\UI\Presenter\StatusPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\TableCardPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Util\Animation\SpriteAnimation.cs" />
+    <Compile Include="Assets\Scripts\UI\Util\Animation\SpriteAnimation2.cs" />
     <Compile Include="Assets\Scripts\UI\Util\Animation\SpriteChunk.cs" />
     <Compile Include="Assets\Scripts\UI\Util\Animation\SpriteChunkList.cs" />
     <Compile Include="Assets\Scripts\UI\Util\GameObjectPool.cs" />

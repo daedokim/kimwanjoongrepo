@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace com.dug.UI.component
@@ -12,7 +13,9 @@ namespace com.dug.UI.component
         private int chairIndex;
         private bool isPlaying = false;
 
-        private void Awake()
+        public Text secondText;
+
+        void Awake()
         {
             this.animator = GetComponent<Animator>();
             this.animator.speed = 0;
@@ -35,7 +38,7 @@ namespace com.dug.UI.component
 
         public void AnimationComplete()
         {
-            Debug.Log("eee");
+            
 
         }
         public void StartCountDown()
@@ -69,6 +72,25 @@ namespace com.dug.UI.component
             isPlaying = false;
         }
 
+        private void FixedUpdate()
+        {
+            if(isPlaying)
+            {
+                AnimatorStateInfo animationState = this.animator.GetCurrentAnimatorStateInfo(0);
+                AnimatorClipInfo[] myAnimatorClip = this.animator.GetCurrentAnimatorClipInfo(0);
+
+                float myTime = myAnimatorClip[0].clip.length * animationState.normalizedTime;
+
+                if(myTime < 0)
+                {
+                    myTime = 0;
+                }
+
+                int time = (model.RoomModel.WAITTIMEOUT_BY_GAME_PLAYER/1000) - (int)myTime;
+
+                secondText.text = time.ToString();
+            }            
+        }
     }
 }
 

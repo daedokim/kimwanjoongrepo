@@ -8,13 +8,13 @@ namespace com.dug.UI.component
 {
     public class FlipCard : MonoBehaviour
     {
-        private bool isFace = true;
+       //private bool isFace = true;
 
         public bool IsFlipable { get; set; }
 
         private void Awake()
         {
-            isFace = false;
+            //isFace = false;
         }
 
     }

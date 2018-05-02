@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using com.dug.UI.dto;
+﻿using com.dug.UI.dto;
 
 
 namespace com.dug.UI.model
@@ -10,7 +7,7 @@ namespace com.dug.UI.model
     {
         public static int MAX_GAME_PLAYER_COUNT = 9;
         public static int WAITTIMEOUT_BY_SETTING = 5000;
-        public static int WAITTIMEOUT_BY_GAME_PLAYER = 17000;
+        public static int WAITTIMEOUT_BY_GAME_PLAYER = 16000;
         public static int WAITTIMEOUT_BY_READY = 5000;
 
         public int roomIndex = 0;
