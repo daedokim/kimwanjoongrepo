@@ -161,6 +161,7 @@
             if (room.waitTimeout <= 0)
             {
                 room.stage += 1;
+                room.lastRaise = room.buyInMin * 2;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
 
                 room.currentOrderNo = table.SelectFirstOrderNo(room.index);

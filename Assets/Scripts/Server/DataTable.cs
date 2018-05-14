@@ -20,6 +20,7 @@ namespace com.dug.Server
             Room info = new Room();
             info.index = 1;
             info.state = RoomState.Wait;
+            info.buyInMin = 20000;
 
             InitPlayers();
             //InitGamePlayerList(info.index);

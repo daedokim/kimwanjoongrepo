@@ -63,14 +63,14 @@ namespace com.dug.UI.view
                 script = gamePlayer.GetComponent<UIGamePlayer>();
                 script.ChairIndex = i;
 
-                SetTImelineUI(script);
+                SetTimelineUI(script);
 
                 gamePlayer.SetActive(false);
                 this.gamePlayers[i] = script;
             }
         }
 
-        private void SetTImelineUI(UIGamePlayer script)
+        private void SetTimelineUI(UIGamePlayer script)
         {
             script.SetTimeLine(timelineAnimationControllers[0]);
         }

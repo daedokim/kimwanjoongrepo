@@ -322,6 +322,9 @@
     <Compile Include="Assets\Scripts\UI\Model\RoomModel.cs" />
     <Compile Include="Assets\Scripts\UI\Model\StatusModel.cs" />
     <Compile Include="Assets\Scripts\UI\Network\UserData.cs" />
+    <Compile Include="Assets\Scripts\UI\Popup\Component\GaugeHandler.cs" />
+    <Compile Include="Assets\Scripts\UI\Popup\PopupBase.cs" />
+    <Compile Include="Assets\Scripts\UI\Popup\SelectBuyInPopup.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\BetRangePresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ChipsPresenter.cs" />

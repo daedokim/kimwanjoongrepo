@@ -86,7 +86,12 @@ namespace com.dug.Server.Controller
                 }
                 room.stageBet += betAmount;
                 room.totalBet += totalAmount;
-                room.lastRaise = betAmount;
+
+                if(betAmount > 0)
+                {
+                    room.lastRaise = betAmount;
+                }
+                
                 room.lastBetType = (BetType)betType;
 
                 table.UpdateRoom(room);

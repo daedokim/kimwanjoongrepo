@@ -21,6 +21,7 @@ namespace com.dug.UI.component
         void Awake()
         {
             this.gameObject.GetComponent<Button>().OnClickAsObservable().Subscribe(_ => {
+                
                 GameManager.Instance.SitChair(chairIndex);
                 this.enable = false;
             });
@@ -29,7 +30,6 @@ namespace com.dug.UI.component
         private void Start()
         {
             this.ObserveEveryValueChanged(x => x.enable).Subscribe(x => {
-                
                 this.gameObject.SetActive(enable);
             });
         }

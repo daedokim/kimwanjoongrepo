@@ -15,6 +15,7 @@ namespace com.dug.UI.presenter
     {
         private SitButtonView view;
         private GameManager manager;
+        private RoomModel model = new RoomModel();
 
         public SitButtonPresenter(SitButtonView view)
         {
@@ -24,6 +25,7 @@ namespace com.dug.UI.presenter
             this.view.CreateSitButtons();
 
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
+            
         }
 
         private void OnRoomUpdate(RoomModel model)

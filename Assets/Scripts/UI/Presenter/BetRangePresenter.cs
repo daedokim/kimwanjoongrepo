@@ -55,11 +55,11 @@ namespace com.dug.UI.presenter
             gameEvent.AddPlayerTurnEvent(OnUpdatePlayerEvent);
             gameEvent.AddPlayerTurnEndEvent(OnTurnEndEvent);
         }
-
       
         private void OnChangeBetRange(float rate)
         {
             double minRaiseBet = lastRaiseBet * 2;
+
             if (model.buyInLeft < minRaiseBet)
                 minRaiseBet = model.buyInLeft;
 

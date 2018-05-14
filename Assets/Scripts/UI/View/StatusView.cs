@@ -6,8 +6,6 @@ namespace com.dug.UI.view
 {
     public class StatusView : MonoBehaviour, IView
     {
-        [SerializeField] Text statusText = null;
-
         private StatusPresenter presenter;
 
         private void Awake()
@@ -17,7 +15,6 @@ namespace com.dug.UI.view
 
         public void SetStatusText(string text)
         {
-            statusText.text = text;
         }
     }
 }

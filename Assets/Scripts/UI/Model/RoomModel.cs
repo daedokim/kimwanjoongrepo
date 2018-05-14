@@ -22,6 +22,7 @@ namespace com.dug.UI.model
         public int card3 = 0;
         public int card4 = 0;
         public int card5 = 0;
+        public int playerCount = 0;
         public RoomState state = RoomState.Wait;
 
         public void SetRoomData(Room room)
@@ -40,6 +41,8 @@ namespace com.dug.UI.model
             card3 = room.card3;
             card4 = room.card4;
             card5 = room.card5;
+
+            playerCount = room.gamePlayers.Count;
         }
 
 
@@ -59,6 +62,8 @@ namespace com.dug.UI.model
             card3 = model.card3;
             card4 = model.card4;
             card5 = model.card5;
+
+            playerCount = model.playerCount;
         }
 
         public enum GamePlayerState
