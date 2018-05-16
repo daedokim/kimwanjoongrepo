@@ -42,6 +42,7 @@ namespace com.dug.Server.vo
         public int betfinished = 0;
         public int betCount = 0;
         public int currentOrderNo = 0;
+        public int minbetAmount = 0;
 
         public int waitTimeout = 10000;
 

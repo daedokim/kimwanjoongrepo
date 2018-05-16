@@ -41,9 +41,12 @@ namespace com.dug.UI.dao
             return returnVal;
         }
 
-        public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        public CRUDResult DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
-            GameServer.Instance.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+            string str = JsonUtility.ToJson(GameServer.Instance.DoSit(roomIndex, userIndex, chairIndex, buyInLeft), true);
+            CRUDResult returnVal = JsonUtility.FromJson<CRUDResult>(str);
+
+            return returnVal;
         }
     }
 }

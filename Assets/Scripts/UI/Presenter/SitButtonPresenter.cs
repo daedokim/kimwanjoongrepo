@@ -7,6 +7,7 @@ using com.dug.UI.events;
 using com.dug.UI.model;
 using com.dug.UI.component;
 using System;
+using UniRx;
 
 namespace com.dug.UI.presenter
 {
@@ -24,11 +25,15 @@ namespace com.dug.UI.presenter
 
             this.view.CreateSitButtons();
 
+            this.model.ObserveEveryValueChanged(x => x.playerCount).Skip(1).Subscribe(_ => {
+
+                UpdateChair();
+            });
+
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
-            
         }
 
-        private void OnRoomUpdate(RoomModel model)
+        private void UpdateChair()
         {
             List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
 
@@ -45,6 +50,11 @@ namespace com.dug.UI.presenter
                 }
             }
             this.view.OnUpateUI(chairIndice);
+        }
+
+        private void OnRoomUpdate(RoomModel model)
+        {
+            this.model.Update(model);
         }
     }
 }

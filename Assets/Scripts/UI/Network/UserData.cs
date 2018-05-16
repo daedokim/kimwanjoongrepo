@@ -10,6 +10,7 @@ namespace com.dug.UI.network
         public string nickName = "dkdkdk";
         public long coin = 10000000;
         public long buyInLeft = 10000;
+        public bool isAutoRefill = false;
     }
 
 }

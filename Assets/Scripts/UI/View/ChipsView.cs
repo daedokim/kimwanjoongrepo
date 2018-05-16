@@ -38,10 +38,10 @@ namespace com.dug.UI.view
             positions = new Vector2[RoomModel.MAX_GAME_PLAYER_COUNT];
             positions[0] = new Vector2(364, 261);
             positions[1] = new Vector2(522, 184);
-            positions[2] = new Vector2(511, -52);
-            positions[3] = new Vector2(479, -207);
-            positions[4] = new Vector2(64, -213);
-            positions[5] = new Vector2(-325, -204);
+            positions[2] = new Vector2(501, -45);
+            positions[3] = new Vector2(479, -187);
+            positions[4] = new Vector2(64, -187);
+            positions[5] = new Vector2(-325, -177);
             positions[6] = new Vector2(-398, -31);
             positions[7] = new Vector2(-383, 152);
             positions[8] = new Vector2(-137, 312);

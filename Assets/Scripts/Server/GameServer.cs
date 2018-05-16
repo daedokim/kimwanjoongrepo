@@ -54,9 +54,21 @@ namespace com.dug.Server
             return controller.SetPlayerBetting(roomIndex, userIdx, betType, callAmount, betAmount);
         }
 
-        public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        public CRUDResult DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
-            controller.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+            CRUDResult result = new CRUDResult();
+            try
+            {
+                controller.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+                result.resultType = CRUDResult.ResultType.SUCCESS;
+            }
+            catch(exceptions.ServerException ex)
+            {
+                result.resultType = CRUDResult.ResultType.FAILED;
+                result.message = ex.Message;
+            }
+
+            return result;
         }
     }
 }

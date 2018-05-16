@@ -17,7 +17,7 @@ namespace com.dug.UI.presenter
         private GameManager manager;
         private GameEvent gameEvent;
         private GamePlayerModel model = new GamePlayerModel();
-        private long lastRaiseBet = 0;
+        
         private bool editable = false;
 
         public BetRangePresenter(BetRangeView view)
@@ -58,7 +58,7 @@ namespace com.dug.UI.presenter
       
         private void OnChangeBetRange(float rate)
         {
-            double minRaiseBet = lastRaiseBet * 2;
+            double minRaiseBet = manager.Room.lastRaise * 2;
 
             if (model.buyInLeft < minRaiseBet)
                 minRaiseBet = model.buyInLeft;
@@ -69,16 +69,14 @@ namespace com.dug.UI.presenter
 
             if (raiseBet > model.buyInLeft)
                 raiseBet = model.buyInLeft;
-
             
             buttonView.SendMessage("SetRaiseBetAmount", raiseBet);
-            this.view.SetRangeText("Raise $" + raiseBet);
+            this.view.SetRangeText("Raise $" + util.GameUtil.MakePriceString(raiseBet));
         }
 
         private void OnUpdatePlayerEvent(GamePlayerModel model)
         {
             this.model.Update(model);
-            lastRaiseBet = manager.Room.lastRaise;
             OnChangeBetRange(this.view.GetScrollRate());
 
             editable = true;

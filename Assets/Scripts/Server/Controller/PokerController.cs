@@ -5,6 +5,7 @@ namespace com.dug.Server.Controller
     using com.dug.Server.vo;
     using com.dug.Server.Util;
     using System;
+    using com.dug.Server.exceptions;
 
     public class PokerController
     {
@@ -43,7 +44,11 @@ namespace com.dug.Server.Controller
                 bool isBlindBet = false;
                 long totalAmount = callAmount + betAmount;
 
-
+                if (betType == (int)BetType.Allin)
+                {
+                    totalAmount = betAmount;
+                }
+                
                 if (betType == (int)BetType.Blind)
                 {
                     betType = (int)BetType.Raise;
@@ -75,6 +80,8 @@ namespace com.dug.Server.Controller
                 gamePlayer.lastRaise = betAmount;
                 gamePlayer.stageBet += totalAmount;
                 gamePlayer.totalBet += totalAmount;
+
+
                 gamePlayer.buyInLeft -= totalAmount;
                 gamePlayer.stage = room.stage;
 
@@ -102,12 +109,21 @@ namespace com.dug.Server.Controller
                     SetAnotherBetStatusReady(roomIndex, userIdx);
                 }
             }
-            
             return GetRoom(roomIndex);
         }
 
         public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
+            if(table.SelectGamePlayerByUserIdx(roomIndex, userIndex) != null)
+            {
+                throw new ServerException("Aready You are have gaming");
+            }
+
+            if (table.SelectGamePlayerByChairIndex(roomIndex, chairIndex) != null)
+            {
+                throw new ServerException("Aready Other gamePlayer has gaming");
+            }
+
             table.InsertGamePlayer(roomIndex, userIndex, chairIndex, buyInLeft);
         }
 

@@ -21,6 +21,8 @@ namespace com.dug.Server
             info.index = 1;
             info.state = RoomState.Wait;
             info.buyInMin = 20000;
+            info.buyInMax = 200000;
+            info.minbetAmount = 1000;
 
             InitPlayers();
             //InitGamePlayerList(info.index);
@@ -220,21 +222,19 @@ namespace com.dug.Server
         {
             Player player = SelectPlayer(userIndex);
 
-            if(SelectGamePlayerByUserIdx(roomIndex, userIndex) == null && SelectGamePlayerByChairIndex(roomIndex, chairIndex) == null)
-            {
-                GamePlayer gamePlayer = new GamePlayer();
-                gamePlayer.roomIndex = roomIndex;
-                gamePlayer.useridx = userIndex;
-                gamePlayer.nickName = player.nickName;
-                gamePlayer.chairIndex = chairIndex;
-                gamePlayer.buyInLeft = buyInLeft;
-                gamePlayer.state = GamePlayerState.SitWait;
+            GamePlayer gamePlayer = new GamePlayer();
+            gamePlayer.roomIndex = roomIndex;
+            gamePlayer.useridx = userIndex;
+            gamePlayer.nickName = player.nickName;
+            gamePlayer.chairIndex = chairIndex;
+            gamePlayer.buyInLeft = buyInLeft;
+            gamePlayer.state = GamePlayerState.SitWait;
 
-                List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
-                gamePlayers.Add(gamePlayer);
+            List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
+            gamePlayers.Add(gamePlayer);
 
-                GamePlayertable[roomIndex] = gamePlayers;
-            }
+            GamePlayertable[roomIndex] = gamePlayers;
+
         }
 
         public Player SelectPlayer(long userIndex)

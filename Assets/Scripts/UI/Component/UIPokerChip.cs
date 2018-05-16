@@ -51,7 +51,7 @@ namespace com.dug.UI.component
 
                 chip = chipsManager.GetChip(amount, false);
                 chip.transform.SetParent(this.transform);
-                chip.transform.localPosition = new Vector3(0, 0, -20 * count);
+                chip.transform.localPosition = new Vector3(0, 10 * count, 0);
                 chip.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
                 amount -= (long) diff;
                 count++;

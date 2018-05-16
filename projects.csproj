@@ -289,20 +289,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Client\DAO\RoomDAO.cs" />
+    <Compile Include="Assets\Scripts\Client\DTO\CRUDResult.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Player.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Room.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\CardManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\ChipsManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Client\Manager\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
     <Compile Include="Assets\Scripts\Server\Controller\PokerController.cs" />
     <Compile Include="Assets\Scripts\Server\Controller\PokerScheduleController.cs" />
     <Compile Include="Assets\Scripts\Server\DataTable.cs" />
+    <Compile Include="Assets\Scripts\Server\Exception\ServerException.cs" />
     <Compile Include="Assets\Scripts\Server\GameServer.cs" />
     <Compile Include="Assets\Scripts\Server\util\CardSortingHelper.cs" />
     <Compile Include="Assets\Scripts\Server\util\GameUtil.cs" />
+    <Compile Include="Assets\Scripts\Server\vo\CRUDResult.cs" />
     <Compile Include="Assets\Scripts\Server\vo\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Player.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Room.cs" />
@@ -322,9 +326,9 @@
     <Compile Include="Assets\Scripts\UI\Model\RoomModel.cs" />
     <Compile Include="Assets\Scripts\UI\Model\StatusModel.cs" />
     <Compile Include="Assets\Scripts\UI\Network\UserData.cs" />
-    <Compile Include="Assets\Scripts\UI\Popup\Component\GaugeHandler.cs" />
-    <Compile Include="Assets\Scripts\UI\Popup\PopupBase.cs" />
-    <Compile Include="Assets\Scripts\UI\Popup\SelectBuyInPopup.cs" />
+    <Compile Include="Assets\Scripts\UI\Popups\Component\GaugeHandler.cs" />
+    <Compile Include="Assets\Scripts\UI\Popups\PopupBase.cs" />
+    <Compile Include="Assets\Scripts\UI\Popups\SelectBuyInPopup.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\BetRangePresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ButtonPresenter.cs" />
     <Compile Include="Assets\Scripts\UI\Presenter\ChipsPresenter.cs" />

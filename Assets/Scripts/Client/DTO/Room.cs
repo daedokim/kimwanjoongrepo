@@ -44,6 +44,7 @@ namespace com.dug.UI.dto
         public int betfinished = 0;
         public int betCount = 0;
         public int currentOrderNo = 0;
+        public int minbetAmount = 0;
 
         [SerializeField]
         public List<GamePlayer> gamePlayers = new List<GamePlayer>();

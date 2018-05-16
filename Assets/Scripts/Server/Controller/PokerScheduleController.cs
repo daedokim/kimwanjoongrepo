@@ -42,8 +42,9 @@
                         SetPlaying(room);
                         break;
                 }
+
                 GameUtil.DebugLog("스테이지 :" + room.stage, ", 현재 벳 사용자 인덱스 :" + room.currentUserIndex, ", 현재 정렬 : " + room.currentOrderNo
-              , ", 스테이지 벳금액 : " + room.stageBet, ", 마지막 벳 금액 :" + room.lastbet, ", 마지막 벳 타입 : " + room.lastBetType
+              , ", 스테이지 벳금액 : " + room.stageBet, ", 마지막 벳 금액 :" + room.lastRaise, ", 마지막 벳 타입 : " + room.lastBetType, "토탈뱃 : " + room.totalBet
               );
             }
         }
@@ -161,7 +162,7 @@
             if (room.waitTimeout <= 0)
             {
                 room.stage += 1;
-                room.lastRaise = room.buyInMin * 2;
+                room.lastRaise = room.minbetAmount * 2;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
 
                 room.currentOrderNo = table.SelectFirstOrderNo(room.index);
@@ -225,6 +226,7 @@
                 room.stage += 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.stageBet = 0;
+                
 
                 table.UpdateRoom(room);
             }

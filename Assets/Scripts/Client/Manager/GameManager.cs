@@ -16,8 +16,6 @@ namespace com.dug.UI.manager
         private int roomIndex = 1;
         private RoomState currentState;
 
-        private long minbetAmount = 1000;
-
         private RoomModel roomModel = new RoomModel();
         private GamePlayerModel gamePlayerModel = new GamePlayerModel();
         private GamePlayerModel gamePlayerUpdateModel = new GamePlayerModel();
@@ -89,13 +87,13 @@ namespace com.dug.UI.manager
                     if (room.betCount == 0)
                     {
                         // Small Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, 0, minbetAmount);
+                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, 0, Room.minbetAmount);
                         isBlindBet = true;
                     }
                     else if (room.betCount == 1)
                     {
                         // Big Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, minbetAmount, minbetAmount);
+                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, Room.minbetAmount, Room.minbetAmount);
                         isBlindBet = true;
                     }
                 }
@@ -133,9 +131,11 @@ namespace com.dug.UI.manager
             gameEvent.InvokePlayerTurnEndEvent();
         }
 
-        public void SitChair(int chairIndex)
+        public CRUDResult SitChair(long userIndex, int chairIndex, long buyInLeft)
         {
-            dao.DoSit(roomIndex, network.UserData.Instance.userIndex, chairIndex, network.UserData.Instance.buyInLeft);
+            CRUDResult result = dao.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+
+            return result;
         }
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {
