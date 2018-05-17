@@ -67,9 +67,7 @@ namespace com.dug.UI.manager
                 gamePlayerUpdateModel.SetGamePlayer(room.gamePlayers[i], Room);
                 gameEvent.InvokeGamePlayerEvent(gamePlayerUpdateModel);
             }
-
             roomModel.SetRoomData(room);
-            
             gameEvent.InvokeRoomEvent(roomModel); 
         }
 

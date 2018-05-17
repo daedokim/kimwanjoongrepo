@@ -219,14 +219,17 @@
         {
             if (room.stage == 13)
             {
+                
 
             }
             else
             {
+                
                 room.stage += 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.stageBet = 0;
-                
+                room.currentOrderNo = 0;
+                room.currentUserIndex = 0;
 
                 table.UpdateRoom(room);
             }
