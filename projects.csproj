@@ -313,6 +313,7 @@
     <Compile Include="Assets\Scripts\Server\vo\Player.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Room.cs" />
     <Compile Include="Assets\Scripts\Test\SingletonTest.cs" />
+    <Compile Include="Assets\Scripts\Test\Test.cs" />
     <Compile Include="Assets\Scripts\UI\Component\FlipCard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UICard.cs" />
     <Compile Include="Assets\Scripts\UI\Component\UIGamePlayer.cs" />
