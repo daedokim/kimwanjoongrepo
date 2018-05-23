@@ -20,8 +20,8 @@ public class HandResult
 
     public enum HandType
     {
-        NONE = -1, ROYAL_STRAIGHT_FLUSH = 0, STRAIGHT_FLUSH = 1, POKER = 2, FULL_HOUSE = 3, FLUSH = 4, STRAIT = 5,
-        TRIPLE = 6, TWO_PAIR = 7, ONE_PAIR = 8, TITLE = 9
+        NONE = -1, ROYAL_STRAIGHT_FLUSH = 9, STRAIGHT_FLUSH = 8, POKER = 7, FULL_HOUSE = 6, FLUSH = 5, STRAIT = 4,
+        TRIPLE = 3, TWO_PAIR = 2, ONE_PAIR = 1, TITLE = 0
     }
     
 }

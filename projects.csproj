@@ -308,6 +308,7 @@
     <Compile Include="Assets\Scripts\Server\util\GameUtil.cs" />
     <Compile Include="Assets\Scripts\Server\util\HandResult.cs" />
     <Compile Include="Assets\Scripts\Server\util\PokerHandUtil.cs" />
+    <Compile Include="Assets\Scripts\Server\util\WinnerValidator.cs" />
     <Compile Include="Assets\Scripts\Server\vo\CRUDResult.cs" />
     <Compile Include="Assets\Scripts\Server\vo\GamePlayer.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Player.cs" />

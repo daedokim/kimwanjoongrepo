@@ -17,6 +17,10 @@ public class Test : MonoBehaviour {
     public int[] cards = new int[] { 0, 9, 10, 11, 12, 6,7};
 
     [SerializeField]
+    public int[] cardsType = new int[] { 0, 9, 10, 11, 12, 6, 7 };
+
+
+    [SerializeField]
     public bool flag = false;
     
 
@@ -38,19 +42,19 @@ public class Test : MonoBehaviour {
         hands[(int)HandResult.HandType.TITLE] = handUtil.CheckTitle;
 
 
-        this.ObserveEveryValueChanged(x => x.flag).Subscribe(x => {
+        this.ObserveEveryValueChanged(x => x.flag).Skip(1).Subscribe(x => {
 
             CheckHands();
         });
-   
 
     }
 
     private void CheckHands()
     {
         result.handType = HandResult.HandType.NONE;
+        SetCards();
 
-        Array.Sort(cards);
+
 
         for (int i = 0; i < hands.Length; i++)
         {
@@ -61,6 +65,28 @@ public class Test : MonoBehaviour {
                 print(result.handType);
                 break;
             }
+        }
+    }
+
+    private void SetCards()
+    {
+        cards.Initialize();
+
+        CardSortingHelper helper = new CardSortingHelper();
+        helper.Initialize();
+
+        for (int j = 0; j < 7; j++)
+        {
+            cards[j] = helper.Pop();
+        }
+
+
+        Array.Sort(cards);
+
+
+        for(int i = 0; i < cards.Length; i++)
+        {
+            cardsType[i] = cards[i] % 13;
         }
     }
 }

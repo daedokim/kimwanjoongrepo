@@ -37,6 +37,7 @@ namespace com.dug.Server.vo
         public long coin;
         public string nickName;
         public long useridx;
+        public HandResult result;
 
 
         // 초기화 여부
@@ -48,6 +49,8 @@ namespace com.dug.Server.vo
             card1 = 0;
             card2 = 0;
             orderNo = 999;
+
+            result = null;
 
             IsInitialize = true;
         }

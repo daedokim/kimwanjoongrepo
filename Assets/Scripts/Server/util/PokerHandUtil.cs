@@ -8,6 +8,24 @@ namespace com.dug.Server.Util
 {
     public class PokerHandUtil
     {
+        delegate HandResult handDelegate(int[] cards);
+        private handDelegate[] hands = new handDelegate[10];
+
+        public PokerHandUtil()
+        {
+
+            hands[(int)HandResult.HandType.ROYAL_STRAIGHT_FLUSH] = CheckRoyalStraightFlush;
+            hands[(int)HandResult.HandType.STRAIGHT_FLUSH] = CheckStraightFlush;
+            hands[(int)HandResult.HandType.POKER] = CheckPoker;
+            hands[(int)HandResult.HandType.FULL_HOUSE] = CheckFullHouse;
+            hands[(int)HandResult.HandType.FLUSH] = CheckFlush;
+            hands[(int)HandResult.HandType.STRAIT] = CheckStraight;
+            hands[(int)HandResult.HandType.TRIPLE] = CheckTriple;
+            hands[(int)HandResult.HandType.TWO_PAIR] = CheckTwoPairs;
+            hands[(int)HandResult.HandType.ONE_PAIR] = CheckOnePair;
+            hands[(int)HandResult.HandType.TITLE] = CheckTitle;
+        }
+        
         public HandResult CheckRoyalStraightFlush(int[] cards)
         {
             HandResult result = new HandResult();
@@ -40,13 +58,13 @@ namespace com.dug.Server.Util
                         }
                     }
 
-                    if (matchCount == cardsCount)
-                    {
-                        result.handType = HandResult.HandType.ROYAL_STRAIGHT_FLUSH;
-                        result.cardType = (HandResult.CardType)i + 1;
+                }
+                if (matchCount == cardsCount)
+                {
+                    result.handType = HandResult.HandType.ROYAL_STRAIGHT_FLUSH;
+                    result.cardType = (HandResult.CardType)i + 1;
 
-                        break;
-                    }
+                    break;
                 }
                 matchCount = 0;
             }
@@ -59,58 +77,82 @@ namespace com.dug.Server.Util
             HandResult result = new HandResult();
             string cardStr = GetCardStr(cards);
 
-            string[] hands = {
-                 "0,1,2,3,4"
-                ,"1,2,3,4,5"
-                ,"2,3,4,5,6"
-                ,"3,4,5,6,7"
-                ,"4,5,6,7,8"
-                ,"5,6,7,8,9"
-                ,"6,7,8,9,10"
-                ,"7,8,9,10,11"
-                ,"8,9,10,11,12"
+            int[,] hands = {
+                 {0,1,2,3,4}
+                ,{1,2,3,4,5}
+                ,{2,3,4,5,6}
+                ,{3,4,5,6,7}
+                ,{4,5,6,7,8}
+                ,{5,6,7,8,9}
+                ,{6,7,8,9,10}
+                ,{7,8,9,10,11}
+                ,{8,9,10,11,12}
 
-                ,"13,14,15,16,17"
-                ,"14,15,16,17,18"
-                ,"15,16,17,18,19"
-                ,"16,17,18,19,20"
-                ,"17,18,19,20,21"
-                ,"18,19,20,21,22"
-                ,"19,20,21,22,23"
-                ,"20,21,22,23,24"
-                ,"21,22,23,24,25"
+                ,{13,14,15,16,17}
+                ,{14,15,16,17,18}
+                ,{15,16,17,18,19}
+                ,{16,17,18,19,20}
+                ,{17,18,19,20,21}
+                ,{18,19,20,21,22}
+                ,{19,20,21,22,23}
+                ,{20,21,22,23,24}
+                ,{21,22,23,24,25}
 
-                ,"26,27,28,29,30"
-                ,"27,28,29,30,31"
-                ,"28,29,30,31,32"
-                ,"29,30,31,32,33"
-                ,"30,31,32,33,34"
-                ,"31,32,33,34,35"
-                ,"32,33,34,35,36"
-                ,"33,34,35,36,37"
-                ,"34,35,36,37,38"
+                ,{26,27,28,29,30}
+                ,{27,28,29,30,31}
+                ,{28,29,30,31,32}
+                ,{29,30,31,32,33}
+                ,{30,31,32,33,34}
+                ,{31,32,33,34,35}
+                ,{32,33,34,35,36}
+                ,{33,34,35,36,37}
+                ,{34,35,36,37,38}
 
-                ,"39,40,41,42,43"
-                ,"40,41,42,43,44"
-                ,"41,42,43,44,45"
-                ,"42,43,44,45,46"
-                ,"43,44,45,46,47"
-                ,"44,45,46,47,48"
-                ,"45,46,47,48,49"
-                ,"46,47,48,49,50"
-                ,"47,48,49,50,51"
+                ,{39,40,41,42,43}
+                ,{40,41,42,43,44}
+                ,{41,42,43,44,45}
+                ,{42,43,44,45,46}
+                ,{43,44,45,46,47}
+                ,{44,45,46,47,48}
+                ,{45,46,47,48,49}
+                ,{46,47,48,49,50}
+                ,{47,48,49,50,51}
             };
 
-            for (int i = 0; i < hands.Length; i++)
+            int handsCount = 36;
+            int cardsCount = 5;
+            int matchCount = 0;
+
+            int compare1 = -1;
+            int compare2 = -1;
+
+
+            for (int i = 0; i < handsCount; i++)
             {
-                if (cardStr.IndexOf(hands[i]) != -1)
+                for (int k = 0; k < cardsCount; k++)
+                {
+                    for (int j = 0; j < cards.Length; j++)
+                    {
+                        compare1 = hands[i, k];
+                        compare2 = cards[j];
+
+                        if (compare1 == compare2)
+                        {
+                            matchCount++;
+                        }
+                    }                   
+                }
+
+                if (matchCount == cardsCount)
                 {
                     result.handType = HandResult.HandType.STRAIGHT_FLUSH;
                     result.cardType = (HandResult.CardType)((i - (i % 9)) / 9 + 1);
                     result.hands[0] = 4 + (i % 9);
+
                     break;
                 }
 
+                matchCount = 0;
             }
 
             return result;
@@ -190,7 +232,7 @@ namespace com.dug.Server.Util
                     }
                 }
 
-                if (matchCount > 3)
+                if (matchCount >= 3)
                 {
                     hasTriple = true;
                 }
@@ -607,7 +649,6 @@ namespace com.dug.Server.Util
 
             Array.Sort(order);
 
-
             int ret = order[orderNo];
             int cardType = ret % 4;
             if (cardType == 0) cardType = 1;
@@ -619,5 +660,25 @@ namespace com.dug.Server.Util
 
             return ret;
         }
+
+        public HandResult CheckHands(int[] cards)
+        {
+            HandResult result = null;
+
+            Array.Sort(cards);
+
+            for (int i = 0; i < hands.Length; i++)
+            {
+                result = hands[i](cards);
+
+                if (result.handType != HandResult.HandType.NONE)
+                {
+                    break;
+                }
+            }
+
+            return result;
+        }
+
     }
 }

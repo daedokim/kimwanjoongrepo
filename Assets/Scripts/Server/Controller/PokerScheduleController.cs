@@ -10,11 +10,12 @@
         private DataTable table;
         private long timeTick = GameUtil.GetCurrentTick();
         private CardSortingHelper helper;
-
+      
 
         public PokerScheduleController(DataTable table)
         {
-            this.table = table;            
+            this.table = table;
+            helper = new CardSortingHelper();
         }
 
         public void Thread()
@@ -63,7 +64,7 @@
                 room.stage = 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
 
-                helper = new CardSortingHelper();
+                helper.Initialize();
                 room.card1 = helper.Pop();
                 room.card2 = helper.Pop();
                 room.card3 = helper.Pop();
@@ -135,7 +136,8 @@
         {
             int stageSet = room.stage % 3;
 
-            if(room.stage >= 3)
+
+            if(room.stage >= 3 && room.stage <= 13)
             {
                 switch (stageSet)
                 {
@@ -154,6 +156,7 @@
             }
         }
 
+
         /**
          * 시스템이 세팅하는 스테이지
          */
@@ -161,18 +164,29 @@
         {
             if (room.waitTimeout <= 0)
             {
-                room.stage += 1;
-                room.lastRaise = room.minbetAmount * 2;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
+                if (room.stage == 14)
+                {
+                    GotoFinal(room);
+                }
+                else
+                {
+                    room.stage += 1;
+                    room.lastRaise = room.minbetAmount * 2;
+                    room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
 
-                room.currentOrderNo = table.SelectFirstOrderNo(room.index);
-                room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
+                    room.currentOrderNo = table.SelectFirstOrderNo(room.index);
+                    room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
 
+                    table.UpdateRoom(room);
 
-                table.UpdateRoom(room);
-
-                ClearGamePlayerByStage(room.index, room.stage);
+                    ClearGamePlayerByStage(room.index, room.stage);
+                }
             }
+        }
+
+        private void GotoFinal(Room room)
+        {
+            
         }
 
         private void CheckGameStatus(Room room)
@@ -188,6 +202,7 @@
                     && (playerList[i].state == GamePlayerState.Play || playerList[i].state == GamePlayerState.StandWait)
                 )
                 {
+                    userIndex = playerList[i].useridx;
                     playerCount++;                    
                 }
             }
@@ -196,8 +211,8 @@
             {
                 GameUtil.DebugLog("게임 무효화");
 
-                room.waitTimeout = 15000;
-                room.stage = -1;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
+                room.stage = 14;
                 room.ownerIndex = -1;
                 room.winnerUserIndex = -1;
                 room.currentUserIndex = 0;
@@ -208,7 +223,7 @@
             {
                 GameUtil.DebugLog("남은자가 승자");
 
-                room.waitTimeout = 15000;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
                 room.stage = 14;
                 room.winnerUserIndex = userIndex;
                 table.UpdateRoom(room);
@@ -219,12 +234,15 @@
         {
             if (room.stage == 13)
             {
-                
+                List<GamePlayer> playerList = table.SelectSitGamePlayer(room.index);
+                room.winnerUserIndex = WinnerValidator.Instance.GetWinner(playerList, new int[]{room.card1, room.card2, room.card3, room.card4, room.card5 });
+                room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
+                room.stage = 14;
+                table.UpdateRoom(room);
 
             }
             else
             {
-                
                 room.stage += 1;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                 room.stageBet = 0;
@@ -235,6 +253,7 @@
             }
         }
 
+        
         /**
         *  게임플레이어 베팅 상태 체크 
         */

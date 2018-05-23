@@ -15,11 +15,16 @@ namespace com.dug.Server.Util
 
         public CardSortingHelper()
         {
+        }
+
+        public void Initialize()
+        {
+            cards.Clear();
+
             for (int i = 0; i < CARD_COUNT; i++)
             {
                 cards.Add(i);
             }
-
             Shuffle();
         }
 
