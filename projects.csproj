@@ -291,6 +291,7 @@
     <Compile Include="Assets\Scripts\Client\DAO\RoomDAO.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\CRUDResult.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\GamePlayer.cs" />
+    <Compile Include="Assets\Scripts\Client\DTO\HandResult.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Player.cs" />
     <Compile Include="Assets\Scripts\Client\DTO\Room.cs" />
     <Compile Include="Assets\Scripts\Client\Manager\CardManager.cs" />
@@ -306,11 +307,11 @@
     <Compile Include="Assets\Scripts\Server\GameServer.cs" />
     <Compile Include="Assets\Scripts\Server\util\CardSortingHelper.cs" />
     <Compile Include="Assets\Scripts\Server\util\GameUtil.cs" />
-    <Compile Include="Assets\Scripts\Server\util\HandResult.cs" />
     <Compile Include="Assets\Scripts\Server\util\PokerHandUtil.cs" />
     <Compile Include="Assets\Scripts\Server\util\WinnerValidator.cs" />
     <Compile Include="Assets\Scripts\Server\vo\CRUDResult.cs" />
     <Compile Include="Assets\Scripts\Server\vo\GamePlayer.cs" />
+    <Compile Include="Assets\Scripts\Server\vo\HandResult.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Player.cs" />
     <Compile Include="Assets\Scripts\Server\vo\Room.cs" />
     <Compile Include="Assets\Scripts\Test\SingletonTest.cs" />

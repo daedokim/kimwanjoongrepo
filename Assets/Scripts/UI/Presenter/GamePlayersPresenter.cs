@@ -5,6 +5,7 @@ using com.dug.UI.manager;
 using com.dug.UI.model;
 using com.dug.UI.view;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace com.dug.UI.presenter
 {
@@ -26,6 +27,7 @@ namespace com.dug.UI.presenter
 
             gameEvent.AddGamePlayerEvent(OnUpdateGamePlayer);
             gameEvent.AddHandoutCompleteEvent(OnHandOutComplete);
+            gameEvent.AddWinnerEvent(OnWinner);
         }
 
         private void OnHandOutComplete(int charIndex)
@@ -37,6 +39,17 @@ namespace com.dug.UI.presenter
         {   
             this.view.OnUpateUI(model);
         }
+
+        private void OnWinner()
+        {
+            List<GamePlayer> players = manager.Room.gamePlayers;
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                
+            }
+        }
+
     }
 }
 

@@ -22,6 +22,9 @@ namespace com.dug.UI.view
         [SerializeField]
         public RuntimeAnimatorController[] timelineAnimationControllers = new RuntimeAnimatorController[4];
 
+        [SerializeField]
+        public Sprite[] handSprites;
+
 
         private GamePlayersPresenter presenter = null;
         
@@ -62,6 +65,7 @@ namespace com.dug.UI.view
 
                 script = gamePlayer.GetComponent<UIGamePlayer>();
                 script.ChairIndex = i;
+                script.view = this;
 
                 SetTimelineUI(script);
 
@@ -106,6 +110,16 @@ namespace com.dug.UI.view
             }
         }
 
+        public Sprite GetHandSprite(int handType)
+        {
+            Sprite sprite = null;
+            if(handSprites != null && handType >= 0 && handType < handSprites.Length )
+            {
+                sprite = handSprites[handType];
+            }
+
+            return sprite;
+        }
     }
 }
 

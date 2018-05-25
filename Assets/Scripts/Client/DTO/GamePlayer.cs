@@ -36,6 +36,7 @@
         public long coin;
         public string nickName;
         public long useridx;
+        public HandResult result;
 
 
         // 초기화 여부

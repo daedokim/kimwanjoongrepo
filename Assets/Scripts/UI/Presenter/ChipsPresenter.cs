@@ -45,6 +45,7 @@ namespace com.dug.UI.presenter
 
         private void OnGamePlayerActionUpdate(GamePlayerModel model)
         {
+
             this.model.Update(model);
 
             this.view.ThrowChips(model);

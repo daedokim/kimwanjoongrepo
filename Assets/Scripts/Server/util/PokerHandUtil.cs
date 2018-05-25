@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System;
+using com.dug.Server.vo;
 
 namespace com.dug.Server.Util
 {
@@ -55,6 +56,9 @@ namespace com.dug.Server.Util
                         if (compare1 == compare2)
                         {
                             matchCount++;
+
+                            result.AddMadeCard(compare2);
+                            result.AddMadeCard(compare1);
                         }
                     }
 
@@ -75,8 +79,6 @@ namespace com.dug.Server.Util
         public HandResult CheckStraightFlush(int[] cards)
         {
             HandResult result = new HandResult();
-            string cardStr = GetCardStr(cards);
-
             int[,] hands = {
                  {0,1,2,3,4}
                 ,{1,2,3,4,5}
@@ -139,6 +141,8 @@ namespace com.dug.Server.Util
                         if (compare1 == compare2)
                         {
                             matchCount++;
+                            result.AddMadeCard(compare2);
+                            result.AddMadeCard(compare1);
                         }
                     }                   
                 }
@@ -177,6 +181,9 @@ namespace com.dug.Server.Util
                             matchIndex = cards[i] % 13;
 
                         matchCount++;
+
+                        result.AddMadeCard(cards[j]);
+                        result.AddMadeCard(cards[i]);
                     }
                 }
 
@@ -229,6 +236,9 @@ namespace com.dug.Server.Util
                             matchIndex1 = cards[i] % 13;
 
                         matchCount++;
+
+                        result.AddMadeCard(cards[j]);
+                        result.AddMadeCard(cards[i]);
                     }
                 }
 
@@ -252,6 +262,8 @@ namespace com.dug.Server.Util
                                 matchIndex2 = cards[i] % 13;
 
                             matchCount++;
+                            result.AddMadeCard(cards[j]);
+                            result.AddMadeCard(cards[i]);
                         }
                     }
 
@@ -284,6 +296,9 @@ namespace com.dug.Server.Util
                                 if (matchIndex1 == 0) matchIndex1 = 13;
                             }
                             matchCount++;
+
+                            result.AddMadeCard(cards[j]);
+                            result.AddMadeCard(cards[i]);
                         }
 
                         if (matchIndex1 == -1) continue;
@@ -340,6 +355,9 @@ namespace com.dug.Server.Util
                             matchType = GetCardType(cards[i]);
 
                         matchCount++;
+
+                        result.AddMadeCard(cards[j]);
+                        result.AddMadeCard(cards[i]);
                     }
                 }
 
@@ -371,25 +389,46 @@ namespace com.dug.Server.Util
         public HandResult CheckStraight(int[] cards)
         {
             HandResult result = new HandResult();
-            string cardStr = GetCardStr(cards);
-            int i = 0;
-            int j = 0;
-            string[] hands = {
-                 "0,1,2,3,4"
-                ,"1,2,3,4,5"
-                ,"2,3,4,5,6"
-                ,"3,4,5,6,7"
-                ,"4,5,6,7,8"
-                ,"5,6,7,8,9"
-                ,"6,7,8,9,10"
-                ,"7,8,9,10,11"
-                ,"8,9,10,11,12"
-                ,"0,9,10,11,12"
+            int[,] hands = {
+                 {0,1,2,3,4}
+                ,{1,2,3,4,5}
+                ,{2,3,4,5,6}
+                ,{3,4,5,6,7}
+                ,{4,5,6,7,8}
+                ,{5,6,7,8,9}
+                ,{6,7,8,9,10}
+                ,{7,8,9,10,11}
+                ,{8,9,10,11,12}
+                ,{0,9,10,11,12}
             };
 
-            for (i = 0; i < hands.Length; i++)
+            int handsCount = 10;
+            int cardsCount = 5;
+            int matchCount = 0;
+
+            int compare1 = -1;
+            int compare2 = -1;
+
+
+            for (int i = 0; i < handsCount; i++)
             {
-                if (cardStr.IndexOf(hands[i]) != -1)
+                for (int k = 0; k < cardsCount; k++)
+                {
+                    for (int j = 0; j < cards.Length; j++)
+                    {
+                        compare1 = hands[i, k];
+                        compare2 = cards[j];
+
+                        if (compare1 == compare2)
+                        {
+                            matchCount++;
+                            result.AddMadeCard(compare2);
+                            result.AddMadeCard(compare1);
+                        }
+                    }
+                }
+
+                if (matchCount == cardsCount)
                 {
                     result.handType = HandResult.HandType.STRAIT;
                     if (i == 9)
@@ -400,7 +439,11 @@ namespace com.dug.Server.Util
                     {
                         result.hands[0] = 13 - (9 - i);
                     }
+
+                    break;
                 }
+
+                matchCount = 0;
             }
 
             return result;
@@ -417,10 +460,9 @@ namespace com.dug.Server.Util
 
             for (i = 0; i < cards.Length; i++)
             {
-                matchCount = 0;
-
                 for (j = 0; j < cards.Length; j++)
                 {
+                    if (cards[i] == cards[j]) continue;
                     if (cards[i] % 13 == cards[j] % 13)
                     {
                         if (matchCount == 2)
@@ -429,6 +471,8 @@ namespace com.dug.Server.Util
                             if (matchIndex == 0) matchIndex = 13;
                         }
                         matchCount++;
+
+                        result.AddMadeCard(cards[i]);
                     }
                 }
 
@@ -468,10 +512,9 @@ namespace com.dug.Server.Util
 
             for (i = 0; i < cards.Length; i++)
             {
-                matchCount = 0;
-
                 for (j = 0; j < cards.Length; j++)
                 {
+                    if (cards[i] == cards[j]) continue;
                     if (cards[i] % 13 == cards[j] % 13)
                     {
                         if (matchCount == 1)
@@ -492,11 +535,16 @@ namespace com.dug.Server.Util
                             {
                                 result.hands[endCount] = matchIndex;
                                 matchCount++;
+
+                                
+                                result.AddMadeCard(cards[i]);
                             }
                         }
                         else
                         {
                             matchCount++;
+
+                            result.AddMadeCard(cards[i]);
                         }
                     }
 
@@ -543,7 +591,6 @@ namespace com.dug.Server.Util
             for (i = 0; i < cards.Length; i++)
             {
                 matchCount = 0;
-
                 for (j = 0; j < cards.Length; j++)
                 {
                     if (cards[i] % 13 == cards[j] % 13)
@@ -566,6 +613,8 @@ namespace com.dug.Server.Util
                             }
                         }
                         matchCount++;
+                        result.AddMadeCard(cards[i]);
+                        
                     }
                 }
 
@@ -598,6 +647,8 @@ namespace com.dug.Server.Util
             {
                 result.hands[i] = GetCardOrder(cards, i) % 13;
                 if (result.hands[i] == 0) result.hands[i] = 13;
+
+                result.AddMadeCard(cards[i]);
             }
 
             return result;
@@ -633,7 +684,6 @@ namespace com.dug.Server.Util
         public static int GetCardOrder(int[] cards, int orderNo)
         {
             int i = 0;
-            int j = 0;
             int value = 0;
             int[] order = new int[cards.Length];
 
@@ -667,7 +717,7 @@ namespace com.dug.Server.Util
 
             Array.Sort(cards);
 
-            for (int i = 0; i < hands.Length; i++)
+            for (int i = hands.Length - 1; i >= 0; i--)
             {
                 result = hands[i](cards);
 

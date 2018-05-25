@@ -26,12 +26,15 @@ namespace com.dug.UI.model
         public long stageBet = 0;
         public long totalBet = 0;
 
+        public HandResult result;
 
         public long userIndex = 0;
         public long coin = 0;
         public string nickName;
         public bool isMyTurn;
         public int roomStage;
+        public bool isWinner;
+        
 
         public enum GamePlayerState
         {
@@ -68,10 +71,13 @@ namespace com.dug.UI.model
             userIndex = gamePlayer.useridx;
             coin = gamePlayer.coin;
             nickName = gamePlayer.nickName;
+            result = gamePlayer.result;
 
             isMyTurn = gamePlayer.useridx == room.currentUserIndex && roomStage % 3 == 0;
+            
             betCount = room.betCount;
             roomStage = room.stage;
+            isWinner = room.winnerUserIndex == gamePlayer.useridx;
         }
 
         public void Update(GamePlayerModel model)
@@ -91,12 +97,15 @@ namespace com.dug.UI.model
             stageBet = model.stageBet;
             totalBet = model.totalBet;
 
+            result = model.result;
+
             userIndex = model.userIndex;
             coin = model.coin;
             nickName = model.nickName;
             isMyTurn = model.isMyTurn;
 
             roomStage = model.roomStage;
+            isWinner = model.isWinner;
 
         }
     }

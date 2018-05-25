@@ -38,8 +38,6 @@ namespace com.dug.Server.Util
 
                 playerList[i].result = handUtil.CheckHands(cards);
 
-                print(playerList[i].result.handType);
-
                 currentHand = (int)playerList[i].result.handType;
 
                 if (maxHand < currentHand)

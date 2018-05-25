@@ -4,6 +4,7 @@ using UnityEngine;
 using UniRx;
 
 using com.dug.Server.Util;
+using com.dug.Server.vo;
 using System;
 
 public class Test : MonoBehaviour {
@@ -47,6 +48,20 @@ public class Test : MonoBehaviour {
             CheckHands();
         });
 
+
+        int count = 0;
+
+        while(count < 1)
+        {
+            CheckHands();
+
+            if(result != null && result.handType == HandResult.HandType.ONE_PAIR)
+            {
+                break;
+            }
+            count++;
+        }
+
     }
 
     private void CheckHands()
@@ -54,10 +69,16 @@ public class Test : MonoBehaviour {
         result.handType = HandResult.HandType.NONE;
         SetCards();
 
-
-
-        for (int i = 0; i < hands.Length; i++)
+        for (int i = hands.Length -1 ; i >= 0; i--)
         {
+            cards[0] = 1;
+            cards[1] = 14;
+            cards[2] = 27;
+            cards[3] = 15;
+            cards[4] = 31;
+            cards[5] = 32;
+            cards[6] = 46;
+
             result = hands[i](cards);
 
             if (result.handType != HandResult.HandType.NONE)

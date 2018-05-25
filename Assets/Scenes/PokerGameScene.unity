@@ -2280,6 +2280,17 @@ MonoBehaviour:
   - {fileID: 9100000, guid: bf37219c2223f764c96f405fcfff33e6, type: 2}
   - {fileID: 9100000, guid: 3dd97878f2515714fb8af37e4c034faa, type: 2}
   - {fileID: 9100000, guid: 92161f6d64a5b7a4eb719669b19171e4, type: 2}
+  handSprites:
+  - {fileID: 21300000, guid: cf1d3bfccd142c343b5fed24dcb8f276, type: 3}
+  - {fileID: 21300000, guid: f5690c4c3250fc748824084df466cd59, type: 3}
+  - {fileID: 21300000, guid: a2ac117513d558542a42f8f5cceb503c, type: 3}
+  - {fileID: 21300000, guid: 870194676533f1e4faa9a30ab2aa6ade, type: 3}
+  - {fileID: 21300000, guid: 8e767547eebc63d4eb4e95aeffafd185, type: 3}
+  - {fileID: 21300000, guid: 75c50a28883bb0143ac13f21ef090208, type: 3}
+  - {fileID: 21300000, guid: 015574648bcc7464897a430f1aff2edc, type: 3}
+  - {fileID: 21300000, guid: 5ce94d27202ea0b4e9f30381b8c5d4cb, type: 3}
+  - {fileID: 21300000, guid: 238eae785b1426d4e9b403d00a952436, type: 3}
+  - {fileID: 21300000, guid: 410bc90c7af59504fbf971cdfcbfcfc7, type: 3}
 --- !u!114 &1688981463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,7 +2710,8 @@ MonoBehaviour:
     handType: -1
     hands: ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     kicks: ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  cards: 01000000020000000300000004000000050000000600000007000000
+  cards: 27000000260000003100000032000000330000000600000007000000
+  cardsType: 00000000090000000a0000000b0000000c0000000600000007000000
   flag: 0
 --- !u!4 &1879505169
 Transform:

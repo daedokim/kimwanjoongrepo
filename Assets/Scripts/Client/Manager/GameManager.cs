@@ -45,6 +45,12 @@ namespace com.dug.UI.manager
                     gameEvent.InvokePlayerTurnEvent(gamePlayerModel);
                 }
             }).AddTo(this);
+
+            roomModel.ObserveEveryValueChanged(x => x.stage).Where(x=> x == 14).Subscribe(x => {
+
+                gameEvent.InvokeWinnerEvent();
+            });
+
             InvokeRepeating("Thread", 0.10f, 0.10f);
         }
     

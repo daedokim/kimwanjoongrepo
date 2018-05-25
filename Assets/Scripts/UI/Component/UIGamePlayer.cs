@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using com.dug.UI.manager;
+using com.dug.UI.view;
 
 namespace com.dug.UI.component
 {
@@ -18,19 +19,24 @@ namespace com.dug.UI.component
         public Image picture = null;
         [SerializeField]
         public GameObject timeLineGameObject = null;
+        [SerializeField]
+        private Image handObject = null;
+        [SerializeField]
+        private GameObject winnerObject = null;
 
         [HideInInspector]
         private UICard firstCard = null;
         [HideInInspector]
         private UICard secondCard = null;
-
-
+        [HideInInspector]
         private UITimeline timeline = null;
+        [HideInInspector]
+        public GamePlayersView view = null;
 
-        
         public int chairIndex = -1;
 
         GamePlayerModel model = new GamePlayerModel();
+
 
         public GamePlayerModel Model {get {return model;} }
          
@@ -98,6 +104,11 @@ namespace com.dug.UI.component
             {
                 GameManager.Instance.GameEvent.InvokeGamePlayerActionEvent(model);   
             });
+
+            model.ObserveEveryValueChanged(x => x.roomStage).Where(x => x == 14).Subscribe(x => {
+
+                ShowHandResult();
+            });
         }
 
         public void SetTimeLine(RuntimeAnimatorController controller)
@@ -109,13 +120,13 @@ namespace com.dug.UI.component
         {
             firstCard = CardManager.Instance.GetCards(model.card1);
             firstCard.transform.SetParent(transform);
-            firstCard.transform.localPosition = new Vector2(80.4f, 0);
+            firstCard.transform.localPosition = new Vector2(90.8f, -17f);
             firstCard.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             firstCard.gameObject.SetActive(true);
 
             secondCard = CardManager.Instance.GetCards(model.card2);
             secondCard.transform.SetParent(transform);
-            secondCard.transform.localPosition = new Vector2(141.7f, 0);
+            secondCard.transform.localPosition = new Vector2(153f, -17f);
             secondCard.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             secondCard.gameObject.SetActive(true);
         }
@@ -180,6 +191,23 @@ namespace com.dug.UI.component
             firstCard.SetFace(true);
             secondCard.SetFace(true);
         }
+
+        private void ShowHandResult()
+        {
+            if(this.model.isWinner == true)
+            {
+                winnerObject.SetActive(true);
+            }
+            
+            handObject.gameObject.SetActive(true);
+            handObject.sprite = view.GetHandSprite((int)this.model.result.handType);
+
+            if (firstCard == null && secondCard == null)
+                ShowOwnCard();
+
+
+        }
+
 
     }
 }
