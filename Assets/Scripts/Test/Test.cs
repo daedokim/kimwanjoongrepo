@@ -69,16 +69,18 @@ public class Test : MonoBehaviour {
         result.handType = HandResult.HandType.NONE;
         SetCards();
 
+        cards[0] = 17;
+        cards[1] = 16;
+        cards[2] = 15;
+        cards[3] = 3;
+        cards[4] = 14;
+        cards[5] = 11;
+        cards[6] = 13;
+
+        Array.Sort(cards);
+
         for (int i = hands.Length -1 ; i >= 0; i--)
         {
-            cards[0] = 1;
-            cards[1] = 14;
-            cards[2] = 27;
-            cards[3] = 15;
-            cards[4] = 31;
-            cards[5] = 32;
-            cards[6] = 46;
-
             result = hands[i](cards);
 
             if (result.handType != HandResult.HandType.NONE)
