@@ -45,6 +45,7 @@ namespace com.dug.UI.view
             }
         }
 
+
         public void Turn(int cardIndex)
         {
             UICard card = cardManager.GetCards(cardIndex);
@@ -56,6 +57,7 @@ namespace com.dug.UI.view
             cards[3] = card;
         }
 
+
         public void River(int cardIndex)
         {
             UICard card = cardManager.GetCards(cardIndex);
@@ -66,5 +68,42 @@ namespace com.dug.UI.view
             card.SetFace(true);
             cards[4] = card;
         }
+
+
+        public void ShowResult(GamePlayerModel model)
+        {
+            int[] madeCards = model.result.madeCards;
+
+            for(int i = 0; i < cards.Length; i++)
+            {
+                cards[i].transform.localPosition = new Vector2(cards[i].transform.localPosition.x, cards[i].transform.localPosition.y - 20);
+                cards[i].SetAlpha(0.3f);
+
+                for (int j =0; j < madeCards.Length; j++)
+                {    
+                    if (cards[i].index == madeCards[j])
+                    {
+                        cards[i].transform.localPosition = new Vector2(cards[i].transform.localPosition.x, cards[i].transform.localPosition.y + 20);
+                        cards[i].SetAlpha(1);
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (cards[i] == null) return;
+
+                cards[i].gameObject.SetActive(false);                
+            }
+
+            cards = new UICard[5];
+        }
+
+
     }
 }

@@ -46,9 +46,9 @@ namespace com.dug.UI.manager
                 }
             }).AddTo(this);
 
-            roomModel.ObserveEveryValueChanged(x => x.stage).Where(x=> x == 14).Subscribe(x => {
+            roomModel.ObserveEveryValueChanged(x => x.stage).Where(x => x == 17).Subscribe(x => {
 
-                gameEvent.InvokeWinnerEvent();
+                gameEvent.InvokeClearEvent();
             });
 
             InvokeRepeating("Thread", 0.10f, 0.10f);
@@ -108,31 +108,31 @@ namespace com.dug.UI.manager
         public void OnCall(long userIdx, long stageBet) 
         {            
             dao.SetPlayerBetting(roomIndex, userIdx, BetType.Call, Room.stageBet - stageBet, 0);
-            gameEvent.InvokePlayerTurnEndEvent();
+            //gameEvent.InvokePlayerTurnEndEvent();
         }
 
         public void OnRaise(long userIdx, long stageBet, long betAmount)
         {            
             dao.SetPlayerBetting(roomIndex, userIdx, BetType.Raise, Room.stageBet - stageBet, betAmount);
-            gameEvent.InvokePlayerTurnEndEvent();
+            //gameEvent.InvokePlayerTurnEndEvent();
         }
 
         public void OnCheck(long userIdx)
         {
             dao.SetPlayerBetting(roomIndex, userIdx, BetType.Check, 0, 0);
-            gameEvent.InvokePlayerTurnEndEvent();
+            //gameEvent.InvokePlayerTurnEndEvent();
         }
 
         public void OnFold(long userIndex)
         {
             dao.SetPlayerBetting(roomIndex, userIndex, BetType.Fold, 0, 0);
-            gameEvent.InvokePlayerTurnEndEvent();
+            //gameEvent.InvokePlayerTurnEndEvent();
         }
 
         public void OnAllIn(long userIndex, long stageBet, long buyInLeft)
         {
             dao.SetPlayerBetting(roomIndex, userIndex, BetType.Allin, Room.stageBet - stageBet, buyInLeft);
-            gameEvent.InvokePlayerTurnEndEvent();
+            //gameEvent.InvokePlayerTurnEndEvent();
         }
 
         public CRUDResult SitChair(long userIndex, int chairIndex, long buyInLeft)

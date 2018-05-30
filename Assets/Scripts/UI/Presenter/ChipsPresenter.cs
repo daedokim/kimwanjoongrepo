@@ -28,6 +28,7 @@ namespace com.dug.UI.presenter
 
             GameEvent.Instance.AddGamePlayerActionEvent(OnGamePlayerActionUpdate);
             GameEvent.Instance.AddRoomEvent(OnUpdateRoom);
+            GameEvent.Instance.AddClearEvent(OnClearAll);
 
             roomModel.ObserveEveryValueChanged(x => x.stage).Subscribe(x =>
             {
@@ -38,6 +39,11 @@ namespace com.dug.UI.presenter
             });
         }
 
+        private void OnClearAll()
+        {
+            this.view.Clear();
+        }
+
         private void OnUpdateRoom(RoomModel model)
         {
             roomModel.Update(model);
@@ -45,9 +51,7 @@ namespace com.dug.UI.presenter
 
         private void OnGamePlayerActionUpdate(GamePlayerModel model)
         {
-
             this.model.Update(model);
-
             this.view.ThrowChips(model);
         }
     }

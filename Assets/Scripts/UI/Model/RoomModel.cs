@@ -23,6 +23,7 @@ namespace com.dug.UI.model
         public int card4 = 0;
         public int card5 = 0;
         public int playerCount = 0;
+        public long winnerUserIndex = 0;
         public RoomState state = RoomState.Wait;
 
         public void SetRoomData(Room room)
@@ -42,6 +43,7 @@ namespace com.dug.UI.model
             card4 = room.card4;
             card5 = room.card5;
 
+            winnerUserIndex = room.winnerUserIndex;
             playerCount = room.gamePlayers.Count;
         }
 
@@ -63,6 +65,7 @@ namespace com.dug.UI.model
             card4 = model.card4;
             card5 = model.card5;
 
+            winnerUserIndex = model.winnerUserIndex;
             playerCount = model.playerCount;
         }
 
@@ -89,7 +92,7 @@ namespace com.dug.UI.model
 
         public enum Stage
         {
-            PreFlop = 3, Flop = 6, Turn = 9, River = 12
+            PreFlop = 3, Flop = 6, Turn = 9, River = 12, Winner = 14, WinnerSolo = 15
         }
     }
 }

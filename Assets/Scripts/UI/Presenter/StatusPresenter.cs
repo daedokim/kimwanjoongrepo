@@ -29,12 +29,6 @@ namespace com.dug.UI.presenter
                 SetStateHandler();
             });
 
-            GameEvent.Instance.AddPlayerTurnEndEvent(OnPlayerTurnEnd);
-        }
-
-        private void OnPlayerTurnEnd()
-        {
-            DisposeWaitTimeout();
         }
 
         private void SetStateHandler()
@@ -58,7 +52,7 @@ namespace com.dug.UI.presenter
                 waitTimeoutDispose = null;
             }
 
-            int waitTimeout = time;
+            int waitTimeout = time - 1000;
             waitTimeoutDispose = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
             {
                 waitTimeout -= 1000;

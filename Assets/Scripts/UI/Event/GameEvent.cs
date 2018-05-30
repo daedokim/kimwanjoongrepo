@@ -15,7 +15,7 @@ namespace com.dug.UI.events
     [System.Serializable]
     public class GamePlayerAcionEvent : UnityEvent<GamePlayerModel> { }
     [System.Serializable]
-    public class WinnerEvent: UnityEvent { }
+    public class ClearEvent: UnityEvent { }
     
     [System.Serializable]
     public class HandoutCompleteEvent : UnityEvent<int> { }
@@ -29,7 +29,7 @@ namespace com.dug.UI.events
         private GamePlayerAcionEvent gamePlayerActionEvent = new GamePlayerAcionEvent();
         private RoomEvent roomEvent = new RoomEvent();
         private HandoutCompleteEvent handoutCompleteEvent = new HandoutCompleteEvent();
-        private WinnerEvent winnerEvent = new WinnerEvent();
+        private ClearEvent clearEvent = new ClearEvent();
         
 
         public void AddGamePlayerEvent(UnityAction<GamePlayerModel> call)
@@ -72,25 +72,25 @@ namespace com.dug.UI.events
             playerTurnEvent.Invoke(model);
         }
 
-        public void AddPlayerTurnEndEvent(UnityAction call)
-        {
-            playerTurnEndEvent.AddListener(call);
-        }
+        //public void AddPlayerTurnEndEvent(UnityAction call)
+        //{
+        //    playerTurnEndEvent.AddListener(call);
+        //}
 
-        public void RemovePlayerTurnEndEvent(UnityAction call)
-        {
-            playerTurnEndEvent.RemoveListener(call);
-        }
+        //public void RemovePlayerTurnEndEvent(UnityAction call)
+        //{
+        //    playerTurnEndEvent.RemoveListener(call);
+        //}
 
-        public void RemoveAllPlayerTurnEndEvent()
-        {
-            playerTurnEndEvent.RemoveAllListeners();
-        }
+        //public void RemoveAllPlayerTurnEndEvent()
+        //{
+        //    playerTurnEndEvent.RemoveAllListeners();
+        //}
 
-        public void InvokePlayerTurnEndEvent()
-        {
-            playerTurnEndEvent.Invoke();
-        }
+        //public void InvokePlayerTurnEndEvent()
+        //{
+        //    playerTurnEndEvent.Invoke();
+        //}
 
         public void AddGamePlayerActionEvent(UnityAction<GamePlayerModel> call)
         {
@@ -152,24 +152,24 @@ namespace com.dug.UI.events
             handoutCompleteEvent.Invoke(chairIndex);
         }
 
-        public void AddWinnerEvent(UnityAction call)
+        public void AddClearEvent(UnityAction call)
         {
-            winnerEvent.AddListener(call);
+            clearEvent.AddListener(call);
         }
 
-        public void RemoveWinnerEvent(UnityAction call)
+        public void RemoveClearEvent(UnityAction call)
         {
-            winnerEvent.RemoveListener(call);
+            clearEvent.RemoveListener(call);
         }
 
-        public void RemoveWinnerEvent()
+        public void RemoveClearEvent()
         {
-            winnerEvent.RemoveAllListeners();
+            clearEvent.RemoveAllListeners();
         }
 
-        public void InvokeWinnerEvent()
+        public void InvokeClearEvent()
         {
-            winnerEvent.Invoke();
+            clearEvent.Invoke();
         }
     }
 }

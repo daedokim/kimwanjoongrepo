@@ -19,12 +19,20 @@ public class UICard : MonoBehaviour
         face.sprite = sprite;
         back.sprite = cardBack;
 
+        SetAlpha(1);
+
         this.index = index;
     }
 
-    internal void SetFace(bool isFace)
+    public void SetFace(bool isFace)
     {
         face.gameObject.SetActive(isFace);
         back.gameObject.SetActive(!isFace);
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        face.color = new Color(face.color.r, face.color.g, face.color.b, alpha);
+        back.color = new Color(back.color.r, back.color.g, back.color.b, alpha);
     }
 }

@@ -36,8 +36,17 @@ namespace com.dug.UI.presenter
                 {
                     this.view.River(model.card5);
                 }
+                else if(x == (int) RoomModel.Stage.Winner)
+                {
+                    this.view.ShowResult(manager.GetGamePlayerByUserIndex(this.model.winnerUserIndex));
+                }
+                else if (x == (int)RoomModel.Stage.WinnerSolo)
+                {
+                    
+                }
             });
 
+            GameEvent.Instance.AddClearEvent(ClearAll);
             GameEvent.Instance.AddRoomEvent(OnUpdateRoomEvent);
         }
 
@@ -45,5 +54,11 @@ namespace com.dug.UI.presenter
         {
             this.model.Update(model);
         }
+
+        private void ClearAll()
+        {
+            this.view.Clear();
+        }
+
     }
 }

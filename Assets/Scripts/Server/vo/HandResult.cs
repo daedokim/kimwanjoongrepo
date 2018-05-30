@@ -54,6 +54,11 @@ namespace com.dug.Server.vo
                 }
             }
         }
+
+        public void InitializeMadeCard()
+        {
+            madeCards = new int[]{ -1, -1, -1, -1, -1, -1, -1 };
+        }
     }
 }
 

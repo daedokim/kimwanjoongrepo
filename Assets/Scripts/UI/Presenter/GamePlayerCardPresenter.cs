@@ -23,8 +23,6 @@ namespace com.dug.UI.presenter
 
             this.view.CreateTableCards();
 
-            GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
-
             roomModel.ObserveEveryValueChanged(x => x.state).Subscribe(x => {
                 if(x == RoomModel.RoomState.Setting)
                 {
@@ -32,6 +30,8 @@ namespace com.dug.UI.presenter
                 }
             });
 
+            GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
+            GameEvent.Instance.AddClearEvent(OnClearAll);
         }
 
         private void HandoutCards()
@@ -54,6 +54,12 @@ namespace com.dug.UI.presenter
         {
             this.roomModel.Update(model);
         }
+
+        private void OnClearAll()
+        {
+            this.view.Clear();
+        }
+
     }
 }
 

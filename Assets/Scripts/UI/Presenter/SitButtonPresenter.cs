@@ -25,7 +25,7 @@ namespace com.dug.UI.presenter
 
             this.view.CreateSitButtons();
 
-            this.model.ObserveEveryValueChanged(x => x.playerCount).Skip(1).Subscribe(_ => {
+            this.model.ObserveEveryValueChanged(x => x.playerCount).Subscribe(_ => {
 
                 UpdateChair();
             });
@@ -35,6 +35,9 @@ namespace com.dug.UI.presenter
 
         private void UpdateChair()
         {
+            if (manager.Room == null)
+                return;
+
             List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
 
             List<int> chairIndice = new List<int>();

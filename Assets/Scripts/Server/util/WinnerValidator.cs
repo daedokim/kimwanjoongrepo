@@ -16,60 +16,54 @@ namespace com.dug.Server.Util
             handUtil = new PokerHandUtil();
         }
 
-        public long GetWinner(List<GamePlayer> playerList, int[] tableCards)
+        public HandResult GetResult(int[] cards)
+        {
+            return handUtil.CheckHands(cards);
+        }
+
+        public long GetWinner(List<GamePlayer> playerList)
         {
             long userIndex = 0;
 
-            List<GamePlayer> resultList = null;
+            List<GamePlayer> winnerList = null;
             int maxHand = -1;
             int currentHand = -1;
 
             for (int i = 0; i < playerList.Count; i++)
             {
-                int[] cards = new int[7];
-
-                cards[0] = playerList[i].card1;
-                cards[1] = playerList[i].card2;
-                cards[2] = tableCards[0];
-                cards[3] = tableCards[1];
-                cards[4] = tableCards[2];
-                cards[5] = tableCards[3];
-                cards[6] = tableCards[4];
-
-                playerList[i].result = handUtil.CheckHands(cards);
-
                 currentHand = (int)playerList[i].result.handType;
 
                 if (maxHand < currentHand)
                 {
                     maxHand = currentHand;
-                    resultList = new List<GamePlayer>();
-                    resultList.Add(playerList[i]);
+                    winnerList = new List<GamePlayer>();
+                    winnerList.Add(playerList[i]);
                 }
                 else if (maxHand == currentHand)
                 {
-                    resultList.Add(playerList[i]);
+                    winnerList.Add(playerList[i]);
                 }
             }
 
-            if (resultList != null)
+            if (winnerList != null)
             {
-                if (resultList.Count == 1)
+                if (winnerList.Count == 1)
                 {
-                    userIndex = resultList[0].useridx;
+                    userIndex = winnerList[0].useridx;
                 }
-                else if (resultList.Count > 1)
+                else if (winnerList.Count > 1)
                 {
-                    userIndex = GetTiedWinner(resultList);
+                    userIndex = GetTiedWinner(winnerList);
 
                     if (userIndex == 0)
-                        userIndex = GetKickWinner(resultList);
+                        userIndex = GetKickWinner(winnerList);
                 }
             }
-            
-            return userIndex;
-        }
 
+            return userIndex;
+
+        }
+       
         private long GetTiedWinner(List<GamePlayer> resultList)
         {
             long userIndex = 0;

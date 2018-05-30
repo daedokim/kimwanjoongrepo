@@ -68,6 +68,14 @@ namespace com.dug.UI.view
             }
         }
 
+        public void Clear()
+        {
+            for (int i = 0; i < tableCards.Length; i++)
+            {
+                tableCards[i].gameObject.SetActive(false);
+            }
+        }
+
         public void HandAllOut(int chairIndex)
         {
             for (int i = 0; i < tableCards.Length; i++)

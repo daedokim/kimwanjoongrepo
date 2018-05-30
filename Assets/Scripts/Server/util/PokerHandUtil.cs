@@ -46,6 +46,8 @@ namespace com.dug.Server.Util
 
             for (int i = 0; i < handsCount; i++)
             {
+                matchCount = 0;
+                result.InitializeMadeCard();
                 for (int k = 0; k < cardsCount; k++)
                 {
                     for (int j = 0; j < cards.Length; j++)
@@ -132,6 +134,9 @@ namespace com.dug.Server.Util
 
             for (int i = 0; i < handsCount; i++)
             {
+                matchCount = 0;
+                result.InitializeMadeCard();
+
                 for (int k = 0; k < cardsCount; k++)
                 {
                     for (int j = 0; j < cards.Length; j++)
@@ -399,70 +404,89 @@ namespace com.dug.Server.Util
         public HandResult CheckStraight(int[] cards)
         {
             HandResult result = new HandResult();
-            int[,] hands = {
-                 {0,1,2,3,4}
-                ,{1,2,3,4,5}
-                ,{2,3,4,5,6}
-                ,{3,4,5,6,7}
-                ,{4,5,6,7,8}
-                ,{5,6,7,8,9}
-                ,{6,7,8,9,10}
-                ,{7,8,9,10,11}
-                ,{8,9,10,11,12}
-                ,{0,9,10,11,12}
+            string[] hands = {
+                 "0,1,2,3,4"
+                ,"1,2,3,4,5"
+                ,"2,3,4,5,6"
+                ,"3,4,5,6,7"
+                ,"4,5,6,7,8"
+                ,"5,6,7,8,9"
+                ,"6,7,8,9,10"
+                ,"7,8,9,10,11"
+                ,"8,9,10,11,12"
+                ,"9,10,11,12"
             };
 
-            int handsCount = 10;
-            int cardsCount = 5;
-            int matchCount = 0;
             int i = 0;
-            int compare1 = -1;
-            int compare2 = -1;
+            int j = 0;
+            int k = 0;
 
-            int[] savedCard = new int[cards.Length];
+            int[] compareCards = new int[cards.Length];
 
             for (i = 0; i < cards.Length; i++)
             {
-                savedCard[i] = cards[i] % 13;
+                compareCards[i] = cards[i] % 13;
             }
 
+            string cardStr = GetCardStr(compareCards);
 
-            for (i = 0; i < handsCount; i++)
+
+            for (i = 0; i < hands.Length; i++)
             {
-                for (int k = 0; k < cardsCount; k++)
+                result.InitializeMadeCard();
+
+                if(i == 9)
                 {
-                    for (int j = 0; j < savedCard.Length; j++)
+                    if(cardStr.IndexOf(hands[i]) >= 0 && GameUtil.IndexOf(compareCards, 0) >= 0)
                     {
-                        compare1 = hands[i, k];
-                        compare2 = savedCard[j];
-
-                        if (compare2 == -1) continue;
-
-                        if (compare1 == compare2)
-                        {
-                            matchCount++;
-                            
-                            result.AddMadeCard(cards[j]);
-                        }
-                    }
-                }
-
-                if (matchCount == cardsCount)
-                {
-                    result.handType = HandResult.HandType.STRAIT;
-                    if (i == 9)
-                    {
+                        result.handType = HandResult.HandType.STRAIT;
                         result.hands[0] = 13;
-                    }
-                    else
-                    {
-                        result.hands[0] = 13 - (9 - i);
-                    }
 
-                    break;
+                        string[] selectedHands = hands[i].Split(',');
+
+                        for(j = 0; j < compareCards.Length; j++)
+                        {
+                            for(k = 0; k < selectedHands.Length; k++)
+                            {
+                                if(compareCards[j] == Convert.ToInt16(selectedHands[k]))
+                                {
+                                    result.AddMadeCard(cards[j]);
+                                    break;
+                                }
+                            }
+
+                            if(cards[j] % 13 == 0)
+                            {
+                                result.AddMadeCard(cards[j]);
+                            }
+                        }
+                        break;
+                    }
                 }
+                else
+                {
+                    if (cardStr.IndexOf(hands[i]) >= 0)
+                    {
+                        result.handType = HandResult.HandType.STRAIT;
+                        result.hands[0] = 13 - (9 - i);
 
-                matchCount = 0;
+                        string[] selectedHands = hands[i].Split(',');
+
+                        for (j = 0; j < compareCards.Length; j++)
+                        {
+                            for (k = 0; k < selectedHands.Length; k++)
+                            {
+                                if (compareCards[j] == Convert.ToInt16(selectedHands[k]))
+                                {
+                                    result.AddMadeCard(cards[j]);
+                                    break;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+                }
             }
 
             return result;
@@ -686,13 +710,21 @@ namespace com.dug.Server.Util
         public static string GetCardStr(int[] cards)
         {
             StringBuilder builder = new StringBuilder();
+            int[] tempCards = new int[cards.Length];
+            int count = 0;
+            Array.Copy(cards, tempCards, cards.Length);
+            Array.Sort<int>(tempCards);
 
-            for (int i = 0; i < cards.Length; i++)
+            for (int i = 0; i < tempCards.Length; i++)
             {
-                if (i > 0)
+                if (tempCards[i] == -1)
+                    continue;
+                if (count > 0)
                     builder.Append(",");
 
-                builder.Append(cards[i]);
+                builder.Append(tempCards[i]);
+
+                count++;
             }
             return builder.ToString();
         }

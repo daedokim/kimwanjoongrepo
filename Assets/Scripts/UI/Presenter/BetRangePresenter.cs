@@ -53,9 +53,10 @@ namespace com.dug.UI.presenter
             });
 
             gameEvent.AddPlayerTurnEvent(OnUpdatePlayerEvent);
-            gameEvent.AddPlayerTurnEndEvent(OnTurnEndEvent);
+            //gameEvent.AddPlayerTurnEndEvent(OnTurnEndEvent);
+            gameEvent.AddClearEvent(OnClearAll);
         }
-      
+
         private void OnChangeBetRange(float rate)
         {
             double minRaiseBet = manager.Room.lastRaise * 2;
@@ -84,11 +85,17 @@ namespace com.dug.UI.presenter
             this.view.EnableScrollBar(editable);
         }
 
-        private void OnTurnEndEvent()
+        private void OnClearAll()
         {
-            editable = false;
-            this.view.EnableScrollBar(editable);
+            this.view.Clear();
         }
+
+
+        //private void OnTurnEndEvent()
+        //{
+        //    editable = false;
+        //    this.view.EnableScrollBar(editable);
+        //}
 
 
     }

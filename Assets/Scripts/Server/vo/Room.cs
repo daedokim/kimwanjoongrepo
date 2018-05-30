@@ -13,6 +13,7 @@ namespace com.dug.Server.vo
         public static int MINIMUM_GAME_PLAYER_COUNT_FOR_GAME = 2;
         public static int WAITTIMEOUT_BY_SETTING = 1000;
         public static int WAITTIMEOUT_BY_GAME_PLAYER = 17000;
+        public static int WAITTIMEOUT_INITIALIZE= 1000;
         public static int WAITTIMEOUT_BY_READY = 5000;
         public bool isInit;
         public int index;

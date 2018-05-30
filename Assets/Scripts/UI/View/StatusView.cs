@@ -8,6 +8,9 @@ namespace com.dug.UI.view
     {
         private StatusPresenter presenter;
 
+        [SerializeField]
+        private Text statusText;
+
         private void Awake()
         {
             presenter = new StatusPresenter(this);
@@ -15,6 +18,7 @@ namespace com.dug.UI.view
 
         public void SetStatusText(string text)
         {
+            statusText.text = text;
         }
     }
 }

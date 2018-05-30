@@ -23,11 +23,27 @@ namespace com.dug.UI.presenter
             this.view = view;
             this.manager = GameManager.Instance;
 
+            this.ObserveEveryValueChanged(x => x.isClickable).Subscribe(x => {
+
+                if(x == false)
+                {
+                    view.EnableAllButtons(false);
+                }
+                
+            });
+
             this.view.OnCallButtonClicked.Where(_=> isClickable).Subscribe(x =>
             {
                 manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
                 isClickable = false;
             });
+
+            this.view.OnCall2ButtonClicked.Where(_ => isClickable).Subscribe(x =>
+            {
+                manager.OnCall(currentGamePlayer.userIndex, currentGamePlayer.stageBet);
+                isClickable = false;
+            });
+
 
 
             this.view.OnCallButtonClicked.Where(_ => isClickable).Subscribe(x =>
@@ -62,6 +78,14 @@ namespace com.dug.UI.presenter
             });
 
             GameEvent.Instance.AddPlayerTurnEvent(OnPlayerTurnEvent);
+            GameEvent.Instance.AddClearEvent(OnClearAll);
+        }
+
+        private void OnClearAll()
+        {
+            view.EnableAllButtons(false);
+            raiseBetAmount = 0;
+            isClickable = false;
         }
 
         private void OnPlayerTurnEvent(GamePlayerModel model)
@@ -70,6 +94,8 @@ namespace com.dug.UI.presenter
             bool isBlind = currentGamePlayer.roomStage == (int)Stage.PreFlop && currentGamePlayer.betCount <= 1;
             if (isBlind == false && model.lastBetType != GamePlayerModel.BetType.Allin && model.lastBetType != GamePlayerModel.BetType.Fold)
             {
+                view.SetCallButton(model.betCount != 0, manager.Room.lastRaise);
+
                 view.EnableAllButtons(true);
 
                 view.EnableCallButton(model.betCount != 0);

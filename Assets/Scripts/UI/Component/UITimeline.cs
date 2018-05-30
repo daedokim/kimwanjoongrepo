@@ -85,8 +85,10 @@ namespace com.dug.UI.component
                 {
                     myTime = 0;
                 }
-
                 int time = (model.RoomModel.WAITTIMEOUT_BY_GAME_PLAYER/1000) - (int)myTime;
+
+                if (time < 0)
+                    time = 0;
 
                 secondText.text = time.ToString();
             }            

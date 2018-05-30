@@ -27,7 +27,7 @@ namespace com.dug.UI.presenter
 
             gameEvent.AddGamePlayerEvent(OnUpdateGamePlayer);
             gameEvent.AddHandoutCompleteEvent(OnHandOutComplete);
-            gameEvent.AddWinnerEvent(OnWinner);
+            gameEvent.AddClearEvent(OnClearAll);
         }
 
         private void OnHandOutComplete(int charIndex)
@@ -40,14 +40,9 @@ namespace com.dug.UI.presenter
             this.view.OnUpateUI(model);
         }
 
-        private void OnWinner()
+        private void OnClearAll()
         {
-            List<GamePlayer> players = manager.Room.gamePlayers;
-
-            for (int i = 0; i < players.Count; i++)
-            {
-                
-            }
+            this.view.Clear();
         }
 
     }

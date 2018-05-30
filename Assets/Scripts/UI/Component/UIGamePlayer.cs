@@ -23,6 +23,8 @@ namespace com.dug.UI.component
         private Image handObject = null;
         [SerializeField]
         private GameObject winnerObject = null;
+        [SerializeField]
+        private GameObject winnerEffect= null;
 
         [HideInInspector]
         private UICard firstCard = null;
@@ -94,20 +96,20 @@ namespace com.dug.UI.component
                   }
               });
 
-            model.ObserveEveryValueChanged(x => x.userIndex).Where(x => x == 0).Subscribe(_ =>
+            model.ObserveEveryValueChanged(x => x.userIndex).Where(x => x == 0).Subscribe((Action<long>)(_ =>
                 {
                     if (model.userIndex == 0)
-                        ClearUI();
-                });
+                        this.Clear();
+                }));
 
             model.ObserveEveryValueChanged(x => x.stage).Where(x => x != 0).Subscribe(_ =>
             {
                 GameManager.Instance.GameEvent.InvokeGamePlayerActionEvent(model);   
             });
 
-            model.ObserveEveryValueChanged(x => x.roomStage).Where(x => x == 14).Subscribe(x => {
+            model.ObserveEveryValueChanged(x => x.roomStage).Where(x => x == 14 || x == 15).Subscribe(x => {
 
-                ShowHandResult();
+                ShowHandResult(x);
             });
         }
 
@@ -172,16 +174,24 @@ namespace com.dug.UI.component
             }
             else
             {
-                ClearUI();
+                Clear();
             }
         }
 
-        private void ClearUI()
+        public void Clear()
         {
-            nameText.text = "";
-            betTypeText.text = "";
-
             picture.color = Color.white;
+
+            winnerEffect.SetActive(false);
+            winnerObject.SetActive(false);
+
+
+            if(firstCard != null)
+                firstCard.gameObject.SetActive(false);
+
+            if(secondCard != null)
+                secondCard.gameObject.SetActive(false);
+
         }
 
         public void ShowOwnCard()
@@ -192,21 +202,52 @@ namespace com.dug.UI.component
             secondCard.SetFace(true);
         }
 
-        private void ShowHandResult()
+        private void ShowHandResult(int stage)
         {
-            if(this.model.isWinner == true)
+            if (this.model.isWinner == true)
             {
                 winnerObject.SetActive(true);
+                winnerEffect.SetActive(true);
             }
-            
-            handObject.gameObject.SetActive(true);
-            handObject.sprite = view.GetHandSprite((int)this.model.result.handType);
 
-            if (firstCard == null && secondCard == null)
-                ShowOwnCard();
+            if(stage == (int)RoomModel.Stage.Winner)
+            {
+                handObject.gameObject.SetActive(true);
+                handObject.sprite = view.GetHandSprite((int)this.model.result.handType);
 
+                if (firstCard == null && secondCard == null)
+                    ShowOwnCard();
 
+                ShowCardResult();
+            }
         }
+
+        private void ShowCardResult()
+        {
+            int[] madeCards = this.model.result.madeCards;
+
+            firstCard.SetAlpha(0.3f);
+            secondCard.SetAlpha(0.3f);
+
+            firstCard.transform.localPosition = new Vector2(firstCard.transform.localPosition.x, firstCard.transform.localPosition.y - 10);
+            secondCard.transform.localPosition = new Vector2(secondCard.transform.localPosition.x, secondCard.transform.localPosition.y - 10);
+
+            for (int i = 0; i < madeCards.Length; i++)
+            {
+                if (this.model.card1 == madeCards[i])
+                {
+                    firstCard.transform.localPosition = new Vector2(firstCard.transform.localPosition.x, firstCard.transform.localPosition.y + 10);
+                    firstCard.SetAlpha(1f);
+                }
+                if (this.model.card2 == madeCards[i])
+                {
+                    secondCard.transform.localPosition = new Vector2(secondCard.transform.localPosition.x, secondCard.transform.localPosition.y + 10);
+                    secondCard.SetAlpha(1f);
+
+                }
+            }
+        }
+
 
 
     }

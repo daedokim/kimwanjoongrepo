@@ -69,6 +69,12 @@ namespace com.dug.UI.view
         {
             scrollBar.interactable = enable;
         }
+
+        public void Clear()
+        {
+            EnableScrollBar(false);
+            scrollBar.value = 0;
+        }
     }
 }
 

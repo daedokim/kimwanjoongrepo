@@ -27,7 +27,7 @@ namespace com.dug.UI.view
 
 
         private GamePlayersPresenter presenter = null;
-        
+
         private void Awake()
         {
             Setpositions();
@@ -49,6 +49,7 @@ namespace com.dug.UI.view
             positions[8] = new Vector2(-401, 567);
         }
 
+
         public void CreateGamePlayers()
         {
             GameObject gamePlayer = null;
@@ -58,7 +59,7 @@ namespace com.dug.UI.view
             {
                 gamePlayer = Instantiate(gamePlayerPrefab, Vector3.zero, Quaternion.identity);
                 tf = gamePlayer.transform;
-                
+
                 tf.SetParent(gamePlayersParent.transform);
                 tf.localPosition = positions[i];
                 tf.localScale = new Vector2(2, 2);
@@ -83,7 +84,7 @@ namespace com.dug.UI.view
         {
             UIGamePlayer gamePlayer = null;
 
-            if(chairIndex >= 0 && chairIndex <= this.gamePlayers.Length - 1)
+            if (chairIndex >= 0 && chairIndex <= this.gamePlayers.Length - 1)
             {
                 gamePlayer = this.gamePlayers[chairIndex];
             }
@@ -94,7 +95,7 @@ namespace com.dug.UI.view
         {
             UIGamePlayer component = GetGamePlayersByChairIndex(model.chairIndex);
 
-            if(component != null)
+            if (component != null)
             {
                 component.UpdateGamePlayer(model);
             }
@@ -104,7 +105,7 @@ namespace com.dug.UI.view
         {
             UIGamePlayer component = GetGamePlayersByChairIndex(chairIndex);
 
-            if(component != null)
+            if (component != null)
             {
                 component.ShowOwnCard();
             }
@@ -113,12 +114,23 @@ namespace com.dug.UI.view
         public Sprite GetHandSprite(int handType)
         {
             Sprite sprite = null;
-            if(handSprites != null && handType >= 0 && handType < handSprites.Length )
+            if (handSprites != null && handType >= 0 && handType < handSprites.Length)
             {
                 sprite = handSprites[handType];
             }
 
             return sprite;
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < gamePlayers.Length; i++)
+            {
+                if (gamePlayers[i] == null)
+                    continue;
+
+                gamePlayers[i].Clear();
+            }
         }
     }
 }

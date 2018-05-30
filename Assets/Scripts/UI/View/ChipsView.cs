@@ -47,7 +47,22 @@ namespace com.dug.UI.view
             positions[8] = new Vector2(-137, 312);
         }
 
+        public void Clear()
+        {
+            if(pokerChips != null)
+            {
+                for(int i = 0;  i < pokerChips.Length; i++)
+                {
+                    pokerChips[i].Restore();
+                }
+            }
 
+            if(totalChip != null)
+            {
+                totalChip.Restore();
+            }
+            
+        }
 
         public void CreateGamePlayeChips()
         {

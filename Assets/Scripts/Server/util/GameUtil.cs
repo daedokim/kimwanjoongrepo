@@ -110,6 +110,25 @@ namespace com.dug.Server.Util
             UnityEngine.Debug.Log(message);
         }
 
+        public static int IndexOf(int[] compareCards, int v)
+        {
+            int index = -1;
+
+            if(compareCards != null)
+            {
+                for(int i = 0; i < compareCards.Length; i++)
+                {
+                    if(v == compareCards[i])
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+            }
+
+            return index;
+        }
     }
 }
     

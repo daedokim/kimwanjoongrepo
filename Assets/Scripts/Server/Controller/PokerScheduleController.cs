@@ -136,8 +136,7 @@
         {
             int stageSet = room.stage % 3;
 
-
-            if(room.stage >= 3 && room.stage <= 13)
+            if(room.stage >= 3 && room.stage < 14)
             {
                 switch (stageSet)
                 {
@@ -154,6 +153,20 @@
 
                 CheckGameStatus(room);
             }
+            if (room.stage == 14 || room.stage == 15)
+            {
+                if (room.waitTimeout <= 0)
+                {
+                    GotoFinish(room);
+                }
+            }
+            else if (room.stage == 17)
+            {
+                if (room.waitTimeout <= 0)
+                {
+                    GotoInitialize(room);
+                }
+            }
         }
 
 
@@ -164,29 +177,33 @@
         {
             if (room.waitTimeout <= 0)
             {
-                if (room.stage == 14)
-                {
-                    GotoFinal(room);
-                }
-                else
-                {
-                    room.stage += 1;
-                    room.lastRaise = room.minbetAmount * 2;
-                    room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
+                room.stage += 1;
 
-                    room.currentOrderNo = table.SelectFirstOrderNo(room.index);
-                    room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
+                room.lastRaise = room.minbetAmount * 2;
+                room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
 
-                    table.UpdateRoom(room);
+                room.currentOrderNo = table.SelectFirstOrderNo(room.index);
+                room.currentUserIndex = table.SelectUserIndexByOrderNo(room.index, room.currentOrderNo);
 
-                    ClearGamePlayerByStage(room.index, room.stage);
-                }
+                table.UpdateRoom(room);
+
+                ClearGamePlayerByStage(room.index, room.stage);
+
             }
         }
 
-        private void GotoFinal(Room room)
+        private void GotoInitialize(Room room)
         {
-            
+            room.state = RoomState.Wait;
+            room.stage = 0;
+            room.totalBet = 0;
+        }
+
+        private void GotoFinish(Room room)
+        {
+            room.waitTimeout = Room.WAITTIMEOUT_INITIALIZE;
+            room.stage = 17;
+            table.UpdateRoom(room);
         }
 
         private void CheckGameStatus(Room room)
@@ -212,11 +229,11 @@
                 GameUtil.DebugLog("게임 무효화");
 
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
-                room.stage = 14;
+                room.stage = -1;
                 room.ownerIndex = -1;
                 room.winnerUserIndex = -1;
                 room.currentUserIndex = 0;
-                room.currentOrderNo = 0;
+                room.currentOrderNo = -1;
                 table.UpdateRoom(room);
             }
             else if (playerCount == 1)
@@ -224,8 +241,10 @@
                 GameUtil.DebugLog("남은자가 승자");
 
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
-                room.stage = 14;
+                room.stage = 15;
                 room.winnerUserIndex = userIndex;
+                room.currentUserIndex = 0;
+                room.currentOrderNo = -1;
                 table.UpdateRoom(room);
             }
         }
@@ -235,8 +254,20 @@
             if (room.stage == 13)
             {
                 List<GamePlayer> playerList = table.SelectSitGamePlayer(room.index);
-                room.winnerUserIndex = WinnerValidator.Instance.GetWinner(playerList, new int[]{room.card1, room.card2, room.card3, room.card4, room.card5 });
+                WinnerValidator validator = WinnerValidator.Instance;
+
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    HandResult result = validator.GetResult(new int[] {room.card1, room.card2, room.card3, room.card4, room.card5, playerList[i].card1, playerList[i].card2});
+                    playerList[i].result = result;
+
+                    table.UpdateGamePlayer(room.index, playerList[i]);
+                }
+                
+                room.winnerUserIndex = WinnerValidator.Instance.GetWinner(playerList);
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
+                room.currentUserIndex = 0;
+                room.currentOrderNo = -1;
                 room.stage = 14;
                 table.UpdateRoom(room);
 

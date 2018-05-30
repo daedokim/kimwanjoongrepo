@@ -35,7 +35,9 @@ namespace com.dug.UI.component
             this.gameObject.SetActive(true);
 
             GameEvent.Instance.InvokeHandoutCompleteEvent(chairIndex);
+
         }
+
     }
 
 }

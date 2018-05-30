@@ -61,8 +61,6 @@ namespace com.dug.UI.component
         public void RemoveChildren()
         {
             int count = transform.childCount;
-
-
             for (int i = count - 1; i >= 0; i--)
             {
                if(transform.GetChild(i) != amountText.transform)
@@ -70,6 +68,8 @@ namespace com.dug.UI.component
                     chipsManager.ReStore(transform.GetChild(i));
                 }
             }
+
+            
         }
 
         public void Restore()
