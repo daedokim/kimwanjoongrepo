@@ -145,6 +145,9 @@ namespace com.dug.UI.manager
         {
             GamePlayerModel gamePlayer = null;
 
+            if (Room == null) return null;
+
+
             for (int i = 0; i < Room.gamePlayers.Count; i++)
             {
                 if (Room.gamePlayers[i].useridx == userIndex)

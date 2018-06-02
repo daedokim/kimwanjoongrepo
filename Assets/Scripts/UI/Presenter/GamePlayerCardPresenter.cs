@@ -23,6 +23,7 @@ namespace com.dug.UI.presenter
 
             this.view.CreateTableCards();
 
+            // 준비 상태일때 딜러가 카드를 사용자에게 나눠준다.
             roomModel.ObserveEveryValueChanged(x => x.state).Subscribe(x => {
                 if(x == RoomModel.RoomState.Setting)
                 {
@@ -38,13 +39,17 @@ namespace com.dug.UI.presenter
         {
             List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
 
+            int count = 1;
+
             if(gamePlayers != null)
             {
                 for(int i = 0; i < gamePlayers.Count; i++)
                 {
                     if(gamePlayers[i].state != dto.GamePlayerState.Stand)
                     {
-                        this.view.HandAllOut(gamePlayers[i].chairIndex);
+                        this.view.HandOut(gamePlayers[i].chairIndex, 0.3f, 0.2f * count);
+
+                        count++;
                     }
                 }
             }
@@ -57,7 +62,7 @@ namespace com.dug.UI.presenter
 
         private void OnClearAll()
         {
-            this.view.Clear();
+            this.view.Clear(0.3f);
         }
 
     }

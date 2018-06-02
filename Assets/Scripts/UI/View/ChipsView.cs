@@ -112,7 +112,14 @@ namespace com.dug.UI.view
                 && model.lastBetType != GamePlayerModel.BetType.Check)
             {
                 pokerChips[model.chairIndex].SetAmount(model.lastBet);
+
+                ThrowAni(model.chairIndex);
             }
+        }
+
+        private void ThrowAni(int chairIndex)
+        {
+
         }
 
         public void CollectChips(long totalBet)

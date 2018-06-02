@@ -60,12 +60,9 @@ namespace com.dug.UI.component
 
             timeline = timeLineGameObject.GetComponent<UITimeline>();
 
-            model.ObserveEveryValueChanged(x => x.status).Subscribe(_ =>
+            model.ObserveEveryValueChanged(x => x.status).Skip(1).Subscribe(_ =>
             {
-                if (model.status != GamePlayerModel.GamePlayerState.Stand)
-                {
-                    this.gameObject.SetActive(true);
-                }
+                this.gameObject.SetActive(model.status != GamePlayerModel.GamePlayerState.Stand);
             });
 
             model.ObserveEveryValueChanged(x => x.nickName).Subscribe(_ =>
@@ -159,7 +156,6 @@ namespace com.dug.UI.component
             return betName;
         }
 
-
         public void ResetGamePlayer()
         {
             this.gameObject.SetActive(false);
@@ -185,8 +181,10 @@ namespace com.dug.UI.component
             winnerEffect.SetActive(false);
             winnerObject.SetActive(false);
 
+            betTypeText.text = "";
 
-            if(firstCard != null)
+
+            if (firstCard != null)
                 firstCard.gameObject.SetActive(false);
 
             if(secondCard != null)
@@ -247,8 +245,6 @@ namespace com.dug.UI.component
                 }
             }
         }
-
-
 
     }
 }

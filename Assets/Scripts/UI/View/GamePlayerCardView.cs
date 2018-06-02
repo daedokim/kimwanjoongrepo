@@ -5,6 +5,8 @@ using UnityEngine;
 using com.dug.UI.presenter;
 using com.dug.UI.model;
 using com.dug.UI.component;
+using DG.Tweening;
+using com.dug.UI.events;
 
 namespace com.dug.UI.view
 {
@@ -16,6 +18,8 @@ namespace com.dug.UI.view
         private Transform tableCardParent = null;
         private static Vector2[] positions = null;
 
+        private Vector2 dealerPosition;
+
         [SerializeField]
         public Sprite[] cardResources;
 
@@ -23,8 +27,11 @@ namespace com.dug.UI.view
 
         private GamePlayerCardPresenter presenter;
 
+        
+
         private void Awake()
         {
+            dealerPosition = new Vector2(47, 443);
             Setpositions();
             tableCardParent = GameObject.Find("/UI/backgroundCanvas/GamePlayerTableCards").transform;
             presenter = new GamePlayerCardPresenter(this);
@@ -56,8 +63,8 @@ namespace com.dug.UI.view
                 tf = tableCard.transform;
 
                 tf.SetParent(tableCardParent.transform);
-                tf.localPosition = positions[i];
-                tf.localScale = new Vector2(1, 1);
+                tf.localPosition = dealerPosition;
+                tf.localScale = new Vector2(0, 0);
 
                 script = tableCard.GetComponent<UIGamePlayerTableCard>();
                 script.chairIndex = i;
@@ -68,23 +75,39 @@ namespace com.dug.UI.view
             }
         }
 
-        public void Clear()
+        public void Clear(float duration, float delay = 0f)
         {
             for (int i = 0; i < tableCards.Length; i++)
             {
-                tableCards[i].gameObject.SetActive(false);
+
+                tableCards[i].transform.DOLocalMove(dealerPosition, duration).SetDelay(delay).SetEase(Ease.InOutQuad);
+                tableCards[i].transform.DOScale(new Vector3(0, 0), duration).SetDelay(delay).OnComplete(()=>OnClearComplete(tableCards[i]));
+
             }
         }
 
-        public void HandAllOut(int chairIndex)
+        private void OnClearComplete(UIGamePlayerTableCard card)
+        {
+            card.gameObject.SetActive(false);
+        }
+
+        public void HandOut(int chairIndex, float duration, float delay)
         {
             for (int i = 0; i < tableCards.Length; i++)
             {
                 if(chairIndex == tableCards[i].chairIndex)
                 {
-                    tableCards[i].Handout();
+                    tableCards[i].gameObject.SetActive(true);
+
+                    tableCards[i].transform.DOLocalMove(positions[i], duration).SetDelay(delay).SetEase(Ease.InOutQuad);
+                    tableCards[i].transform.DOScale(new Vector3(1, 1), duration).SetDelay(delay).OnComplete(() => OnHandoutComplete(chairIndex));
                 }
             }
+        }
+
+        private void OnHandoutComplete(int chairIndex)
+        {
+            GameEvent.Instance.InvokeHandoutCompleteEvent(chairIndex);
         }
     }
 

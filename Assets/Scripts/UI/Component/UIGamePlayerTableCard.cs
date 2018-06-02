@@ -30,14 +30,7 @@ namespace com.dug.UI.component
             image.sprite = imageSource;
         }
 
-        public void Handout()
-        {
-            this.gameObject.SetActive(true);
-
-            GameEvent.Instance.InvokeHandoutCompleteEvent(chairIndex);
-
-        }
-
+      
     }
 
 }
