@@ -94,10 +94,7 @@ namespace com.dug.Server.Controller
                 room.stageBet += betAmount;
                 room.totalBet += totalAmount;
 
-                if(betAmount > 0)
-                {
-                    room.lastRaise = betAmount;
-                }
+                room.lastRaise = betAmount;
                 
                 room.lastBetType = (BetType)betType;
 

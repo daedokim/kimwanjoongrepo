@@ -21,7 +21,6 @@ namespace com.dug.UI.component
 
         public void SetAmount(long amount)
         {
-            this.gameObject.SetActive(true);
             RemoveChildren();
             Draw(amount);
         }
@@ -52,7 +51,7 @@ namespace com.dug.UI.component
                 chip = chipsManager.GetChip(amount, false);
                 chip.transform.SetParent(this.transform);
                 chip.transform.localPosition = new Vector3(0, 10 * count, 0);
-                chip.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                chip.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 amount -= (long) diff;
                 count++;
             }
@@ -68,8 +67,6 @@ namespace com.dug.UI.component
                     chipsManager.ReStore(transform.GetChild(i));
                 }
             }
-
-            
         }
 
         public void Restore()

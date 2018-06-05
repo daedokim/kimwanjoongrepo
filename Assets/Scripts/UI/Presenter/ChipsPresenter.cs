@@ -24,17 +24,20 @@ namespace com.dug.UI.presenter
             this.view = view;
             manager = GameManager.Instance;
 
-            this.view.CreateGamePlayeChips();
-
-            GameEvent.Instance.AddGamePlayerActionEvent(OnGamePlayerActionUpdate);
+            GameEvent.Instance.AddChipsEvent(OnChipsUpdate);
             GameEvent.Instance.AddRoomEvent(OnUpdateRoom);
             GameEvent.Instance.AddClearEvent(OnClearAll);
 
+            this.view.CreateGamePlayeChips();
+
             roomModel.ObserveEveryValueChanged(x => x.stage).Subscribe(x =>
             {
-                if (x % 3 == 1)
+                if (x % 3 == 2)
                 {
-                    this.view.CollectChips(roomModel.totalBet);
+                    if(roomModel.totalBet > 0)
+                    {
+                        this.view.CollectChips(roomModel.totalBet);
+                    }
                 }
             });
         }
@@ -49,10 +52,9 @@ namespace com.dug.UI.presenter
             roomModel.Update(model);
         }
 
-        private void OnGamePlayerActionUpdate(GamePlayerModel model)
+        private void OnChipsUpdate(int chairIndex, long amount)
         {
-            this.model.Update(model);
-            this.view.ThrowChips(model);
+            this.view.ThrowChips(chairIndex, amount);
         }
     }
 }

@@ -31,6 +31,7 @@ public class ChipsManager : Singleton<ChipsManager>
     {
         GameObject newObj = new GameObject();
         
+        
         Image image = newObj.AddComponent<Image>();
         int imageIndex = GetImageIndex(amount);
 
@@ -45,6 +46,8 @@ public class ChipsManager : Singleton<ChipsManager>
         }
 
         AddCache(amount, isBottom, newObj);
+
+        newObj.name = "Chip";
         return newObj;
     }
 
@@ -67,7 +70,9 @@ public class ChipsManager : Singleton<ChipsManager>
 
     public void ReStore(Transform tf)
     {
+        tf.name = "Chip";
         tf.gameObject.SetActive(false);
+        
         tf.SetParent(this.transform);
     }
 

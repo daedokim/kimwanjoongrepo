@@ -90,6 +90,7 @@
                 room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
                 room.lastbet = 0;
                 room.stageBet = 0;
+                room.lastRaise = 0;
                 room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
                 room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
 
@@ -179,7 +180,7 @@
             {
                 room.stage += 1;
 
-                room.lastRaise = room.minbetAmount * 2;
+                room.lastRaise = room.minbetAmount;
                 room.waitTimeout = Room.WAITTIMEOUT_BY_GAME_PLAYER;
 
                 room.currentOrderNo = table.SelectFirstOrderNo(room.index);
@@ -325,6 +326,7 @@
                         room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
                         currentOrderNo = 0;
                         currentUserIndex = 0;
+                        room.lastRaise = 0;
                         table.UpdateRoom(room);
                     }
                     else

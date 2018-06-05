@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using com.dug.UI.manager;
 using com.dug.UI.view;
+using com.dug.UI.events;
 
 namespace com.dug.UI.component
 {
@@ -25,6 +26,9 @@ namespace com.dug.UI.component
         private GameObject winnerObject = null;
         [SerializeField]
         private GameObject winnerEffect= null;
+        [SerializeField]
+        private GameObject dealearMark = null;
+
 
         [HideInInspector]
         private UICard firstCard = null;
@@ -93,21 +97,28 @@ namespace com.dug.UI.component
                   }
               });
 
-            model.ObserveEveryValueChanged(x => x.userIndex).Where(x => x == 0).Subscribe((Action<long>)(_ =>
+            model.ObserveEveryValueChanged(x => x.stageBet).Subscribe(x => {
+                if(x > 0)
                 {
-                    if (model.userIndex == 0)
-                        this.Clear();
-                }));
+                    if (model.lastBetType != GamePlayerModel.BetType.Fold && model.lastBetType != GamePlayerModel.BetType.Check)
+                    {
+                        GameEvent.Instance.InvokeChipsEvent(chairIndex, x);
+                    }
+                }
+            });
 
-            model.ObserveEveryValueChanged(x => x.stage).Where(x => x != 0).Subscribe(_ =>
-            {
-                GameManager.Instance.GameEvent.InvokeGamePlayerActionEvent(model);   
+            model.ObserveEveryValueChanged(x => x.lastBetType).Where(x => x == GamePlayerModel.BetType.Fold).Subscribe(x => {
+                GameEvent.Instance.InvokeFoldEvent(model.chairIndex);
             });
 
             model.ObserveEveryValueChanged(x => x.roomStage).Where(x => x == 14 || x == 15).Subscribe(x => {
-
                 ShowHandResult(x);
             });
+        }
+
+        public void ShowDelarMark()
+        {
+            dealearMark.SetActive(GameManager.Instance.Room.dealerChairIndex == chairIndex);
         }
 
         public void SetTimeLine(RuntimeAnimatorController controller)
@@ -180,7 +191,7 @@ namespace com.dug.UI.component
 
             winnerEffect.SetActive(false);
             winnerObject.SetActive(false);
-
+            handObject.gameObject.SetActive(false);
             betTypeText.text = "";
 
 
@@ -189,6 +200,8 @@ namespace com.dug.UI.component
 
             if(secondCard != null)
                 secondCard.gameObject.SetActive(false);
+
+            dealearMark.SetActive(false);
 
         }
 
@@ -230,20 +243,24 @@ namespace com.dug.UI.component
             firstCard.transform.localPosition = new Vector2(firstCard.transform.localPosition.x, firstCard.transform.localPosition.y - 10);
             secondCard.transform.localPosition = new Vector2(secondCard.transform.localPosition.x, secondCard.transform.localPosition.y - 10);
 
-            for (int i = 0; i < madeCards.Length; i++)
-            {
-                if (this.model.card1 == madeCards[i])
-                {
-                    firstCard.transform.localPosition = new Vector2(firstCard.transform.localPosition.x, firstCard.transform.localPosition.y + 10);
-                    firstCard.SetAlpha(1f);
-                }
-                if (this.model.card2 == madeCards[i])
-                {
-                    secondCard.transform.localPosition = new Vector2(secondCard.transform.localPosition.x, secondCard.transform.localPosition.y + 10);
-                    secondCard.SetAlpha(1f);
 
+            if (this.model.isWinner == true)
+            {
+                for (int i = 0; i < madeCards.Length; i++)
+                {
+                    if (this.model.card1 == madeCards[i])
+                    {
+                        firstCard.transform.localPosition = new Vector2(firstCard.transform.localPosition.x, firstCard.transform.localPosition.y + 10);
+                        firstCard.SetAlpha(1f);
+                    }
+                    if (this.model.card2 == madeCards[i])
+                    {
+                        secondCard.transform.localPosition = new Vector2(secondCard.transform.localPosition.x, secondCard.transform.localPosition.y + 10);
+                        secondCard.SetAlpha(1f);
+                    }
                 }
             }
+
         }
 
     }

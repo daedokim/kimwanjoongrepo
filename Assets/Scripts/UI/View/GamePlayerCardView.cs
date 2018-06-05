@@ -27,8 +27,6 @@ namespace com.dug.UI.view
 
         private GamePlayerCardPresenter presenter;
 
-        
-
         private void Awake()
         {
             dealerPosition = new Vector2(47, 443);
@@ -75,14 +73,18 @@ namespace com.dug.UI.view
             }
         }
 
+        public void ReturnCard(int chairIndex)
+        {
+            tableCards[chairIndex].transform.DOLocalMove(dealerPosition, 0.2f).SetEase(Ease.InOutQuad);
+            tableCards[chairIndex].transform.DOScale(new Vector3(0, 0), 0.2f).OnComplete(() => OnClearComplete(tableCards[chairIndex]));
+        }
+
         public void Clear(float duration, float delay = 0f)
         {
             for (int i = 0; i < tableCards.Length; i++)
             {
-
                 tableCards[i].transform.DOLocalMove(dealerPosition, duration).SetDelay(delay).SetEase(Ease.InOutQuad);
                 tableCards[i].transform.DOScale(new Vector3(0, 0), duration).SetDelay(delay).OnComplete(()=>OnClearComplete(tableCards[i]));
-
             }
         }
 

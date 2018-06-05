@@ -33,6 +33,7 @@ namespace com.dug.UI.presenter
 
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
             GameEvent.Instance.AddClearEvent(OnClearAll);
+            GameEvent.Instance.AddFoldEvent(OnFold);
         }
 
         private void HandoutCards()
@@ -47,12 +48,17 @@ namespace com.dug.UI.presenter
                 {
                     if(gamePlayers[i].state != dto.GamePlayerState.Stand)
                     {
-                        this.view.HandOut(gamePlayers[i].chairIndex, 0.3f, 0.2f * count);
+                        this.view.HandOut(gamePlayers[i].chairIndex, 0.2f, 0.2f * count);
 
                         count++;
                     }
                 }
             }
+        }
+
+        private void OnFold(int chairIndex)
+        {
+            this.view.ReturnCard(chairIndex);
         }
 
         private void OnRoomUpdate(RoomModel model)

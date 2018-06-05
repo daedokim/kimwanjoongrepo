@@ -94,7 +94,7 @@ namespace com.dug.UI.presenter
             bool isBlind = currentGamePlayer.roomStage == (int)Stage.PreFlop && currentGamePlayer.betCount <= 1;
             if (isBlind == false && model.lastBetType != GamePlayerModel.BetType.Allin && model.lastBetType != GamePlayerModel.BetType.Fold)
             {
-                view.SetCallButton(model.betCount != 0, manager.Room.lastRaise);
+                view.SetCallButton(model.betCount != 0, manager.Room.stageBet - model.stageBet);
 
                 view.EnableAllButtons(true);
 

@@ -14,7 +14,7 @@ namespace com.dug.UI.view
         [SerializeField]
         public GameObject gamePlayerPrefab;
         private Transform gamePlayersParent = null;
-        private static Vector2[] positions;
+        public static Vector2[] positions;
 
         [HideInInspector]
         public UIGamePlayer[] gamePlayers = new UIGamePlayer[RoomModel.MAX_GAME_PLAYER_COUNT];
@@ -108,6 +108,7 @@ namespace com.dug.UI.view
             if (component != null)
             {
                 component.ShowOwnCard();
+                component.ShowDelarMark();
             }
         }
 

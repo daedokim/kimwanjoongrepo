@@ -48,18 +48,19 @@ namespace com.dug.UI.presenter
 
             this.view.OnScrollBarChanged.Where(_ => editable).Subscribe(x => {
 
-                double v = Math.Floor(x * 10) / 10;
-                OnChangeBetRange((float)v);
+                OnChangeBetRange(x);
             });
 
             gameEvent.AddPlayerTurnEvent(OnUpdatePlayerEvent);
-            //gameEvent.AddPlayerTurnEndEvent(OnTurnEndEvent);
             gameEvent.AddClearEvent(OnClearAll);
         }
 
         private void OnChangeBetRange(float rate)
         {
-            double minRaiseBet = manager.Room.lastRaise * 2;
+            double minRaiseBet = manager.Room.lastRaise;
+
+            if (model.betCount > 0)
+                minRaiseBet *= 2;
 
             if (model.buyInLeft < minRaiseBet)
                 minRaiseBet = model.buyInLeft;
@@ -70,6 +71,9 @@ namespace com.dug.UI.presenter
 
             if (raiseBet > model.buyInLeft)
                 raiseBet = model.buyInLeft;
+
+            raiseBet = (long)Math.Floor((double)raiseBet / 1000) * 1000;
+
             
             buttonView.SendMessage("SetRaiseBetAmount", raiseBet);
             this.view.SetRangeText("Raise $" + util.GameUtil.MakePriceString(raiseBet));
@@ -89,15 +93,6 @@ namespace com.dug.UI.presenter
         {
             this.view.Clear();
         }
-
-
-        //private void OnTurnEndEvent()
-        //{
-        //    editable = false;
-        //    this.view.EnableScrollBar(editable);
-        //}
-
-
     }
 }
 

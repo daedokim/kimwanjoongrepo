@@ -74,7 +74,12 @@ namespace com.dug.UI.manager
                 gameEvent.InvokeGamePlayerEvent(gamePlayerUpdateModel);
             }
             roomModel.SetRoomData(room);
-            gameEvent.InvokeRoomEvent(roomModel); 
+
+            if(roomModel.stage < 17)
+            {
+                gameEvent.InvokeRoomEvent(roomModel);
+            }
+            
         }
 
         private bool CheckPreFlopBlind(GamePlayer gamePlayer)

@@ -6,6 +6,7 @@ using com.dug.UI.presenter;
 using com.dug.UI.component;
 using com.dug.UI.model;
 using System;
+using DG.Tweening;
 
 namespace com.dug.UI.view
 {
@@ -18,11 +19,12 @@ namespace com.dug.UI.view
 
         private static Vector2[] positions;
         private ChipsPresenter presenter;
-
+        
 
         [HideInInspector]
         private UIPokerChip[] pokerChips = new UIPokerChip[RoomModel.MAX_GAME_PLAYER_COUNT];
         private UIPokerChip totalChip = null;
+        private List<GameObject> throwAniChips = new List<GameObject>();
 
 
         private void Awake()
@@ -54,14 +56,15 @@ namespace com.dug.UI.view
                 for(int i = 0;  i < pokerChips.Length; i++)
                 {
                     pokerChips[i].Restore();
+                    pokerChips[i].gameObject.SetActive(false);
                 }
             }
 
             if(totalChip != null)
             {
                 totalChip.Restore();
+                totalChip.gameObject.SetActive(false);
             }
-            
         }
 
         public void CreateGamePlayeChips()
@@ -75,15 +78,14 @@ namespace com.dug.UI.view
                 tf = pokerChip.transform;
 
                 tf.SetParent(pokerChipsParent.transform);
-                tf.localPosition = positions[i];
-                tf.localScale = new Vector2(1, 1);
+                tf.localPosition = Vector2.zero;
+                tf.localScale = new Vector2(1f, 1f);
 
                 script = pokerChip.GetComponent<UIPokerChip>();
 
                 pokerChip.SetActive(false);
                 this.pokerChips[i] = script;
             }
-
 
             CreateTotalChip();
         }
@@ -94,32 +96,56 @@ namespace com.dug.UI.view
             Transform tf = null;
             UIPokerChip script = null;
 
-            pokerChip = Instantiate(pokerChipsPrefab, Vector3.zero, Quaternion.identity);
+            pokerChip = Instantiate(pokerChipsPrefab, Vector3.zero, Quaternion.identity);            
             tf = pokerChip.transform;
 
             tf.SetParent(pokerChipsParent.transform);
             tf.localPosition = new Vector3(95, -62, 0);
-            tf.localScale = new Vector2(1, 1);
+            tf.localScale = new Vector2(1f, 1f);
             script = pokerChip.GetComponent<UIPokerChip>();
             pokerChip.SetActive(false);
 
             totalChip = script;
         }
 
-        public void ThrowChips(GamePlayerModel model)
+        public void ThrowChips(int chairIndex, long amount)
         {
-            if (model.lastBetType != GamePlayerModel.BetType.Fold
-                && model.lastBetType != GamePlayerModel.BetType.Check)
-            {
-                pokerChips[model.chairIndex].SetAmount(model.lastBet);
-
-                ThrowAni(model.chairIndex);
-            }
+            pokerChips[chairIndex].SetAmount(amount);
+            ThrowAni(chairIndex, amount);
         }
 
-        private void ThrowAni(int chairIndex)
+        private void ThrowAni(int chairIndex, long amount)
         {
+            Vector2 gamePos = GamePlayersView.positions[chairIndex];
+            Vector2 dest = positions[chairIndex];
 
+            int i = 0;
+            
+            for(i = 0; i < 3; i++)
+            {
+                GameObject go = ChipsManager.Instance.GetChip(10);
+                go.name = "throwChip" + i;
+                go.transform.SetParent(pokerChipsParent.transform);
+                go.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                go.transform.localPosition = new Vector2(gamePos.x + (2 * i), gamePos.y + (2 * i));
+                go.transform.DOLocalMove(dest, 0.2f).SetDelay(0.1f * i).OnComplete(()=> { OnThrowComplete(go); });
+                
+            }
+            DOVirtual.DelayedCall(0.4f, () => { OnThrowAniComplete(chairIndex, dest, amount); });
+        }
+
+        private void OnThrowAniComplete(int chairIndex, Vector2 dest, long amount)
+        {
+            UIPokerChip chip = pokerChips[chairIndex];
+            chip.gameObject.SetActive(true);
+            chip.transform.localPosition = dest;
+            chip.transform.localScale = new Vector2(1, 1);
+            chip.SetAmount(amount);   
+        }
+
+        private void OnThrowComplete(GameObject go)
+        {
+            ChipsManager.Instance.ReStore(go.transform); 
         }
 
         public void CollectChips(long totalBet)
@@ -127,18 +153,27 @@ namespace com.dug.UI.view
             for (int i = 0; i < pokerChips.Length; i++)
             {
                 if(pokerChips[i].gameObject.activeSelf == true)
-                    pokerChips[i].Restore();
+                {
+                    UIPokerChip uIPokerChip = pokerChips[i];
+                    uIPokerChip.transform.DOLocalMove(totalChip.transform.localPosition, 0.2f).OnComplete(()=> OnCollectAniComplete(uIPokerChip));
+                }
             }
 
-            if (totalChip != null && totalBet > 0)
-            {
-                totalChip.SetAmount(totalBet);
-            }
+            DOVirtual.DelayedCall(0.1f, () => {
+
+                if (totalChip != null && totalBet > 0)
+                {
+                    totalChip.SetAmount(totalBet);
+                    totalChip.gameObject.SetActive(true);
+                }
+            });
         }
 
-
-
-
+        private void OnCollectAniComplete(UIPokerChip uIPokerChip)
+        {
+            uIPokerChip.Restore();
+            uIPokerChip.gameObject.SetActive(false);
+        }
     }
 
 }

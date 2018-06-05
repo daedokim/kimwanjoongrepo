@@ -13,12 +13,14 @@ namespace com.dug.UI.events
     [System.Serializable]
     public class PlayerTurnEndEvent : UnityEvent { }
     [System.Serializable]
-    public class GamePlayerAcionEvent : UnityEvent<GamePlayerModel> { }
+    public class ChipsEvent : UnityEvent<int, long> { }
     [System.Serializable]
     public class ClearEvent: UnityEvent { }
-    
     [System.Serializable]
     public class HandoutCompleteEvent : UnityEvent<int> { }
+    [System.Serializable]
+    public class FoldEvent : UnityEvent<int> { }
+
 
 
     public class GameEvent : Singleton<GameEvent>
@@ -26,10 +28,11 @@ namespace com.dug.UI.events
         private GamePlayerEvent gamePlayerEvent = new GamePlayerEvent();
         private PlayerTurnEvent playerTurnEvent = new PlayerTurnEvent();
         private PlayerTurnEndEvent playerTurnEndEvent = new PlayerTurnEndEvent();
-        private GamePlayerAcionEvent gamePlayerActionEvent = new GamePlayerAcionEvent();
+        private ChipsEvent chipsEvent = new ChipsEvent();
         private RoomEvent roomEvent = new RoomEvent();
         private HandoutCompleteEvent handoutCompleteEvent = new HandoutCompleteEvent();
         private ClearEvent clearEvent = new ClearEvent();
+        private FoldEvent foldEvent = new FoldEvent();
         
 
         public void AddGamePlayerEvent(UnityAction<GamePlayerModel> call)
@@ -72,44 +75,44 @@ namespace com.dug.UI.events
             playerTurnEvent.Invoke(model);
         }
 
-        //public void AddPlayerTurnEndEvent(UnityAction call)
-        //{
-        //    playerTurnEndEvent.AddListener(call);
-        //}
-
-        //public void RemovePlayerTurnEndEvent(UnityAction call)
-        //{
-        //    playerTurnEndEvent.RemoveListener(call);
-        //}
-
-        //public void RemoveAllPlayerTurnEndEvent()
-        //{
-        //    playerTurnEndEvent.RemoveAllListeners();
-        //}
-
-        //public void InvokePlayerTurnEndEvent()
-        //{
-        //    playerTurnEndEvent.Invoke();
-        //}
-
-        public void AddGamePlayerActionEvent(UnityAction<GamePlayerModel> call)
+        public void AddFoldEvent(UnityAction<int> call)
         {
-            gamePlayerActionEvent.AddListener(call);
+            foldEvent.AddListener(call);
         }
 
-        public void RemoveGamePlayerActionEvent(UnityAction<GamePlayerModel> call)
+        public void RemoveFoldEvent(UnityAction<int> call)
         {
-            gamePlayerActionEvent.RemoveListener(call);
+            foldEvent.RemoveListener(call);
         }
 
-        public void RemoveAllGamePlayerActionEvent()
+        public void RemoveAllFoldEvent()
         {
-            gamePlayerActionEvent.RemoveAllListeners();
+            foldEvent.RemoveAllListeners();
         }
 
-        public void InvokeGamePlayerActionEvent(GamePlayerModel model)
+        public void InvokeFoldEvent(int chairIndex)
         {
-            gamePlayerActionEvent.Invoke(model);
+            foldEvent.Invoke(chairIndex);
+        }
+
+        public void AddChipsEvent(UnityAction<int, long> call)
+        {
+            chipsEvent.AddListener(call);
+        }
+
+        public void RemoveChipsEvent(UnityAction<int, long> call)
+        {
+            chipsEvent.RemoveListener(call);
+        }
+
+        public void RemoveAllChipsEvent()
+        {
+            chipsEvent.RemoveAllListeners();
+        }
+
+        public void InvokeChipsEvent(int chairIndex, long diffAmount)
+        {
+            chipsEvent.Invoke(chairIndex, diffAmount);
         }
 
         public void AddRoomEvent(UnityAction<RoomModel> call)

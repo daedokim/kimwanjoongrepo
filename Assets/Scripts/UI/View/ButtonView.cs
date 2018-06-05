@@ -105,7 +105,6 @@ namespace com.dug.UI.view
             {
                 presenter.SetRaiseBetAmount(amount);
             }
-
         }
 
         public void SetCallButton(bool isCall2Enable, long lastRaise)

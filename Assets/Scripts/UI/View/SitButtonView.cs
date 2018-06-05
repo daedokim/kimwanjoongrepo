@@ -18,7 +18,7 @@ namespace com.dug.UI.view
         [SerializeField] GameObject sitButtonPrefab = null;
         private Transform sitButtonParent;
 
-        private SitButtonPresenter presenter;
+        private SitButtonPresenter presenter = null;
 
         private void Awake()
         {

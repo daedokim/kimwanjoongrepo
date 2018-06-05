@@ -51,6 +51,7 @@ namespace com.dug.UI.manager
             card.transform.localScale = new Vector3(1, 1, 1);
             card.transform.SetParent(this.transform);
             card.gameObject.SetActive(false);
+            card.SetAlpha(1);
 
             return cards[index];
         }
