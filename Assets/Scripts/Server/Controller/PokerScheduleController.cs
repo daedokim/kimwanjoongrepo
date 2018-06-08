@@ -65,6 +65,7 @@
                 room.waitTimeout = Room.WAITTIMEOUT_BY_READY;
 
                 helper.Initialize();
+
                 room.card1 = helper.Pop();
                 room.card2 = helper.Pop();
                 room.card3 = helper.Pop();
@@ -82,29 +83,36 @@
 
             if (room.waitTimeout <= 0)
             {
-                room.state = RoomState.Setting;
-                room.stage = 2;
-                room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
-
-                room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
-                room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
-                room.lastbet = 0;
-                room.stageBet = 0;
-                room.lastRaise = 0;
-                room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
-                room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
-
-                playerList = SetCards(helper, playerList);
-                playerList = SetOrderNo(room.ownerIndex, playerList);
-
-                // 정렬을 세팅한다.
-                for (int i = 0; i < playerList.Count; i++)
+                if (playerList != null && playerList.Count >= 2)
                 {
-                    table.UpdateGamePlayer(room.index, playerList[i]);
+                    room.state = RoomState.Setting;
+                    room.stage = 2;
+                    room.waitTimeout = Room.WAITTIMEOUT_BY_SETTING;
+
+                    room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
+                    room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
+                    room.lastbet = 0;
+                    room.stageBet = 0;
+                    room.lastRaise = 0;
+                    room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);
+                    room.currentOrderNo = table.selectOrderNoByOwnerIndex(room.index, room.ownerIndex);
+
+                    playerList = SetCards(helper, playerList);
+                    playerList = SetOrderNo(room.ownerIndex, playerList);
+
+                    // 정렬을 세팅한다.
+                    for (int i = 0; i < playerList.Count; i++)
+                    {
+                        table.UpdateGamePlayer(room.index, playerList[i]);
+                    }
+
+                    InitGamePlayerMember(room.index);
                 }
-
-                InitGamePlayerMember(room.index);
-
+                else
+                {
+                    room.state = RoomState.Wait;
+                    room.stage = 0;
+                }
                 table.UpdateRoom(room);
             }
         }
@@ -198,12 +206,24 @@
             room.state = RoomState.Wait;
             room.stage = 0;
             room.totalBet = 0;
+            table.UpdateRoom(room);
         }
 
         private void GotoFinish(Room room)
         {
             room.waitTimeout = Room.WAITTIMEOUT_INITIALIZE;
             room.stage = 17;
+
+            List<GamePlayer> playerList = table.SelectSitGamePlayer(room.index);
+
+            for(int i = 0;  i < playerList.Count; i++)
+            {
+                if(playerList[i].state == GamePlayerState.StandWait)
+                {
+                    table.DeleteGamePlayer(room.index, playerList[i].useridx);
+                }
+            }
+
             table.UpdateRoom(room);
         }
 
@@ -357,7 +377,6 @@
                     && (playerList[i].state == GamePlayerState.Play || playerList[i].state == GamePlayerState.StandWait)
                  )
                 {
-                    playerList[i].state = GamePlayerState.Play;
                     playerList[i].betStatus = BetStatus.BetReady;
                     playerList[i].lastBetType = 0;
                     playerList[i].stageBet = 0;

@@ -70,6 +70,23 @@ namespace com.dug.Server
 
             return result;
         }
+
+        public CRUDResult DoStandUp(int roomIndex, long userIndex)
+        {
+            CRUDResult result = new CRUDResult();
+            try
+            {
+                controller.DoStandUp(roomIndex, userIndex);
+                result.resultType = CRUDResult.ResultType.SUCCESS;
+            }
+            catch (exceptions.ServerException ex)
+            {
+                result.resultType = CRUDResult.ResultType.FAILED;
+                result.message = ex.Message;
+            }
+
+            return result;
+        }
     }
 }
     

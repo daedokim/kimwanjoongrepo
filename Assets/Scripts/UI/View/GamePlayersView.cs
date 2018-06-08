@@ -49,6 +49,24 @@ namespace com.dug.UI.view
             positions[8] = new Vector2(-401, 567);
         }
 
+        public void CheckSitGamePlayers(List<int> chairIndice)
+        {
+            if (gamePlayers != null)
+            {
+                for (int i = 0; i < gamePlayers.Length; i++)
+                {
+                    if(chairIndice.IndexOf(gamePlayers[i].chairIndex) >= 0)
+                    {
+                        gamePlayers[i].gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        gamePlayers[i].gameObject.SetActive(false);
+                        gamePlayers[i].Clear();
+                    }
+                }
+            }
+        }
 
         public void CreateGamePlayers()
         {
@@ -121,7 +139,7 @@ namespace com.dug.UI.view
             }
 
             return sprite;
-        }
+        }     
 
         public void Clear()
         {

@@ -110,6 +110,11 @@ namespace com.dug.UI.manager
             return isBlindBet;
         }
 
+        public CRUDResult StandUp(long userIndex)
+        {
+            return dao.StandUp(roomIndex, userIndex);
+        }
+
         public void OnCall(long userIdx, long stageBet) 
         {            
             dao.SetPlayerBetting(roomIndex, userIdx, BetType.Call, Room.stageBet - stageBet, 0);

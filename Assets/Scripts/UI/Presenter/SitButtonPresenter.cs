@@ -24,21 +24,15 @@ namespace com.dug.UI.presenter
             this.manager = GameManager.Instance;
 
             this.view.CreateSitButtons();
-
-            this.model.ObserveEveryValueChanged(x => x.playerCount).Subscribe(_ => {
-
-                UpdateChair();
-            });
-
+           
             GameEvent.Instance.AddRoomEvent(OnRoomUpdate);
         }
 
-        private void UpdateChair()
+        private void OnRoomUpdate(RoomModel model)
         {
-            if (manager.Room == null)
-                return;
+            this.model.Update(model);
 
-            List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
+            List<dto.GamePlayer> gamePlayers = this.model.gamePlayers;
 
             List<int> chairIndice = new List<int>();
 
@@ -53,11 +47,7 @@ namespace com.dug.UI.presenter
                 }
             }
             this.view.OnUpateUI(chairIndice);
-        }
 
-        private void OnRoomUpdate(RoomModel model)
-        {
-            this.model.Update(model);
         }
     }
 }

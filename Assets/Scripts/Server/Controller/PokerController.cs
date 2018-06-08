@@ -20,7 +20,6 @@ namespace com.dug.Server.Controller
         {
             Room room = table.SelectRoom(roomIndex);
             room.gamePlayers = table.SelectGamePlayers(roomIndex);
-            
 
             return room;
         }
@@ -107,6 +106,27 @@ namespace com.dug.Server.Controller
                 }
             }
             return GetRoom(roomIndex);
+        }
+
+        public void DoStandUp(int roomIndex, long userIndex)
+        {
+            Room room = table.SelectRoom(roomIndex);
+            GamePlayer gamePlayer = table.SelectGamePlayerByUserIdx(roomIndex, userIndex);
+
+            if(gamePlayer != null)
+            {
+                if (room.state == RoomState.Playing)
+                {
+                    gamePlayer.state = GamePlayerState.StandWait;
+
+                    table.UpdateGamePlayer(roomIndex, gamePlayer);
+                }
+                else
+                {
+                    table.DeleteGamePlayer(roomIndex, userIndex);
+                }
+            }
+
         }
 
         public void DoSit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)

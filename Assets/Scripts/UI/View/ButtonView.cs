@@ -14,10 +14,11 @@ namespace com.dug.UI.view
         [SerializeField] Button callButton = null;
         [SerializeField] Button call2Button = null;        
         [SerializeField] Button foldButton = null;
+        [SerializeField] Button toLobbyButton = null;
+        [SerializeField] Button standUpButton = null;
         [HideInInspector] Text call2Text = null;
 
-
-
+        
         private ButtonPresenter presenter;
 
         private void Awake()
@@ -53,6 +54,15 @@ namespace com.dug.UI.view
             get { return foldButton.OnClickAsObservable(); }
         }
 
+        public IObservable<Unit> OnToLobbyButtonClicked
+        {
+            get { return toLobbyButton.OnClickAsObservable(); }
+        }
+
+        public IObservable<Unit> OnStandUpButtonClicked
+        {
+            get { return standUpButton.OnClickAsObservable(); }
+        }
 
         public void EnableAllButtons(bool enable)
         {

@@ -33,6 +33,8 @@ namespace com.dug.UI.presenter
 
         private void SetStateHandler()
         {
+            DisposeWaitTimeout();
+
             RoomModel.RoomState state = model.state;
             if (state == RoomModel.RoomState.Wait)
             {
@@ -45,13 +47,7 @@ namespace com.dug.UI.presenter
         }
 
         private void SetGameStartWaitTime(int time)
-        {
-            if(waitTimeoutDispose != null)
-            {
-                waitTimeoutDispose.Dispose();
-                waitTimeoutDispose = null;
-            }
-
+        {            
             int waitTimeout = time - 1000;
             waitTimeoutDispose = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
             {

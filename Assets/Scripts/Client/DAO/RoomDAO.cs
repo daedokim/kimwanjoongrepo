@@ -48,6 +48,14 @@ namespace com.dug.UI.dao
 
             return returnVal;
         }
+
+        public CRUDResult StandUp(int roomIndex, long userIndex)
+        {
+            string str = JsonUtility.ToJson(GameServer.Instance.DoStandUp(roomIndex, userIndex), true);
+            CRUDResult returnVal = JsonUtility.FromJson<CRUDResult>(str);
+
+            return returnVal;
+        }
     }
 }
  

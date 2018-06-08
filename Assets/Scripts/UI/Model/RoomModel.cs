@@ -1,5 +1,5 @@
 ﻿using com.dug.UI.dto;
-
+using System.Collections.Generic;
 
 namespace com.dug.UI.model
 {
@@ -25,6 +25,7 @@ namespace com.dug.UI.model
         public int playerCount = 0;
         public long winnerUserIndex = 0;
         public RoomState state = RoomState.Wait;
+        public List<GamePlayer> gamePlayers;
 
         public void SetRoomData(Room room)
         {
@@ -36,6 +37,7 @@ namespace com.dug.UI.model
             stageBet = room.stageBet;
             state = (RoomState)room.state;
             waitTimeout = room.waitTimeout;
+            gamePlayers = room.gamePlayers;
 
             card1 = room.card1;
             card2 = room.card2;
@@ -46,7 +48,6 @@ namespace com.dug.UI.model
             winnerUserIndex = room.winnerUserIndex;
             playerCount = room.gamePlayers.Count;
         }
-
 
         public void Update(RoomModel model)
         {
@@ -65,6 +66,7 @@ namespace com.dug.UI.model
             card4 = model.card4;
             card5 = model.card5;
 
+            gamePlayers = model.gamePlayers;
             winnerUserIndex = model.winnerUserIndex;
             playerCount = model.playerCount;
         }
@@ -73,7 +75,6 @@ namespace com.dug.UI.model
         {
             Play = 1, Stand = 0, SitWait = 2, StandWait = 3
         }
-
 
         public enum BetStatus
         {

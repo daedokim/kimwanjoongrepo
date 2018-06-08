@@ -126,7 +126,7 @@ namespace com.dug.Server
 
             for (int i = 0; i < gamePlayers.Count; i++)
             {
-                if (gamePlayers[i] != null && (gamePlayers[i].state == GamePlayerState.SitWait || gamePlayers[i].state == GamePlayerState.Play))
+                if (gamePlayers[i] != null && (gamePlayers[i].state == GamePlayerState.SitWait || gamePlayers[i].state == GamePlayerState.Play || gamePlayers[i].state == GamePlayerState.StandWait))
                 {
                     list.Add(gamePlayers[i]);
                 }
@@ -157,6 +157,21 @@ namespace com.dug.Server
             return list;
         }
 
+        public void DeleteGamePlayer(int roomIndex, long userIndex)
+        {
+            List<GamePlayer> gamePlayers = SelectGamePlayers(roomIndex);
+
+            for (int i = 0; i < gamePlayers.Count; i++)
+            {
+                if (gamePlayers[i] != null && gamePlayers[i].useridx == userIndex)
+                {
+                    gamePlayers.Remove(gamePlayers[i]);
+                    break;
+                }
+            }
+
+            GamePlayertable[roomIndex] = gamePlayers;
+        }
 
         public int CompareOrderByChairIdx(GamePlayer x, GamePlayer y)
         {
@@ -262,6 +277,8 @@ namespace com.dug.Server
                         break;
                     }
                 }
+
+                GamePlayertable[roomIndex] = gamePlayers;
             }
         }
 

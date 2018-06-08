@@ -64,10 +64,10 @@ namespace com.dug.UI.component
 
             timeline = timeLineGameObject.GetComponent<UITimeline>();
 
-            model.ObserveEveryValueChanged(x => x.status).Skip(1).Subscribe(_ =>
-            {
-                this.gameObject.SetActive(model.status != GamePlayerModel.GamePlayerState.Stand);
-            });
+            //model.ObserveEveryValueChanged(x => x.status).Skip(1).Subscribe(_ =>
+            //{
+            //    this.gameObject.SetActive(model.status != GamePlayerModel.GamePlayerState.Stand);
+            //});
 
             model.ObserveEveryValueChanged(x => x.nickName).Subscribe(_ =>
                    {

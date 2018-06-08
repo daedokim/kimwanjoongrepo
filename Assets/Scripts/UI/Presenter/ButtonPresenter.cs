@@ -6,6 +6,7 @@ using UniRx;
 using com.dug.UI.events;
 using com.dug.UI.dto;
 using System;
+using com.dug.UI.network;
 
 namespace com.dug.UI.presenter
 {
@@ -76,6 +77,25 @@ namespace com.dug.UI.presenter
                 manager.OnFold(currentGamePlayer.userIndex);
                 isClickable = false;
             });
+
+            this.view.OnToLobbyButtonClicked.Subscribe(_ => {
+                CRUDResult result = manager.StandUp(UserData.Instance.userIndex);
+                
+                if(result.resultType == CRUDResult.ResultType.SUCCESS)
+                {
+
+                }
+            });
+
+            this.view.OnStandUpButtonClicked.Subscribe(_ => {
+                CRUDResult result = manager.StandUp(UserData.Instance.userIndex);
+
+                if (result.resultType == CRUDResult.ResultType.SUCCESS)
+                {
+
+                }
+            });
+
 
             GameEvent.Instance.AddPlayerTurnEvent(OnPlayerTurnEvent);
             GameEvent.Instance.AddClearEvent(OnClearAll);

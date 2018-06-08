@@ -695,6 +695,12 @@ namespace com.dug.Server.Util
             HandResult result = new HandResult();
             result.handType = HandResult.HandType.TITLE;
 
+            cards[0] = -1;
+            cards[1] = -1;
+            cards[2] = -1;
+            cards[3] = -1;
+            cards[4] = -1;
+
             for (int i = 0; i < cards.Length; i++)
             {
                 result.hands[i] = GetCardOrder(cards, i) % 13;
