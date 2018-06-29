@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using com.dug.UI.presenter;
-using com.dug.UI.model;
+using com.dug.UI.Models;
 using com.dug.UI.component;
 using DG.Tweening;
-using com.dug.UI.events;
+using com.dug.UI.Events;
 
 namespace com.dug.UI.view
 {

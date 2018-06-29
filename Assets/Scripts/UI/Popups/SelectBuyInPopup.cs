@@ -1,11 +1,11 @@
 ﻿using com.dug.UI.popups.component;
-using com.dug.UI.dto;
+using com.dug.UI.DTO;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using com.dug.UI.manager;
+using com.dug.UI.Managers;
 using com.dug.UI.util;
-using com.dug.UI.dao;
+using com.dug.UI.DAO;
 using com.dug.UI.network;
 using System;
 

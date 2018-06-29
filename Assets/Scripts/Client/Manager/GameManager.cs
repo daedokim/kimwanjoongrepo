@@ -1,12 +1,12 @@
-﻿using com.dug.UI.dao;
-using com.dug.UI.dto;
-using com.dug.UI.model;
-using com.dug.UI.events;
+﻿using com.dug.UI.DAO;
+using com.dug.UI.DTO;
+using com.dug.UI.Models;
+using com.dug.UI.Events;
 using UnityEngine;
 using System;
 using UniRx;
 
-namespace com.dug.UI.manager
+namespace com.dug.UI.Managers
 {
     public class GameManager : Singleton<GameManager>
     {
@@ -26,13 +26,18 @@ namespace com.dug.UI.manager
         public Room Room { get { return room; } }
         public GameEvent GameEvent { get {return gameEvent;} }
 
+        public GameEventHandler eventHandler;
+
         private void Awake()
         {
             dao = new RoomDAO();
+            eventHandler = GameEventHandler.Instance;
+            eventHandler.AddHandler(this, UserManager.USER_LOGIN_COMPLETE, OnLoginCompleteHandler);
+
             gameEvent = GameEvent.Instance;
         }
 
-        private void Start()
+        private void OnLoginCompleteHandler(object obj)
         {
             roomModel.ObserveEveryValueChanged(x => x.currentUserIndex).Subscribe(x =>
             {
@@ -53,7 +58,8 @@ namespace com.dug.UI.manager
 
             InvokeRepeating("Thread", 0.10f, 0.10f);
         }
-    
+
+   
         private void Thread()
         {
             room = dao.GetRoom(roomIndex);

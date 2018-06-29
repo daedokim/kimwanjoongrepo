@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using com.dug.UI.events;
+using com.dug.UI.Events;
 
 namespace com.dug.UI.component
 {

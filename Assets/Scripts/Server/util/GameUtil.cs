@@ -5,7 +5,7 @@ namespace com.dug.Server.Util
     
     public class GameUtil
     {
-        public static Boolean enableDebugLog = true;
+        public static Boolean enableDebugLog = false;
 
         // 1000000 식으로 숫자 변환
         public static string MakePriceString(double number)

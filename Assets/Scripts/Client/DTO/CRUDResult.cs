@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.dug.UI.dto
+namespace com.dug.UI.DTO
 {
     [Serializable]
     public class CRUDResult

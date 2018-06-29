@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace com.dug.UI.dto
+namespace com.dug.UI.DTO
 {
     [Serializable]
     public class HandResult

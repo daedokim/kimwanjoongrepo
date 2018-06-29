@@ -1,12 +1,12 @@
-﻿using com.dug.UI.events;
-using com.dug.UI.manager;
-using com.dug.UI.model;
+﻿using com.dug.UI.Events;
+using com.dug.UI.Managers;
+using com.dug.UI.Models;
 using com.dug.UI.view;
 using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
 using System;
-using com.dug.UI.dto;
+using com.dug.UI.DTO;
 
 namespace com.dug.UI.presenter
 {

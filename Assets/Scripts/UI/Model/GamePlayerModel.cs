@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UniRx;
-using com.dug.UI.dto;
+using com.dug.UI.DTO;
 using System;
 
-namespace com.dug.UI.model
+namespace com.dug.UI.Models
 {
     [System.Serializable]
     public class GamePlayerModel : IModel

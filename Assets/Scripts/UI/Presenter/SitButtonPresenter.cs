@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.dug.UI.view;
-using com.dug.UI.manager;
-using com.dug.UI.events;
-using com.dug.UI.model;
+using com.dug.UI.Managers;
+using com.dug.UI.Events;
+using com.dug.UI.Models;
 using com.dug.UI.component;
 using System;
 using UniRx;
@@ -32,7 +32,7 @@ namespace com.dug.UI.presenter
         {
             this.model.Update(model);
 
-            List<dto.GamePlayer> gamePlayers = this.model.gamePlayers;
+            List<DTO.GamePlayer> gamePlayers = this.model.gamePlayers;
 
             List<int> chairIndice = new List<int>();
 

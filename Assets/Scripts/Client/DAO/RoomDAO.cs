@@ -1,11 +1,11 @@
 ﻿
-namespace com.dug.UI.dao
+namespace com.dug.UI.DAO
 {
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using com.dug.Server;
-    using com.dug.UI.dto;
+    using com.dug.UI.DTO;
     using System;
 
     public class RoomDAO

@@ -1,9 +1,9 @@
 ﻿
 using System;
-using com.dug.UI.dto;
+using com.dug.UI.DTO;
 using UniRx;
 
-namespace com.dug.UI.model
+namespace com.dug.UI.Models
 {
     public class StatusModel : IModel
     {

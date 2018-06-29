@@ -1,8 +1,8 @@
-﻿using com.dug.UI.model;
-using com.dug.UI.dto;
+﻿using com.dug.UI.Models;
+using com.dug.UI.DTO;
 using UnityEngine.Events;
 
-namespace com.dug.UI.events
+namespace com.dug.UI.Events
 {
     [System.Serializable]
     public class GamePlayerEvent : UnityEvent<GamePlayerModel> {}

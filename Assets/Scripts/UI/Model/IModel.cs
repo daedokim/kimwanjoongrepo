@@ -1,4 +1,4 @@
-﻿namespace com.dug.UI.model
+﻿namespace com.dug.UI.Models
 {
     public interface IModel
     {

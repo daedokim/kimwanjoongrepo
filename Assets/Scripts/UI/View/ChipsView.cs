@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using com.dug.UI.presenter;
 using com.dug.UI.component;
-using com.dug.UI.model;
+using com.dug.UI.Models;
 using System;
 using DG.Tweening;
 

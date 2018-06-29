@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using com.dug.UI.util;
-using com.dug.UI.manager;
+using com.dug.UI.Managers;
 
 namespace com.dug.UI.component
 {

@@ -91,7 +91,7 @@
 
                     room.dealerChairIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
                     room.ownerIndex = GetNearChairIndex(room.dealerChairIndex, playerList);
-                    room.lastbet = 0;
+                    //room.lastbet = 0;
                     room.stageBet = 0;
                     room.lastRaise = 0;
                     room.currentUserIndex = table.SelectUserIndexByOwnerIndex(room.index, room.ownerIndex);

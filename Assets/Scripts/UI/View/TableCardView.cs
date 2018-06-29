@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.dug.UI.presenter;
-using com.dug.UI.manager;
-using com.dug.UI.model;
+using com.dug.UI.Managers;
+using com.dug.UI.Models;
 using System;
 
 namespace com.dug.UI.view

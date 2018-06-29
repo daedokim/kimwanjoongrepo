@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using com.dug.UI.model;
-using com.dug.UI.dto;
+using com.dug.UI.Models;
+using com.dug.UI.DTO;
 using com.dug.UI.component;
 using com.dug.UI.presenter;
 using System;

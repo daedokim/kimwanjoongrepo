@@ -1,4 +1,4 @@
-﻿namespace com.dug.UI.dto
+﻿namespace com.dug.UI.DTO
 {
     using System;
     using System.Collections;

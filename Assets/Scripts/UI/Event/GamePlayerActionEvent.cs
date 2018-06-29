@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using com.dug.UI.model;
+using com.dug.UI.Models;
 
 public class GamePlayerActionEvent : Singleton<GamePlayerActionEvent>
 {

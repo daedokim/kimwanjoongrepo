@@ -103,9 +103,7 @@ public class Test : MonoBehaviour {
             cards[j] = helper.Pop();
         }
 
-
         Array.Sort(cards);
-
 
         for(int i = 0; i < cards.Length; i++)
         {

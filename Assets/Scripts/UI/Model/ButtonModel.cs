@@ -1,7 +1,7 @@
 ﻿using UniRx;
 
 
-namespace com.dug.UI.model
+namespace com.dug.UI.Models
 {
     public class ButtonModel : IModel
     {

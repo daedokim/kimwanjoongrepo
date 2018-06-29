@@ -4,7 +4,7 @@ using UnityEngine;
 using com.dug.UI.util;
 using com.dug.UI.component;
 
-namespace com.dug.UI.manager
+namespace com.dug.UI.Managers
 {
     public class CardManager : Singleton<CardManager>
     {

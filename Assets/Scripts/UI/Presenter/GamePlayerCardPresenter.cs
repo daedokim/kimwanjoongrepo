@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using com.dug.UI.view;
-using com.dug.UI.manager;
-using com.dug.UI.model;
-using com.dug.UI.events;
+using com.dug.UI.Managers;
+using com.dug.UI.Models;
+using com.dug.UI.Events;
 using UniRx;
 using System;
 
@@ -38,7 +38,7 @@ namespace com.dug.UI.presenter
 
         private void HandoutCards()
         {
-            List<dto.GamePlayer> gamePlayers = manager.Room.gamePlayers;
+            List<DTO.GamePlayer> gamePlayers = manager.Room.gamePlayers;
 
             int count = 1;
 
@@ -46,7 +46,7 @@ namespace com.dug.UI.presenter
             {
                 for(int i = 0; i < gamePlayers.Count; i++)
                 {
-                    if(gamePlayers[i].state != dto.GamePlayerState.Stand)
+                    if(gamePlayers[i].state != DTO.GamePlayerState.Stand)
                     {
                         this.view.HandOut(gamePlayers[i].chairIndex, 0.2f, 0.2f * count);
 

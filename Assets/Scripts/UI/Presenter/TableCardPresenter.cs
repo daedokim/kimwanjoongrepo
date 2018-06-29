@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using com.dug.UI.view;
-using com.dug.UI.manager;
-using com.dug.UI.model;
-using com.dug.UI.events;
+using com.dug.UI.Managers;
+using com.dug.UI.Models;
+using com.dug.UI.Events;
 using System;
 
 namespace com.dug.UI.presenter

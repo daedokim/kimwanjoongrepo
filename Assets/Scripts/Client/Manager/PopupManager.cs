@@ -4,7 +4,7 @@ using UnityEngine;
 using com.dug.UI.popups;
 using System;
 
-namespace com.dug.UI.manager
+namespace com.dug.UI.Managers
 {
     public class PopupManager : Singleton<PopupManager>
     {

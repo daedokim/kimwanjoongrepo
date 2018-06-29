@@ -24,8 +24,7 @@ namespace com.dug.Server.vo
         public int card2;
         public int card3;
         public int card4;
-        public int card5;
-        public int lastbet;
+        public int card5;        
         public long lastRaise;
         public long winnerUserIndex = 0;
         public long currentUserIndex = 0;

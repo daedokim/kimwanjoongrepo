@@ -1,7 +1,7 @@
-﻿using com.dug.UI.dto;
+﻿using com.dug.UI.DTO;
 using System.Collections.Generic;
 
-namespace com.dug.UI.model
+namespace com.dug.UI.Models
 {
     public class RoomModel : IModel
     {
