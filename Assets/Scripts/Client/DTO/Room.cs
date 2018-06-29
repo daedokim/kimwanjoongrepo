@@ -17,7 +17,7 @@ namespace com.dug.UI.DTO
         public static int WAITTIMEOUT_BY_GAME_PLAYER = 17000;
         public static int WAITTIMEOUT_BY_READY = 5000;
         public bool isInit;
-        public int index;
+        public int roomIndex;
         public int doingGame;
         public RoomState state = RoomState.Wait;
         public int round;

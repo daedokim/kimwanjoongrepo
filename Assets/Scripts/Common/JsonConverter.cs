@@ -36,6 +36,69 @@ namespace com.dug.common
             return (T)obj;
         }
 
+        public static T[] GetObjects<T>(Dictionary<string, object>[] dicts)
+        {
+            T[] objs = null;
+
+           Type type = typeof(T);
+          
+            if(dicts != null && dicts.Length > 0)
+            {
+                objs = new T[dicts.Length];
+                
+                for(int i = 0; i < dicts.Length; i++)
+                {
+                    T obj = (T)Activator.CreateInstance(type);
+
+                    foreach (var kv in dicts[i])
+                    {
+                        System.Reflection.FieldInfo property = type.GetField(kv.Key);
+
+                        if (property != null)
+                        {
+                            property.SetValue(obj, kv.Value);
+                        }
+                    }
+
+                    objs[i] = obj;
+                }
+            }
+
+            return objs;
+        }
+
+        public static List<T> GetObjectList<T>(Dictionary<string, object>[] dicts)
+        {
+           List<T> objs = null;
+
+            Type type = typeof(T);
+
+            if (dicts != null && dicts.Length > 0)
+            {
+                objs = new List<T>();
+
+                for (int i = 0; i < dicts.Length; i++)
+                {
+                    T obj = (T)Activator.CreateInstance(type);
+
+                    foreach (var kv in dicts[i])
+                    {
+                        System.Reflection.FieldInfo property = type.GetField(kv.Key);
+
+                        if (property != null)
+                        {
+                            property.SetValue(obj, kv.Value);
+                        }
+                    }
+
+                    objs.Add(obj);
+                }
+            }
+
+            return objs;
+        }
+
+
     }
 
 }

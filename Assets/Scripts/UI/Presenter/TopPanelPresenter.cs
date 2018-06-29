@@ -1,6 +1,6 @@
 ﻿using com.dug.UI.Events;
 using com.dug.UI.Managers;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 using com.dug.UI.view;
 using System;
 using System.Collections;

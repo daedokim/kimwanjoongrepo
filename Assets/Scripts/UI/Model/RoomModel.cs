@@ -29,7 +29,7 @@ namespace com.dug.UI.Models
 
         public void SetRoomData(Room room)
         {
-            roomIndex = room.index;
+            roomIndex = room.roomIndex;
             stage = room.stage;
             currentOrderNo = room.currentOrderNo;
             currentUserIndex = room.currentUserIndex;

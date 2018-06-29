@@ -1,6 +1,6 @@
 ﻿using com.dug.common;
 using com.dug.UI.Events;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 using System;
 using System.Collections;
 using System.Collections.Generic;

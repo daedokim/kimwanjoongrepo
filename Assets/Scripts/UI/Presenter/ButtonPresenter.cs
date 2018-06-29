@@ -6,7 +6,7 @@ using UniRx;
 using com.dug.UI.Events;
 using com.dug.UI.DTO;
 using System;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 
 namespace com.dug.UI.presenter
 {

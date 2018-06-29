@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using com.dug.UI.Managers;
 using com.dug.UI.util;
 using com.dug.UI.DAO;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 using System;
 
 namespace com.dug.UI.popups
@@ -68,7 +68,7 @@ namespace com.dug.UI.popups
             
             gaugeText.text = GameUtil.MakePriceString(maxBuyIn);
 
-            myChipsText.text = GameUtil.MakePriceString(com.dug.UI.network.UserData.Instance.coin);
+            myChipsText.text = GameUtil.MakePriceString(com.dug.UI.Networks.UserData.Instance.coin);
 
             gauge.ObserveEveryValueChanged(x => x.gaugeRate).Skip(1).Subscribe(x => {
                 selectedBuyIn = (long)(minBuyIn + (maxBuyIn - minBuyIn) * (Math.Floor(x * 10) / 10));

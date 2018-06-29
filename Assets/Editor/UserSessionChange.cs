@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 
 public class UserSessionChange : MonoBehaviour {
 

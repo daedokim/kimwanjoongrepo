@@ -28,9 +28,7 @@ namespace com.dug.UI.view
 
         public void SetCoin(long coin)
         {
-            Debug.Log("aaaa");
             coinText.text = GameUtil.MakePriceString(coin);
-
         }
     }
 }

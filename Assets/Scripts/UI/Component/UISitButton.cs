@@ -1,6 +1,6 @@
 ﻿using com.dug.UI.Managers;
 using com.dug.UI.DTO;
-using com.dug.UI.network;
+using com.dug.UI.Networks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

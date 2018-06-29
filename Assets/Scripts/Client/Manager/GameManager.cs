@@ -5,6 +5,9 @@ using com.dug.UI.Events;
 using UnityEngine;
 using System;
 using UniRx;
+using com.dug.UI.Networks;
+using com.dug.common;
+using System.Collections.Generic;
 
 namespace com.dug.UI.Managers
 {
@@ -33,10 +36,10 @@ namespace com.dug.UI.Managers
             dao = new RoomDAO();
             eventHandler = GameEventHandler.Instance;
             eventHandler.AddHandler(this, UserManager.USER_LOGIN_COMPLETE, OnLoginCompleteHandler);
-
+            eventHandler.AddHandler(this, ResponseManager.ON_DATA_RECIEVE, OnDataReceive);
             gameEvent = GameEvent.Instance;
         }
-
+        
         private void OnLoginCompleteHandler(object obj)
         {
             roomModel.ObserveEveryValueChanged(x => x.currentUserIndex).Subscribe(x =>
@@ -56,16 +59,49 @@ namespace com.dug.UI.Managers
                 gameEvent.InvokeClearEvent();
             });
 
-            InvokeRepeating("Thread", 0.10f, 0.10f);
+            InvokeRepeating("Thread", 0.10f, 0.10f);            
         }
 
    
         private void Thread()
         {
-            room = dao.GetRoom(roomIndex);
+            CommonNetwork.Instance.GetRoom(UserData.Instance.userIndex, roomIndex);
+        }
+
+        private void OnDataReceive(object obj)
+        {
+            PacketData data = (PacketData)obj;
+
+            switch ((PacketNumConstants.PacketNum)data.packetNum)
+            {
+                case PacketNumConstants.PacketNum.GET_ROOM:
+                    OnGetRoomHandler(data);
+                    break;
+            }
+        }
+
+        private void OnGetRoomHandler(PacketData data)
+        {
+            Debug.Log("data 받아온다.");
+            room = JsonConverter.GetObject<Room>((Dictionary<string, object>) data.data["Room"]);
+
+            if(data.data["GamePlayers"] != null)
+            {
+                object[] temp = (object[])data.data["GamePlayers"];
+
+                if(temp.Length > 0)
+                {
+                    List<GamePlayer> gamePlayers = JsonConverter.GetObjectList<GamePlayer>((Dictionary<string, object>[])temp);
+                    room.gamePlayers = gamePlayers;
+                }
+            }
+            
+
+            
+
             currentState = room.state;
 
-            if(currentState != RoomState.Playing)
+            if (currentState != RoomState.Playing)
             {
                 room.currentOrderNo = -1;
                 room.currentUserIndex = 0;
@@ -81,11 +117,11 @@ namespace com.dug.UI.Managers
             }
             roomModel.SetRoomData(room);
 
-            if(roomModel.stage < 17)
+            if (roomModel.stage < 17)
             {
                 gameEvent.InvokeRoomEvent(roomModel);
             }
-            
+
         }
 
         private bool CheckPreFlopBlind(GamePlayer gamePlayer)

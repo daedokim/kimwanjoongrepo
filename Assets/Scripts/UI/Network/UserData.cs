@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace com.dug.UI.network
+namespace com.dug.UI.Networks
 {
     public class UserData
     {

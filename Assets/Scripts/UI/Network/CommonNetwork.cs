@@ -8,7 +8,7 @@ using System.Timers;
 using UnityEngine;
 
 
-namespace com.dug.UI.network
+namespace com.dug.UI.Networks
 {
     public class CommonNetwork
     {        
@@ -75,7 +75,21 @@ namespace com.dug.UI.network
             packet.data = data;                               
 
             socket.Send(packet);
-        }        
+        }
+
+        public void GetRoom(long userIndex, int roomIndex)
+        {
+            PacketData packet = new PacketData();
+            packet.packetNum = (int)PacketNumConstants.PacketNum.GET_ROOM;
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("userIndex", userIndex);
+            data.Add("roomIndex", roomIndex);
+
+            packet.data = data;
+
+            socket.Send(packet);
+        }
+
     }
 
 }
