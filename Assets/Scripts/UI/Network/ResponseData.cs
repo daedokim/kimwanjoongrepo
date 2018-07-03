@@ -28,6 +28,8 @@ namespace com.dug.UI.Networks
         public void PushResponseData(string jsonStr)
         {
             messages.Enqueue(jsonStr);
+
+            //Debug.Log(jsonStr);
         }
 
         public PacketData GetResponseData()

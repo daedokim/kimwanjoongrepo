@@ -90,6 +90,21 @@ namespace com.dug.UI.Networks
             socket.Send(packet);
         }
 
+        public void JoinGame(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        {
+            PacketData packet = new PacketData();
+            packet.packetNum = (int)PacketNumConstants.PacketNum.JOIN_GAME;
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("userIndex", userIndex);
+            data.Add("roomIndex", roomIndex);
+            data.Add("chairIndex", chairIndex);
+            data.Add("buyInLeft", buyInLeft);
+
+            packet.data = data;
+
+            socket.Send(packet);
+        }
+
     }
 
 }

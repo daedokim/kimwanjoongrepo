@@ -68,16 +68,16 @@ namespace com.dug.UI.Models
             stageBet = gamePlayer.stageBet;
             totalBet = gamePlayer.totalBet;
 
-            userIndex = gamePlayer.useridx;
+            userIndex = gamePlayer.userIndex;
             coin = gamePlayer.coin;
             nickName = gamePlayer.nickName;
             result = gamePlayer.result;
 
-            isMyTurn = gamePlayer.useridx == room.currentUserIndex && roomStage % 3 == 0;
+            isMyTurn = gamePlayer.userIndex == room.currentUserIndex && roomStage % 3 == 0;
             
             betCount = room.betCount;
             roomStage = room.stage;
-            isWinner = room.winnerUserIndex == gamePlayer.useridx;
+            isWinner = room.winnerUserIndex == gamePlayer.userIndex;
         }
 
         public void Update(GamePlayerModel model)

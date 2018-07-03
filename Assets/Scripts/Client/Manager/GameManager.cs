@@ -59,7 +59,7 @@ namespace com.dug.UI.Managers
                 gameEvent.InvokeClearEvent();
             });
 
-            InvokeRepeating("Thread", 0.10f, 0.10f);            
+            InvokeRepeating("Thread", 1.10f, 1.10f);            
         }
 
    
@@ -76,6 +76,9 @@ namespace com.dug.UI.Managers
             {
                 case PacketNumConstants.PacketNum.GET_ROOM:
                     OnGetRoomHandler(data);
+                    break;
+                case PacketNumConstants.PacketNum.JOIN_GAME:
+                    
                     break;
             }
         }
@@ -95,9 +98,6 @@ namespace com.dug.UI.Managers
                     room.gamePlayers = gamePlayers;
                 }
             }
-            
-
-            
 
             currentState = room.state;
 
@@ -109,7 +109,7 @@ namespace com.dug.UI.Managers
 
             for (int i = 0; i < room.gamePlayers.Count; i++)
             {
-                if (room.gamePlayers[i].useridx == room.currentUserIndex)
+                if (room.gamePlayers[i].userIndex == room.currentUserIndex)
                     currentGamePlayer = room.gamePlayers[i];
 
                 gamePlayerUpdateModel.SetGamePlayer(room.gamePlayers[i], Room);
@@ -121,8 +121,17 @@ namespace com.dug.UI.Managers
             {
                 gameEvent.InvokeRoomEvent(roomModel);
             }
-
         }
+
+        public CRUDResult SitChair(long userIndex, int chairIndex, long buyInLeft)
+        {
+            CRUDResult result = dao.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
+
+            CommonNetwork.Instance.JoinGame(roomIndex, userIndex, chairIndex, buyInLeft);
+
+            return result;
+        }
+
 
         private bool CheckPreFlopBlind(GamePlayer gamePlayer)
         {
@@ -130,7 +139,7 @@ namespace com.dug.UI.Managers
             // Blind 체크
             if (room.stage == (int)Stage.PreFlop)
             {
-                bool isMyTurn = gamePlayer.useridx == room.currentUserIndex;
+                bool isMyTurn = gamePlayer.userIndex == room.currentUserIndex;
 
                 isMyTurn = true;
                 if (isMyTurn)
@@ -138,13 +147,13 @@ namespace com.dug.UI.Managers
                     if (room.betCount == 0)
                     {
                         // Small Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, 0, Room.minbetAmount);
+                        dao.SetPlayerBetting(roomIndex, gamePlayer.userIndex, BetType.Blind, 0, Room.minbetAmount);
                         isBlindBet = true;
                     }
                     else if (room.betCount == 1)
                     {
                         // Big Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.useridx, BetType.Blind, Room.minbetAmount, Room.minbetAmount);
+                        dao.SetPlayerBetting(roomIndex, gamePlayer.userIndex, BetType.Blind, Room.minbetAmount, Room.minbetAmount);
                         isBlindBet = true;
                     }
                 }
@@ -187,12 +196,7 @@ namespace com.dug.UI.Managers
             //gameEvent.InvokePlayerTurnEndEvent();
         }
 
-        public CRUDResult SitChair(long userIndex, int chairIndex, long buyInLeft)
-        {
-            CRUDResult result = dao.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
-
-            return result;
-        }
+      
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {
             GamePlayerModel gamePlayer = null;
@@ -202,7 +206,7 @@ namespace com.dug.UI.Managers
 
             for (int i = 0; i < Room.gamePlayers.Count; i++)
             {
-                if (Room.gamePlayers[i].useridx == userIndex)
+                if (Room.gamePlayers[i].userIndex == userIndex)
                 {
                     gamePlayer = new GamePlayerModel();
                     gamePlayer.SetGamePlayer(Room.gamePlayers[i], Room);

@@ -35,7 +35,7 @@
 
         public long coin;
         public string nickName;
-        public long useridx;
+        public long userIndex;
         public HandResult result;
 
 

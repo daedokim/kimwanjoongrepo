@@ -18,12 +18,6 @@ namespace com.dug.UI.view
         private void Awake()
         {
             presenter = new TopPanelPresenter(this);
-            Debug.Log("eeee");
-        }
-
-        private void Start()
-        {
-            Debug.Log("ccc");
         }
 
         public void SetCoin(long coin)

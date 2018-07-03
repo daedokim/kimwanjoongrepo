@@ -11,6 +11,7 @@ namespace com.dug.UI.Networks
         {
             LOGIN = 1
             , GET_ROOM = 2
+            , JOIN_GAME = 3
 
         }
     }

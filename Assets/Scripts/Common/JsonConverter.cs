@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.dug.UI.DTO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,7 +70,7 @@ namespace com.dug.common
 
         public static List<T> GetObjectList<T>(Dictionary<string, object>[] dicts)
         {
-           List<T> objs = null;
+            List<T> objs = null;
 
             Type type = typeof(T);
 
@@ -86,8 +87,26 @@ namespace com.dug.common
                         System.Reflection.FieldInfo property = type.GetField(kv.Key);
 
                         if (property != null)
-                        {
-                            property.SetValue(obj, kv.Value);
+                        {                         
+                            if(property.FieldType == typeof(DateTime))
+                            {
+                                property.SetValue(obj, DateTime.Parse((string)kv.Value));
+                            }
+                            else if (property.FieldType == typeof(HandResult))
+                            {
+                                Dictionary<string, object> handResultValue = (Dictionary<string, object>)kv.Value;
+
+                                if(handResultValue.Count > 0)
+                                {
+                                    HandResult result = GetObject<HandResult>(handResultValue);
+                                    property.SetValue(obj, result);
+                                }
+                            }
+                            else
+                            {
+                                property.SetValue(obj, kv.Value);                             
+                            }
+                            
                         }
                     }
 
