@@ -1,4 +1,5 @@
 ﻿using com.dug.UI.Events;
+using com.dug.UI.Managers;
 using com.dug.UI.Networks;
 using com.dug.UI.util;
 using System;
@@ -33,7 +34,7 @@ namespace com.dug.common
 
         public SocketBase()
         {
-
+            
         }
 
         public void Connect(string host, int port, string channel)
@@ -108,10 +109,8 @@ namespace com.dug.common
         private void OnGetMessage(object sender, MessageEventArgs e)
         {
             string jsonStr = Encoding.Default.GetString(e.RawData);
-            jsonStr = jsonStr.Replace("\\", "");
-            jsonStr = jsonStr.Substring(1, jsonStr.Length - 2);
-
             ResponseData.Instance.PushResponseData(jsonStr);
         }
+
     }
 }

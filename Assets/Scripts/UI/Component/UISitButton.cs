@@ -20,12 +20,13 @@ namespace com.dug.UI.component
             this.gameObject.GetComponent<Button>().OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    if (GameManager.Instance.GetGamePlayerByUserIndex(UserData.Instance.userIndex) == null)
+                    Room room = GameManager.Instance.Room;
+
+                    if(room != null)
                     {
-                        Room room = GameManager.Instance.Room;
                         PopupManager.Instance.OpenPopup(PopupManager.PopupTypes.SELECT_BUYIN_POPUP, room.buyInMin, room.buyInMax, chairIndex);
                     }
-
+                    
                 });
         }
 

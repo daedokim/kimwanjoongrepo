@@ -117,6 +117,11 @@ namespace com.dug.UI.Events
             return count;
         }
 
+        internal void AddHandler(string sIT_CHAIR_COMPLETE, object onSitChairComplete)
+        {
+            throw new NotImplementedException();
+        }
+
         public int RemoveHandler(object target, string key, Action<object> callback)
         {
             int count = 0;

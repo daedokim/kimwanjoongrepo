@@ -8,6 +8,7 @@ using com.dug.UI.util;
 using com.dug.UI.DAO;
 using com.dug.UI.Networks;
 using System;
+using com.dug.UI.Events;
 
 namespace com.dug.UI.popups
 {
@@ -50,6 +51,9 @@ namespace com.dug.UI.popups
 
         RoomDAO dao = new RoomDAO();
 
+        public static readonly string SIT_CHAIR_COMPLETE = "SelectBuyInPopup.SIT_CHAIR_COMPLETE";
+
+
         private void Awake()
         {
             gauge = gaugeObj.GetComponent<GaugeHandler>();
@@ -75,22 +79,16 @@ namespace com.dug.UI.popups
                 gaugeText.text = GameUtil.MakePriceString(selectedBuyIn);
             });
 
+            object thiz = this;
+
             okButton.onClick.AsObservable().Subscribe(_ => {
 
                 okButton.interactable = false;
                 cancelButton.interactable = false;
 
-                CRUDResult result = GameManager.Instance.SitChair(UserData.Instance.userIndex, chairIndex, selectedBuyIn);
+                GameEventHandler.Instance.AddHandler(thiz, SIT_CHAIR_COMPLETE, OnSitChairComplete);
+                GameManager.Instance.SitChair(UserData.Instance.userIndex, chairIndex, selectedBuyIn);                
 
-                if (result.resultType == CRUDResult.ResultType.FAILED)
-                {
-                    cancelButton.interactable = true;
-                }
-                else if(result.resultType == CRUDResult.ResultType.SUCCESS)
-                {
-                    UserData.Instance.isAutoRefill = autoRefill.isOn;
-                    ClosePopup(null);
-                }
             });
 
             cancelButton.onClick.AsObservable().Subscribe(_ => {
@@ -100,6 +98,25 @@ namespace com.dug.UI.popups
             closeButton.onClick.AsObservable().Subscribe(_ => {
                 ClosePopup(null);
             });
+
+        }
+
+        public void OnSitChairComplete(object obj)
+        {
+            GameEventHandler.Instance.RemoveHandler(this, SIT_CHAIR_COMPLETE, OnSitChairComplete);
+
+            CRUDResult result = (CRUDResult)obj;
+
+            if (result.resultType == CRUDResult.ResultType.FAILED)
+            {
+                cancelButton.interactable = true;
+            }
+            else if (result.resultType == CRUDResult.ResultType.SUCCESS)
+            {
+                UserData.Instance.isAutoRefill = autoRefill.isOn;
+                ClosePopup(null);
+            }
+
         }
     }
 

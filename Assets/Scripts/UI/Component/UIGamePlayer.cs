@@ -64,11 +64,6 @@ namespace com.dug.UI.component
 
             timeline = timeLineGameObject.GetComponent<UITimeline>();
 
-            //model.ObserveEveryValueChanged(x => x.status).Skip(1).Subscribe(_ =>
-            //{
-            //    this.gameObject.SetActive(model.status != GamePlayerModel.GamePlayerState.Stand);
-            //});
-
             model.ObserveEveryValueChanged(x => x.nickName).Subscribe(_ =>
                    {
                        nameText.text = model.nickName;
@@ -97,7 +92,8 @@ namespace com.dug.UI.component
                   }
               });
 
-            model.ObserveEveryValueChanged(x => x.stageBet).Subscribe(x => {
+            model.ObserveEveryValueChanged(x => x.stageBet).Subscribe(x => 
+            {
                 if(x > 0)
                 {
                     if (model.lastBetType != GamePlayerModel.BetType.Fold && model.lastBetType != GamePlayerModel.BetType.Check)
@@ -114,6 +110,15 @@ namespace com.dug.UI.component
             model.ObserveEveryValueChanged(x => x.roomStage).Where(x => x == 14 || x == 15).Subscribe(x => {
                 ShowHandResult(x);
             });
+
+            model.ObserveEveryValueChanged(x => x.roomState).Subscribe(x => {
+                if (x >= (int)RoomModel.RoomState.Setting && (firstCard == null || firstCard.gameObject.activeSelf == false)
+                && (secondCard == null || secondCard.gameObject.activeSelf == false))
+                {
+                    ShowOwnCard();
+                }
+            });
+
         }
 
         public void ShowDelarMark()

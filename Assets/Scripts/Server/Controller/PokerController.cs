@@ -80,7 +80,6 @@ namespace com.dug.Server.Controller
                 gamePlayer.stageBet += totalAmount;
                 gamePlayer.totalBet += totalAmount;
 
-
                 gamePlayer.buyInLeft -= totalAmount;
                 gamePlayer.stage = room.stage;
 

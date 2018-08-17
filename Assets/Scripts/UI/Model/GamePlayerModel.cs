@@ -34,6 +34,10 @@ namespace com.dug.UI.Models
         public bool isMyTurn;
         public int roomStage;
         public bool isWinner;
+
+        public int roomState;
+
+        public bool isUpdate;
         
 
         public enum GamePlayerState
@@ -78,6 +82,7 @@ namespace com.dug.UI.Models
             betCount = room.betCount;
             roomStage = room.stage;
             isWinner = room.winnerUserIndex == gamePlayer.userIndex;
+            roomState = (int)room.state;
         }
 
         public void Update(GamePlayerModel model)
@@ -105,8 +110,8 @@ namespace com.dug.UI.Models
             isMyTurn = model.isMyTurn;
 
             roomStage = model.roomStage;
+            roomState = model.roomState;
             isWinner = model.isWinner;
-
         }
     }
 

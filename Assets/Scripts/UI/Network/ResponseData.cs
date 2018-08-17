@@ -40,6 +40,8 @@ namespace com.dug.UI.Networks
             if (messages.Count > 0)
             {
                 jsonStr = messages.Dequeue();
+
+                //Debug.Log(jsonStr);
                 data = JsonConverter.FromJson<PacketData>(jsonStr);
             }
             return data;

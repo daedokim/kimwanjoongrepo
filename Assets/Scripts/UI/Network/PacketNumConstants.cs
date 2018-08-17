@@ -11,7 +11,10 @@ namespace com.dug.UI.Networks
         {
             LOGIN = 1
             , GET_ROOM = 2
-            , JOIN_GAME = 3
+            , SIT = 3
+            , ADD_ROOM = 4
+            , STAND_UP = 5
+            , SET_PLAYER_BET = 6
 
         }
     }

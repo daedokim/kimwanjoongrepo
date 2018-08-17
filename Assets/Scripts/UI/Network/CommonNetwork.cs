@@ -1,5 +1,7 @@
 ﻿using com.dug.common;
+using com.dug.Server.vo;
 using com.dug.UI.Events;
+using com.dug.UI.Managers;
 using com.dug.UI.util;
 using System;
 using System.Collections;
@@ -63,7 +65,7 @@ namespace com.dug.UI.Networks
             }
         }
 
-        public void Login(User user)
+        public CommonNetwork Login(User user)
         {
             PacketData packet = new PacketData();
             packet.packetNum = (int)PacketNumConstants.PacketNum.LOGIN;
@@ -75,9 +77,11 @@ namespace com.dug.UI.Networks
             packet.data = data;                               
 
             socket.Send(packet);
+
+            return this;
         }
 
-        public void GetRoom(long userIndex, int roomIndex)
+        public CommonNetwork GetRoom(long userIndex, int roomIndex)
         {
             PacketData packet = new PacketData();
             packet.packetNum = (int)PacketNumConstants.PacketNum.GET_ROOM;
@@ -88,12 +92,14 @@ namespace com.dug.UI.Networks
             packet.data = data;
 
             socket.Send(packet);
+
+            return this;
         }
 
-        public void JoinGame(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
+        public CommonNetwork Sit(int roomIndex, long userIndex, int chairIndex, long buyInLeft)
         {
             PacketData packet = new PacketData();
-            packet.packetNum = (int)PacketNumConstants.PacketNum.JOIN_GAME;
+            packet.packetNum = (int)PacketNumConstants.PacketNum.SIT;
             Dictionary<string, object> data = new Dictionary<string, object>();
             data.Add("userIndex", userIndex);
             data.Add("roomIndex", roomIndex);
@@ -103,8 +109,42 @@ namespace com.dug.UI.Networks
             packet.data = data;
 
             socket.Send(packet);
+
+            return this;
         }
 
+        public CommonNetwork StandUp(int roomIndex, long userIndex)
+        {
+            PacketData packet = new PacketData();
+            packet.packetNum = (int)PacketNumConstants.PacketNum.STAND_UP;
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("userIndex", userIndex);
+            data.Add("roomIndex", roomIndex);
+
+            packet.data = data;
+
+            socket.Send(packet);
+
+            return this;
+        }
+
+        public CommonNetwork SetPlayerBet(int roomIndex, long userIndex, int betType, long callAmount, long betAmount)
+        {
+            PacketData packet = new PacketData();
+            packet.packetNum = (int)PacketNumConstants.PacketNum.SET_PLAYER_BET;
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data.Add("userIndex", userIndex);
+            data.Add("roomIndex", roomIndex);
+            data.Add("betType", betType);
+            data.Add("callAmount", callAmount);
+            data.Add("betAmount", betAmount);
+
+            packet.data = data;
+
+            socket.Send(packet);
+
+            return this;
+        }
     }
 
 }

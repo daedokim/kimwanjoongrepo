@@ -79,23 +79,14 @@ namespace com.dug.UI.presenter
             });
 
             this.view.OnToLobbyButtonClicked.Subscribe(_ => {
-                CRUDResult result = manager.StandUp(UserData.Instance.userIndex);
+                manager.StandUp(UserData.Instance.userIndex);
                 
-                if(result.resultType == CRUDResult.ResultType.SUCCESS)
-                {
-
-                }
             });
 
             this.view.OnStandUpButtonClicked.Subscribe(_ => {
-                CRUDResult result = manager.StandUp(UserData.Instance.userIndex);
+                manager.StandUp(UserData.Instance.userIndex);
 
-                if (result.resultType == CRUDResult.ResultType.SUCCESS)
-                {
-
-                }
             });
-
 
             GameEvent.Instance.AddPlayerTurnEvent(OnPlayerTurnEvent);
             GameEvent.Instance.AddClearEvent(OnClearAll);

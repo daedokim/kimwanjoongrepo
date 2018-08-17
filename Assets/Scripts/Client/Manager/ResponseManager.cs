@@ -22,7 +22,7 @@ namespace com.dug.UI.Managers
         IEnumerator CheckMessageQue()
         {
             //1초 주기로 탐색
-            WaitForSeconds waitSec = new WaitForSeconds(1);
+            WaitForSeconds waitSec = new WaitForSeconds(0.01f);
             PacketData data = null;
 
             while (true)

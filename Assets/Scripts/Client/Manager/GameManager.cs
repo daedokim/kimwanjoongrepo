@@ -59,36 +59,19 @@ namespace com.dug.UI.Managers
                 gameEvent.InvokeClearEvent();
             });
 
-            InvokeRepeating("Thread", 1.10f, 1.10f);            
+            InvokeRepeating("Thread", 0, 0.5f);            
         }
 
-   
         private void Thread()
         {
             CommonNetwork.Instance.GetRoom(UserData.Instance.userIndex, roomIndex);
         }
 
-        private void OnDataReceive(object obj)
-        {
-            PacketData data = (PacketData)obj;
-
-            switch ((PacketNumConstants.PacketNum)data.packetNum)
-            {
-                case PacketNumConstants.PacketNum.GET_ROOM:
-                    OnGetRoomHandler(data);
-                    break;
-                case PacketNumConstants.PacketNum.JOIN_GAME:
-                    
-                    break;
-            }
-        }
-
         private void OnGetRoomHandler(PacketData data)
         {
-            Debug.Log("data 받아온다.");
             room = JsonConverter.GetObject<Room>((Dictionary<string, object>) data.data["Room"]);
 
-            if(data.data["GamePlayers"] != null)
+            if (data.data["GamePlayers"] != null)
             {
                 object[] temp = (object[])data.data["GamePlayers"];
 
@@ -123,37 +106,32 @@ namespace com.dug.UI.Managers
             }
         }
 
-        public CRUDResult SitChair(long userIndex, int chairIndex, long buyInLeft)
+        public void SitChair(long userIndex, int chairIndex, long buyInLeft)
         {
-            CRUDResult result = dao.DoSit(roomIndex, userIndex, chairIndex, buyInLeft);
-
-            CommonNetwork.Instance.JoinGame(roomIndex, userIndex, chairIndex, buyInLeft);
-
-            return result;
+            CommonNetwork.Instance.Sit(roomIndex, userIndex, chairIndex, buyInLeft);
         }
-
 
         private bool CheckPreFlopBlind(GamePlayer gamePlayer)
         {
             bool isBlindBet = false;
+
             // Blind 체크
             if (room.stage == (int)Stage.PreFlop)
             {
                 bool isMyTurn = gamePlayer.userIndex == room.currentUserIndex;
 
-                isMyTurn = true;
                 if (isMyTurn)
                 {
                     if (room.betCount == 0)
                     {
                         // Small Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.userIndex, BetType.Blind, 0, Room.minbetAmount);
+                        CommonNetwork.Instance.SetPlayerBet(roomIndex, gamePlayer.userIndex, (int)BetType.Blind, 0, Room.minbetAmount);
                         isBlindBet = true;
                     }
                     else if (room.betCount == 1)
                     {
                         // Big Blind
-                        dao.SetPlayerBetting(roomIndex, gamePlayer.userIndex, BetType.Blind, Room.minbetAmount, Room.minbetAmount);
+                        CommonNetwork.Instance.SetPlayerBet(roomIndex, gamePlayer.userIndex, (int)BetType.Blind, Room.minbetAmount, Room.minbetAmount);
                         isBlindBet = true;
                     }
                 }
@@ -161,48 +139,41 @@ namespace com.dug.UI.Managers
             return isBlindBet;
         }
 
-        public CRUDResult StandUp(long userIndex)
+        public void StandUp(long userIndex)
         {
-            return dao.StandUp(roomIndex, userIndex);
+            CommonNetwork.Instance.StandUp(roomIndex, userIndex);
         }
 
         public void OnCall(long userIdx, long stageBet) 
-        {            
-            dao.SetPlayerBetting(roomIndex, userIdx, BetType.Call, Room.stageBet - stageBet, 0);
-            //gameEvent.InvokePlayerTurnEndEvent();
+        {
+            CommonNetwork.Instance.SetPlayerBet(roomIndex, userIdx, (int)BetType.Call, Room.stageBet - stageBet, 0);
         }
 
         public void OnRaise(long userIdx, long stageBet, long betAmount)
-        {            
-            dao.SetPlayerBetting(roomIndex, userIdx, BetType.Raise, Room.stageBet - stageBet, betAmount);
-            //gameEvent.InvokePlayerTurnEndEvent();
+        {
+            CommonNetwork.Instance.SetPlayerBet(roomIndex, userIdx, (int)BetType.Raise, Room.stageBet - stageBet, betAmount);
         }
 
         public void OnCheck(long userIdx)
         {
-            dao.SetPlayerBetting(roomIndex, userIdx, BetType.Check, 0, 0);
-            //gameEvent.InvokePlayerTurnEndEvent();
+            CommonNetwork.Instance.SetPlayerBet(roomIndex, userIdx, (int)BetType.Check, 0, 0);
         }
 
         public void OnFold(long userIndex)
         {
-            dao.SetPlayerBetting(roomIndex, userIndex, BetType.Fold, 0, 0);
-            //gameEvent.InvokePlayerTurnEndEvent();
+            CommonNetwork.Instance.SetPlayerBet(roomIndex, userIndex, (int)BetType.Fold, 0, 0);
         }
 
         public void OnAllIn(long userIndex, long stageBet, long buyInLeft)
         {
-            dao.SetPlayerBetting(roomIndex, userIndex, BetType.Allin, Room.stageBet - stageBet, buyInLeft);
-            //gameEvent.InvokePlayerTurnEndEvent();
+            CommonNetwork.Instance.SetPlayerBet(roomIndex, userIndex, (int)BetType.Allin, Room.stageBet - stageBet, buyInLeft);
         }
 
-      
         public GamePlayerModel GetGamePlayerByUserIndex(long userIndex)
         {
             GamePlayerModel gamePlayer = null;
 
             if (Room == null) return null;
-
 
             for (int i = 0; i < Room.gamePlayers.Count; i++)
             {
@@ -215,6 +186,33 @@ namespace com.dug.UI.Managers
             }
             return gamePlayer;
         }
+
+        private void OnDataReceive(object obj)
+        {
+            PacketData data = (PacketData)obj;
+
+            switch ((PacketNumConstants.PacketNum)data.packetNum)
+            {
+                case PacketNumConstants.PacketNum.GET_ROOM:
+                    OnGetRoomHandler(data);
+                    break;
+                case PacketNumConstants.PacketNum.SIT:
+                    OnJoinGameHandler(data);
+                    break;
+                case PacketNumConstants.PacketNum.SET_PLAYER_BET:
+                    OnGetRoomHandler(data);
+                    break;
+            }
+        }
+
+        private void OnJoinGameHandler(PacketData data)
+        {
+            CRUDResult result = new CRUDResult();
+            result.resultType = String.IsNullOrEmpty(data.error) ? CRUDResult.ResultType.SUCCESS : CRUDResult.ResultType.FAILED;
+            eventHandler.Invoke(popups.SelectBuyInPopup.SIT_CHAIR_COMPLETE, result);
+        }
     }
+
+
 
 }
